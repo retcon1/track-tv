@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getCurrentUserShows } from "../utils/dbFunctions";
+import {
+  getCurrentUserShows,
+} from "../utils/dbFunctions";
 import ShowCard from "./ShowCard";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
@@ -10,15 +12,15 @@ const Profile = () => {
 
   const [user, setUser] = useState<null | Object>(null);
   const [loading, setLoading] = useState(true);
-  console.log(auth?.currentUser?.email);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
-      console.log(user);
       const currentShows = await getCurrentUserShows();
-      setUserShows(currentShows);
-      setLoading(false);
+      if (currentShows) {
+        setUserShows(currentShows);
+        setLoading(false);
+      }
     });
 
     return () => {
@@ -39,7 +41,8 @@ const Profile = () => {
       {userShows.map((show) => {
         return (
           <ShowCard
-            key={show.title}
+            key={show.id}
+            id={show.id}
             title={show.title}
             current_episode={show.current_episode}
             total_episodes={show.total_episodes}
