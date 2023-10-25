@@ -11,16 +11,20 @@ import {
 import { auth, db } from "../config/firebase";
 import { ShowStats, UserData } from "../interfaces/interfaces";
 
-export const findUserByEmail = async (
-  email: string
-): Promise<UserData | null> => {
+// If no email is provided, the function will search for the logged in user's data
+export const findUserByEmail = async (userEmail = auth?.currentUser?.email): Promise<UserData | null> => {
+  if (!userEmail) {
+    console.log("User not signed in!");
+    return null;
+  }
+
   try {
     const usersCollection = collection(db, "users");
-    const q = query(usersCollection, where("email", "==", email));
+    const q = query(usersCollection, where("email", "==", userEmail));
     const querySnapshot: QuerySnapshot<DocumentData> = await getDocs(q);
 
     if (querySnapshot.empty) {
-      console.log(`No user found with email ${email}`);
+      console.log(`No user found with email ${userEmail}`);
       return null;
     }
 
@@ -34,12 +38,7 @@ export const findUserByEmail = async (
 };
 
 export const getCurrentUserShows = async (): Promise<ShowStats[] | null> => {
-  const userEmail = auth?.currentUser?.email;
-  if (!userEmail) {
-    console.log("User not signed in!");
-    return null;
-  }
-  const user = await findUserByEmail(userEmail);
+  const user = await findUserByEmail();
 
   if (!user) {
     console.log("User not signed in!");
@@ -69,14 +68,7 @@ export const getCurrentUserShows = async (): Promise<ShowStats[] | null> => {
 };
 
 export const updateCurrEp = async (showId: string, epNum: number) => {
-  const userEmail = auth?.currentUser?.email;
-
-  if (!userEmail) {
-    console.log("No user is currently signed in.");
-    return null;
-  }
-
-  const userData = await findUserByEmail(userEmail);
+  const userData = await findUserByEmail();
 
   if (!userData) {
     console.log("No user data found.");
