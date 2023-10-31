@@ -31,7 +31,6 @@ export const findUserByEmail = async (
     }
 
     const userData = querySnapshot.docs[0].data() as UserData;
-    userData.user_id = querySnapshot.docs[0].id;
 
     return userData;
   } catch (err) {
