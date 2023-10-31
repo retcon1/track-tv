@@ -1,31 +1,28 @@
 import React, { useEffect, useState } from "react";
-import {
-  getCurrentUserShows,
-} from "../utils/dbFunctions";
+import { findUserByEmail, getCurrentUserShows } from "../utils/dbFunctions";
 import ShowCard from "./ShowCard";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { ShowStats } from "../interfaces/interfaces";
+import { useUser } from "./UserContext";
 
 const Profile = () => {
   const [userShows, setUserShows] = useState<ShowStats[]>([]);
-
-  const [user, setUser] = useState<null | Object>(null);
   const [loading, setLoading] = useState(true);
+  const { setUserData, userData } = useUser();
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      setUser(user);
+    onAuthStateChanged(auth, async () => {
       const currentShows = await getCurrentUserShows();
       if (currentShows) {
+        const newUserData = await findUserByEmail();
+        if (newUserData) {
+          setUserData(newUserData);
+        }
         setUserShows(currentShows);
         setLoading(false);
       }
     });
-
-    return () => {
-      unsubscribe();
-    };
   }, []);
 
   if (loading) {

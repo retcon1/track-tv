@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { auth } from "../config/firebase";
 import { logout, signIn, signInGoogle } from "../utils/authFunctions";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-
 
   return (
     <div>
