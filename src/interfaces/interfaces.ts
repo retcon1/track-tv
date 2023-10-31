@@ -14,6 +14,7 @@ export interface ShowStats {
 }
 
 export interface UserData {
+  user_id: string;
   email: string;
   show_stash_id: string;
   username: string;

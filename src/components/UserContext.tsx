@@ -14,7 +14,7 @@ interface UserContextType {
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
-  const [userData, setUserData] = useState<UserData>({email: '', username: '', show_stash_id: ''});
+  const [userData, setUserData] = useState<UserData>({email: '', username: '', show_stash_id: '', user_id: ''});
 
   return (
     <UserContext.Provider value={{ userData, setUserData }}>

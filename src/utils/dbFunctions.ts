@@ -12,7 +12,9 @@ import { auth, db } from "../config/firebase";
 import { ShowStats, UserData } from "../interfaces/interfaces";
 
 // If no email is provided, the function will search for the logged in user's data
-export const findUserByEmail = async (userEmail = auth?.currentUser?.email): Promise<UserData | null> => {
+export const findUserByEmail = async (
+  userEmail = auth?.currentUser?.email
+): Promise<UserData | null> => {
   if (!userEmail) {
     console.log("User not signed in!");
     return null;
@@ -29,6 +31,7 @@ export const findUserByEmail = async (userEmail = auth?.currentUser?.email): Pro
     }
 
     const userData = querySnapshot.docs[0].data() as UserData;
+    userData.user_id = querySnapshot.docs[0].id;
 
     return userData;
   } catch (err) {
