@@ -55,7 +55,7 @@ const Auth = () => {
           />
           <button onClick={() => signIn(email, pass)}>Sign In</button>
 
-          <button onClick={signInGoogle}>Sing In with Google</button>
+          <button onClick={signInGoogle}>Sign In with Google</button>
         </div>
       )}
 
