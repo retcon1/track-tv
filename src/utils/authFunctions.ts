@@ -4,10 +4,8 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { auth, db, googleProvider } from "../config/firebase";
-import { addDoc, collection } from "firebase/firestore";
-import { UserData } from "../interfaces/interfaces";
-import { findUserByEmail } from "./dbFunctions";
+import { auth, googleProvider } from "../config/firebase";
+import { addUserAndShowStash, findUserByEmail } from "./dbFunctions";
 
 export const signUp = async (email: string, pass: string, username: string) => {
   try {
@@ -18,22 +16,7 @@ export const signUp = async (email: string, pass: string, username: string) => {
       pass
     );
     const user = userCredential.user;
-
-    // Creates new show_stash for that user
-    const showStashCollectionRef = collection(db, "show_stash");
-    const showStashDocRef = await addDoc(showStashCollectionRef, {
-      user_id: user.uid,
-    });
-
-    // Adds new user info to users collection
-    const userCollectionRef = collection(db, "users");
-    const newUserData: UserData = {
-      email: email,
-      username: username,
-      user_id: user.uid,
-      show_stash_id: showStashDocRef.id,
-    };
-    addDoc(userCollectionRef, newUserData);
+    await addUserAndShowStash(user, email, username);
   } catch (err) {
     console.error(err);
   }
@@ -53,22 +36,8 @@ export const signInGoogle = async () => {
     const user = googleCredentials.user;
     const userExists = await findUserByEmail(user.email);
     console.log(userExists);
-    if (user.email && !userExists) {
-      // Creates new show_stash for that user
-      const showStashCollectionRef = collection(db, "show_stash");
-      const showStashDocRef = await addDoc(showStashCollectionRef, {
-        user_id: user.uid,
-      });
-
-      // Adds new user info to users collection
-      const userCollectionRef = collection(db, "users");
-      const newUserData: UserData = {
-        email: user.email,
-        username: "username",
-        user_id: user.uid,
-        show_stash_id: showStashDocRef.id,
-      };
-      addDoc(userCollectionRef, newUserData);
+    if (!userExists) {
+      await addUserAndShowStash(user);
     }
   } catch (err) {
     console.error(err);
