@@ -7,9 +7,11 @@ import {
   QuerySnapshot,
   DocumentData,
   setDoc,
+  addDoc,
 } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 import { ShowStats, UserData } from "../interfaces/interfaces";
+import { User } from "firebase/auth";
 
 // If no email is provided, the function will search for the logged in user's data
 export const findUserByEmail = async (
@@ -31,7 +33,6 @@ export const findUserByEmail = async (
     }
 
     const userData = querySnapshot.docs[0].data() as UserData;
-    userData.user_id = querySnapshot.docs[0].id;
 
     return userData;
   } catch (err) {
@@ -92,4 +93,26 @@ export const updateCurrEp = async (showId: string, epNum: number) => {
   } catch (error) {
     console.error("Error updating current_episode:", error);
   }
+};
+
+export const addUserAndShowStash = async (
+  user: User,
+  email: string = user.email!,
+  username = "username"
+) => {
+  // Creates new show_stash for that user
+  const showStashCollectionRef = collection(db, "show_stash");
+  const showStashDocRef = await addDoc(showStashCollectionRef, {
+    user_id: user.uid,
+  });
+
+  // Adds new user info to users collection
+  const userCollectionRef = collection(db, "users");
+  const newUserData: UserData = {
+    email: email,
+    username: username,
+    user_id: user.uid,
+    show_stash_id: showStashDocRef.id,
+  };
+  addDoc(userCollectionRef, newUserData);
 };

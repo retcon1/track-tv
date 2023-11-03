@@ -13,6 +13,7 @@ const Profile = () => {
 
   useEffect(() => {
     onAuthStateChanged(auth, async () => {
+      console.log(auth.currentUser?.uid);
       const currentShows = await getCurrentUserShows();
       if (currentShows) {
         const newUserData = await findUserByEmail();

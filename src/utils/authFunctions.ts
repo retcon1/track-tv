@@ -5,10 +5,18 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, googleProvider } from "../config/firebase";
+import { addUserAndShowStash, findUserByEmail } from "./dbFunctions";
 
-export const signUp = async (email: string, pass: string) => {
+export const signUp = async (email: string, pass: string, username: string) => {
   try {
-    await createUserWithEmailAndPassword(auth, email, pass);
+    // Creates new user
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      pass
+    );
+    const user = userCredential.user;
+    await addUserAndShowStash(user, email, username);
   } catch (err) {
     console.error(err);
   }
@@ -24,7 +32,13 @@ export const signIn = async (email: string, pass: string) => {
 
 export const signInGoogle = async () => {
   try {
-    await signInWithPopup(auth, googleProvider);
+    const googleCredentials = await signInWithPopup(auth, googleProvider);
+    const user = googleCredentials.user;
+    const userExists = await findUserByEmail(user.email);
+    console.log(userExists);
+    if (!userExists) {
+      await addUserAndShowStash(user);
+    }
   } catch (err) {
     console.error(err);
   }
