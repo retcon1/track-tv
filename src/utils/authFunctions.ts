@@ -47,6 +47,7 @@ export const signInGoogle = async () => {
 export const logout = async () => {
   try {
     await signOut(auth);
+    window.location.href = "/";
   } catch (err) {
     console.error(err);
   }
