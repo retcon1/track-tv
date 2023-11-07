@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { findUserByEmail, getCurrentUserShows } from "../utils/dbFunctions";
+import { getCurrentUserShows } from "../utils/dbFunctions";
 import ShowCard from "./ShowCard";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { ShowStats } from "../interfaces/interfaces";
-import { useUser } from "./UserContext";
+import { logout } from "../utils/authFunctions";
 
 const Profile = () => {
   const [userShows, setUserShows] = useState<ShowStats[]>([]);
   const [loading, setLoading] = useState(true);
-  const { setUserData, userData } = useUser();
 
   useEffect(() => {
     onAuthStateChanged(auth, async () => {
-      console.log(auth.currentUser?.uid);
       const currentShows = await getCurrentUserShows();
       if (currentShows) {
-        const newUserData = await findUserByEmail();
-        if (newUserData) {
-          setUserData(newUserData);
-        }
         setUserShows(currentShows);
         setLoading(false);
       }
@@ -34,8 +28,21 @@ const Profile = () => {
     );
   }
 
+  if (!loading && userShows.length === 0) {
+    return (
+      <div>
+        <button onClick={logout}>Logout</button>
+        <h1>
+          You don't have any shows yet! How about adding some
+          <a href="/show-search">here</a>?
+        </h1>
+      </div>
+    );
+  }
+
   return (
     <div>
+      <button onClick={logout}>Logout</button>
       {userShows.map((show) => {
         return (
           <ShowCard
