@@ -1,10 +1,10 @@
 import "./App.css";
+import React, { useEffect } from "react";
 import Auth from "./components/Auth";
 import Profile from "./components/Profile";
 import { Routes, Route, useNavigate } from "react-router-dom";
 import { auth } from "./config/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useEffect } from "react";
 
 function App() {
   const [user] = useAuthState(auth);
@@ -17,7 +17,7 @@ function App() {
   }, [user, navigate]);
 
   return (
-    <div id="root" className="App">
+    <div id="root">
       <Routes>
         <Route path="/" element={<Auth />} />
         <Route path="/profile" element={<Profile />} />

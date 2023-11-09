@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { logout, signIn, signInGoogle, signUp } from "../utils/authFunctions";
 
 const Auth = () => {
