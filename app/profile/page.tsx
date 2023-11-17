@@ -1,10 +1,12 @@
+'use client'
 import React, { useEffect, useState } from "react";
 import { getCurrentUserShows } from "../utils/dbFunctions";
-import ShowCard from "./ShowCard";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { ShowStats } from "../interfaces/interfaces";
 import { logout } from "../utils/authFunctions";
+import ShowCard from "../components/ShowCard";
+import Link from "next/link";
 
 const Profile = () => {
   const [userShows, setUserShows] = useState<ShowStats[]>([]);
@@ -34,7 +36,7 @@ const Profile = () => {
         <button onClick={logout}>Logout</button>
         <h1>
           You don't have any shows yet! How about adding some
-          <a href="/show-search">here</a>?
+          <Link href="/show-search">here</Link>?
         </h1>
       </div>
     );
