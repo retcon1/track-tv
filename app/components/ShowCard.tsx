@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { ShowStats } from "../interfaces/interfaces";
 import { updateCurrEp } from "../utils/dbFunctions";
+import AddEp from "./AddEp";
 
 const ShowCard = ({
   id,
@@ -12,11 +13,6 @@ const ShowCard = ({
   started_watching,
 }: ShowStats) => {
   const [epNum, setEpNum] = useState<number>(current_episode);
-
-  const addEp = (id: string) => {
-    updateCurrEp(id.toString(), epNum + 1);
-    setEpNum((prevNum) => prevNum + 1);
-  };
 
   const formattedDate = new Date(
     started_watching.seconds * 1000
@@ -31,9 +27,11 @@ const ShowCard = ({
         {epNum}/{total_episodes}
       </p>
       {epNum !== total_episodes ? (
-        <button className="add-ep-btn" onClick={() => addEp(id)}>
-          +
-        </button>
+        <AddEp
+          id={id}
+          epNum={epNum}
+          setEpNum={setEpNum}
+        />
       ) : null}
       <p>{formattedDate}</p>
     </div>
