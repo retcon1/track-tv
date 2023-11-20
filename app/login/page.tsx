@@ -1,6 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { logout, signIn, signInGoogle, signUp } from "../utils/authFunctions";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/navigation";
+import { auth } from "../config/firebase";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -9,6 +13,14 @@ const Login = () => {
   const [signUpUsername, setSignUpUsername] = useState("");
   const [signUpEmail, setSignUpEmail] = useState("");
   const [signUpPass, setSignUpPass] = useState("");
+  const router = useRouter();
+  const [user] = useAuthState(auth);
+
+  useEffect(() => {
+    if (user) {
+      router.push("/profile");
+    }
+  }, [user]);
 
   return (
     <div className="flex justify-center">
