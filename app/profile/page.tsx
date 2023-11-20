@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
 import { getCurrentUserShows } from "../utils/dbFunctions";
 import { onAuthStateChanged } from "firebase/auth";
@@ -7,6 +7,7 @@ import { ShowStats } from "../interfaces/interfaces";
 import { logout } from "../utils/authFunctions";
 import ShowCard from "../components/ShowCard";
 import Link from "next/link";
+import Logout from "../components/Logout";
 
 const Profile = () => {
   const [userShows, setUserShows] = useState<ShowStats[]>([]);
@@ -25,7 +26,7 @@ const Profile = () => {
   if (loading) {
     return (
       <div>
-        <h1>Loading</h1>
+        <h1>Loading..</h1>
       </div>
     );
   }
@@ -44,7 +45,7 @@ const Profile = () => {
 
   return (
     <div>
-      <button onClick={logout}>Logout</button>
+      <Logout />
       {userShows.map((show) => {
         return (
           <ShowCard
