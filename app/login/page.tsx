@@ -5,7 +5,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "../config/firebase";
 
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -50,11 +49,7 @@ const Login = () => {
             onChange={(e) => setSignUpPass(e.target.value)}
             className="mx-5"
           />
-          <button
-            onClick={() => signUp(signUpEmail, signUpPass, signUpUsername)}
-          >
-            Sign Up
-          </button>
+          <button onClick={() => signUp(signUpEmail, signUpPass, signUpUsername)}>Sign Up</button>
         </div>
       ) : (
         <div className="signIn">
@@ -79,7 +74,9 @@ const Login = () => {
         </div>
       )}
 
-      <button onClick={logout} className="mx-5">Logout</button>
+      <button onClick={logout} className="mx-5">
+        Logout
+      </button>
     </div>
   );
 };

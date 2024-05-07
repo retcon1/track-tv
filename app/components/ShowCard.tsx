@@ -1,31 +1,13 @@
 import React from "react";
-import { ShowStats } from "../interfaces/interfaces";
-import AddEp from "./AddEp";
+import { ShowBasicInfo } from "../interfaces/interfaces";
 
-const ShowCard = ({
-  id,
-  title,
-  current_episode,
-  total_episodes,
-  status,
-  rating,
-  started_watching,
-}: ShowStats) => {
-  const formattedDate = new Date(
-    started_watching.seconds * 1000
-  ).toDateString();
-
+const ShowCard = ({ id, title, status, rating, image, url, genres }: ShowBasicInfo) => {
   return (
     <div className="show-card">
+      {image ? <img src={image} /> : <p>Placeholder Image Here</p>}
       <h1>{title}</h1>
-      <p>{status}</p>
-      <p>Rating: {rating}</p>
-      <AddEp
-        id={id}
-        current_episode={current_episode}
-        total_episodes={total_episodes}
-      />
-      <p>{formattedDate}</p>
+      <p>Status: {status}</p>
+      <p>{rating}</p>
     </div>
   );
 };

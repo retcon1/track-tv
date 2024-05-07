@@ -10,11 +10,7 @@ import { addUserAndShowStash, findUserByEmail } from "./dbFunctions";
 export const signUp = async (email: string, pass: string, username: string) => {
   try {
     // Creates new user
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      pass
-    );
+    const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
     const user = userCredential.user;
     await addUserAndShowStash(user, email, username);
   } catch (err) {

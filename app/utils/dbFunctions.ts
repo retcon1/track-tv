@@ -49,12 +49,7 @@ export const getCurrentUserShows = async (): Promise<ShowStats[] | null> => {
     return null;
   }
   try {
-    const showsCollectionRef = collection(
-      db,
-      "show_stash",
-      user.show_stash_id,
-      "shows"
-    );
+    const showsCollectionRef = collection(db, "show_stash", user.show_stash_id, "shows");
     const showsQuerySnapshot = await getDocs(showsCollectionRef);
 
     const showsDataArray: ShowStats[] = [];
@@ -79,13 +74,7 @@ export const updateCurrEp = async (showId: string, epNum: number) => {
     return null;
   }
 
-  const showDocRef = doc(
-    db,
-    "show_stash",
-    userData.show_stash_id,
-    "shows",
-    showId.toString()
-  );
+  const showDocRef = doc(db, "show_stash", userData.show_stash_id, "shows", showId.toString());
 
   try {
     // Update the current_episode for the specified show
@@ -116,3 +105,9 @@ export const addUserAndShowStash = async (
   };
   addDoc(userCollectionRef, newUserData);
 };
+
+const userArticles = [
+  { userID1: ["articleId1Ref", "articleId2Ref", "articleId3Ref"] },
+  { userID2: ["articleId1Ref", "articleId2Ref", "articleId3Ref"] },
+  { userID3: ["articleId1Ref", "articleId2Ref", "articleId3Ref"] },
+];
