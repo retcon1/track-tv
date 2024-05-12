@@ -35,12 +35,14 @@ const Login = () => {
             maxLength={10}
             onChange={(e) => setSignUpUsername(e.target.value)}
             className="mx-5"
+            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
           />
           <input
             placeholder="Email"
             type="email"
             onChange={(e) => setSignUpEmail(e.target.value)}
             className="mx-5"
+            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
           />
           <input
             placeholder="Password"
@@ -48,6 +50,7 @@ const Login = () => {
             minLength={6}
             onChange={(e) => setSignUpPass(e.target.value)}
             className="mx-5"
+            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
           />
           <button onClick={() => signUp(signUpEmail, signUpPass, signUpUsername)}>Sign Up</button>
         </div>
@@ -58,6 +61,7 @@ const Login = () => {
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             className="mx-5"
+            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
           />
           <input
             placeholder="Password"
@@ -65,6 +69,7 @@ const Login = () => {
             minLength={6}
             onChange={(e) => setPass(e.target.value)}
             className="mx-5"
+            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
           />
           <button onClick={() => signIn(email, pass)} className="mx-5">
             Sign In

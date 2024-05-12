@@ -70,7 +70,7 @@ export const updateCurrEp = async (showId: string, epNum: number) => {
   const userData = await findUserByEmail();
 
   if (!userData) {
-    console.log("No user data found.");
+    console.log("User not signed in!");
     return null;
   }
 
@@ -106,8 +106,20 @@ export const addUserAndShowStash = async (
   addDoc(userCollectionRef, newUserData);
 };
 
-const userArticles = [
-  { userID1: ["articleId1Ref", "articleId2Ref", "articleId3Ref"] },
-  { userID2: ["articleId1Ref", "articleId2Ref", "articleId3Ref"] },
-  { userID3: ["articleId1Ref", "articleId2Ref", "articleId3Ref"] },
-];
+export const addShowToStash = async (showData: ShowStats) => {
+  const userData = await findUserByEmail();
+
+  if (!userData) {
+    console.log("User not signed in!");
+    return null;
+  }
+
+  const showStashCollectionRef = collection(db, "show_stash", userData.show_stash_id, "shows");
+  const showDocRef = doc(showStashCollectionRef, showData.id.toString());
+
+  try {
+    await setDoc(showDocRef, showData);
+  } catch (error) {
+    throw console.error("Error adding show to stash:", error);
+  }
+};

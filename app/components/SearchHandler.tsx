@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { searchShow } from "../utils/searchFunctions";
 import { useRouter } from "next/navigation";
 
 const SearchHandler = () => {
