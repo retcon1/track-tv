@@ -5,7 +5,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "../config/firebase";
 
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
@@ -36,12 +35,14 @@ const Login = () => {
             maxLength={10}
             onChange={(e) => setSignUpUsername(e.target.value)}
             className="mx-5"
+            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
           />
           <input
             placeholder="Email"
             type="email"
             onChange={(e) => setSignUpEmail(e.target.value)}
             className="mx-5"
+            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
           />
           <input
             placeholder="Password"
@@ -49,12 +50,9 @@ const Login = () => {
             minLength={6}
             onChange={(e) => setSignUpPass(e.target.value)}
             className="mx-5"
+            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
           />
-          <button
-            onClick={() => signUp(signUpEmail, signUpPass, signUpUsername)}
-          >
-            Sign Up
-          </button>
+          <button onClick={() => signUp(signUpEmail, signUpPass, signUpUsername)}>Sign Up</button>
         </div>
       ) : (
         <div className="signIn">
@@ -63,6 +61,7 @@ const Login = () => {
             type="email"
             onChange={(e) => setEmail(e.target.value)}
             className="mx-5"
+            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
           />
           <input
             placeholder="Password"
@@ -70,6 +69,7 @@ const Login = () => {
             minLength={6}
             onChange={(e) => setPass(e.target.value)}
             className="mx-5"
+            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
           />
           <button onClick={() => signIn(email, pass)} className="mx-5">
             Sign In
@@ -79,7 +79,9 @@ const Login = () => {
         </div>
       )}
 
-      <button onClick={logout} className="mx-5">Logout</button>
+      <button onClick={logout} className="mx-5">
+        Logout
+      </button>
     </div>
   );
 };

@@ -4,10 +4,9 @@ import { getCurrentUserShows } from "../utils/dbFunctions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { ShowStats } from "../interfaces/interfaces";
-import { logout } from "../utils/authFunctions";
-import ShowCard from "../components/ShowCard";
 import Link from "next/link";
 import Logout from "../components/Logout";
+import UserShowCard from "../components/UserShowCard";
 
 const Profile = () => {
   const [userShows, setUserShows] = useState<ShowStats[]>([]);
@@ -34,10 +33,13 @@ const Profile = () => {
   if (!loading && userShows.length === 0) {
     return (
       <div>
-        <button onClick={logout}>Logout</button>
+        <Logout />
         <h1>
           You don't have any shows yet! How about adding some
-          <Link href="/show-search">here</Link>?
+          <Link href="/show-search">
+            <strong> here</strong>
+          </Link>
+          ?
         </h1>
       </div>
     );
@@ -47,19 +49,9 @@ const Profile = () => {
     <div>
       <Logout />
       {userShows.map((show) => {
-        return (
-          <ShowCard
-            key={show.id}
-            id={show.id}
-            title={show.title}
-            current_episode={show.current_episode}
-            total_episodes={show.total_episodes}
-            status={show.status}
-            rating={show.rating}
-            started_watching={show.started_watching}
-          />
-        );
+        return <UserShowCard key={show.id} {...show} />;
       })}
+      <Link href="/show-search">Click to add another show!</Link>
     </div>
   );
 };

@@ -49,12 +49,7 @@ export const getCurrentUserShows = async (): Promise<ShowStats[] | null> => {
     return null;
   }
   try {
-    const showsCollectionRef = collection(
-      db,
-      "show_stash",
-      user.show_stash_id,
-      "shows"
-    );
+    const showsCollectionRef = collection(db, "show_stash", user.show_stash_id, "shows");
     const showsQuerySnapshot = await getDocs(showsCollectionRef);
 
     const showsDataArray: ShowStats[] = [];
@@ -75,17 +70,11 @@ export const updateCurrEp = async (showId: string, epNum: number) => {
   const userData = await findUserByEmail();
 
   if (!userData) {
-    console.log("No user data found.");
+    console.log("User not signed in!");
     return null;
   }
 
-  const showDocRef = doc(
-    db,
-    "show_stash",
-    userData.show_stash_id,
-    "shows",
-    showId.toString()
-  );
+  const showDocRef = doc(db, "show_stash", userData.show_stash_id, "shows", showId.toString());
 
   try {
     // Update the current_episode for the specified show
@@ -115,4 +104,22 @@ export const addUserAndShowStash = async (
     show_stash_id: showStashDocRef.id,
   };
   addDoc(userCollectionRef, newUserData);
+};
+
+export const addShowToStash = async (showData: ShowStats) => {
+  const userData = await findUserByEmail();
+
+  if (!userData) {
+    console.log("User not signed in!");
+    return null;
+  }
+
+  const showStashCollectionRef = collection(db, "show_stash", userData.show_stash_id, "shows");
+  const showDocRef = doc(showStashCollectionRef, showData.id.toString());
+
+  try {
+    await setDoc(showDocRef, showData);
+  } catch (error) {
+    throw console.error("Error adding show to stash:", error);
+  }
 };
