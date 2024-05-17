@@ -2,20 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-}
-
 @media (prefers-color-scheme: dark) {
   :root {
     --background-rbg: 10, 23, 37;
     --foreground-rgb: 255, 255, 255;
     --highlight-rgb: 21, 31, 46;
+    --header-rgb: 21, 34, 50;
   }
 }
 
-body {
-  background-color: rgb(var(--background-rbg));
-  color: rgb(var(--foreground-rgb));
-  padding: 1rem;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
 }

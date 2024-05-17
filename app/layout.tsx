@@ -15,14 +15,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
- 
- 
-
   return (
     <html lang="en" data-theme="night">
       <body className={inter.className}>
-          <Navbar />
-          {children}
+        <Navbar />
+        {children}
       </body>
     </html>
   );
