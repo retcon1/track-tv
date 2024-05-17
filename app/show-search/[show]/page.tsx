@@ -33,10 +33,11 @@ const ShowSearch = ({ params }: { params: { show: string } }) => {
   return (
     <div>
       <SearchHandler />
-      <h1>Search Results</h1>
-      {showList.map((show) => (
-        <ShowCard key={show.id} {...show} />
-      ))}
+      <div className="flex row flex-wrap justify-center">
+        {showList.map((show) => (
+          <ShowCard key={show.id} {...show} />
+        ))}
+      </div>
     </div>
   );
 };
