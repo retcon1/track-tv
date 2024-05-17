@@ -2,9 +2,20 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import { logout } from "../utils/authFunctions";
 import { auth } from "../config/firebase";
+import Image from "next/image";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [user] = useAuthState(auth);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const router = useRouter();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    router.push(`/show-search/${searchTerm}`);
+  };
 
   // If user is logged in, show the navbar with extra functionality
   if (user)
@@ -51,7 +62,9 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl">trackTV</a>
+          <a className="btn btn-ghost text-xl" href="/">
+            trackTV
+          </a>
         </div>
         <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
@@ -75,13 +88,26 @@ const Navbar = () => {
               <a>Item 3</a>
             </li>
           </ul>
-          <label className="input input-bordered flex items-center gap-2">
-            <input type="text" className="grow" placeholder="Search" />
+          <label className="input input-bordered mr-2 flex items-center gap-2">
+            <input
+              type="text"
+              className="grow"
+              placeholder="Search"
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch(e);
+                }
+              }}
+            />
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="currentColor"
-              className="h-4 w-4 opacity-70"
+              className="h-4 w-4 opacity-70 hover:cursor-pointer"
+              onClick={handleSearch}
             >
               <path
                 fillRule="evenodd"
@@ -97,9 +123,11 @@ const Navbar = () => {
               className="avatar btn btn-circle btn-ghost"
             >
               <div className="w-10 rounded-full">
-                <img
+                <Image
                   alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                  src="/user.png"
+                  width={300}
+                  height={300}
                 />
               </div>
             </div>
@@ -108,10 +136,7 @@ const Navbar = () => {
               className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
             >
               <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
+                <a href="/profile">Profile</a>
               </li>
               <li>
                 <a>Settings</a>
@@ -131,7 +156,9 @@ const Navbar = () => {
     <div className="navbar bg-base-300 bg-opacity-70 dark:bg-neutral">
       <div className="navbar-start">
         <div className="dropdown">
-          <a className="btn btn-ghost text-xl">trackTV</a>
+          <a className="btn btn-ghost text-xl" href="/">
+            trackTV
+          </a>
         </div>
       </div>
       <div className="navbar-end">

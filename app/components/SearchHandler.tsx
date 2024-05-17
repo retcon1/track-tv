@@ -9,7 +9,6 @@ const SearchHandler = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("SEARCH TERM ", searchTerm);
     router.push(`/show-search/${searchTerm}`);
   };
 
@@ -21,7 +20,6 @@ const SearchHandler = () => {
         onChange={(e) => {
           setSearchTerm(e.target.value);
         }}
-        style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
       />
       <button
         type="submit"
