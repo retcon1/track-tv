@@ -5,10 +5,10 @@ import { createShowStats } from "../utils/searchFunctions";
 import { useRouter } from "next/navigation";
 
 const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
-  const addToUserList = async () => {
+  const addToUserList = async (status: string) => {
     const show = await createShowStats({
       ...showBasicInfo,
-    });
+    }, status);
     try {
       addShowToStash(show);
       setInLibrary(true);
@@ -60,12 +60,38 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
           Remove from List
         </button>
       ) : (
-        <button
-          className="btn btn-primary w-full rounded-none rounded-b-2xl"
-          onClick={addToUserList}
-        >
-          Add to List
-        </button>
+        <div className="dropdown">
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-primary w-full rounded-none rounded-b-2xl"
+          >
+            Add to List ⬇️
+          </div>
+          <ul
+            tabIndex={0}
+            className="menu dropdown-content absolute z-[1]  w-full items-center rounded-none rounded-b-2xl rounded-t-2xl bg-primary text-base-100 shadow"
+          >
+            <li
+              className="w-full cursor-pointer items-center hover:btn-ghost"
+              onClick={() => addToUserList("watching")}
+            >
+              <a>Watching</a>
+            </li>
+            <li
+              className="w-full cursor-pointer items-center hover:btn-ghost"
+              onClick={() => addToUserList("planning")}
+            >
+              <a>Planning</a>
+            </li>
+            <li
+              className="w-full cursor-pointer items-center hover:btn-ghost"
+              onClick={() => addToUserList("completed")}
+            >
+              <a>Completed</a>
+            </li>
+          </ul>
+        </div>
       )}
     </div>
   );

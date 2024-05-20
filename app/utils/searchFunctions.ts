@@ -47,7 +47,7 @@ const getNumberOfEpisodes = async (showId: string) => {
   }
 };
 
-export const createShowStats = async (info: ShowBasicInfo) => {
+export const createShowStats = async (info: ShowBasicInfo, status: string) => {
   const numberOfEpisodes = await getNumberOfEpisodes(info.id);
 
   return {
@@ -57,6 +57,6 @@ export const createShowStats = async (info: ShowBasicInfo) => {
     current_episode: 0,
     total_episodes: numberOfEpisodes,
     started_watching: Timestamp.now(),
-    status: "Watching",
+    status: status,
   };
 };
