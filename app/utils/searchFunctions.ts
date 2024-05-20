@@ -54,7 +54,7 @@ export const createShowStats = async (info: ShowBasicInfo, status: string) => {
     ...info,
     rating: null,
     inLibrary: true,
-    current_episode: 0,
+    current_episode: status == "completed" ? numberOfEpisodes : 0,
     total_episodes: numberOfEpisodes,
     started_watching: Timestamp.now(),
     status: status,
