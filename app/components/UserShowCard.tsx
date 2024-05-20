@@ -13,7 +13,7 @@ const UserShowCard = ({
   image,
 }: ShowStats) => {
   const formattedDate = started_watching.toDate().toLocaleDateString();
-  const badgeCss = status === "Watching" ? "badge-primary" : "badge-secondary";
+  const badgeCss = status === "Watching" ? "badge-primary" : "badge-warning";
 
   return (
     <tr className="hover">

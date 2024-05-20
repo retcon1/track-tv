@@ -24,7 +24,6 @@ export interface UserData {
 export interface ShowBasicInfo {
   id: string;
   title: string;
-  status: string;
   rating: number | null;
   image: string | undefined;
   url: string;

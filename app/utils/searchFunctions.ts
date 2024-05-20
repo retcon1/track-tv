@@ -26,7 +26,6 @@ const extractBasicShowInfo = (
     return {
       id: show.id,
       title: show.name,
-      status: show.status,
       rating: show.rating.average,
       image: show.image?.medium,
       url: show.url,
@@ -58,5 +57,6 @@ export const createShowStats = async (info: ShowBasicInfo) => {
     current_episode: 0,
     total_episodes: numberOfEpisodes,
     started_watching: Timestamp.now(),
+    status: "Watching",
   };
 };
