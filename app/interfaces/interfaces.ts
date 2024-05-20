@@ -15,15 +15,6 @@ export interface ShowStats {
   url: string;
 }
 
-export function createShowStats(info: ShowBasicInfo): ShowStats {
-  return {
-    ...info,
-    current_episode: 0,
-    total_episodes: 0,
-    started_watching: new Date(),
-  };
-}
-
 export interface UserData {
   user_id: string;
   email: string;

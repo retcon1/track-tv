@@ -1,6 +1,7 @@
 import React from "react";
-import { createShowStats, ShowBasicInfo } from "../interfaces/interfaces";
+import {  ShowBasicInfo } from "../interfaces/interfaces";
 import { addShowToStash } from "../utils/dbFunctions";
+import { createShowStats } from "../utils/searchFunctions";
 
 const ShowCard = ({
   id,
@@ -9,10 +10,9 @@ const ShowCard = ({
   image,
   url,
   genres,
-  total_episodes,
 }: ShowBasicInfo) => {
   const addToUserList = async () => {
-    const show = createShowStats({
+    const show = await createShowStats({
       id,
       title,
       status: "Watching",
@@ -20,7 +20,6 @@ const ShowCard = ({
       image,
       url,
       genres,
-      total_episodes,
     });
     try {
       addShowToStash(show);

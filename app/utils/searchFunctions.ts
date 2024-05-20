@@ -1,4 +1,5 @@
 import axios from "axios";
+import { ShowBasicInfo } from "../interfaces/interfaces";
 
 const SHOW_SEARCH_URL = "https://api.tvmaze.com/search/shows?q=";
 
@@ -26,4 +27,26 @@ const extractBasicShowInfo = (showData: any) => {
     };
   });
   return showInfo;
+};
+
+const getNumberOfEpisodes = async (showId: string) => {
+  try {
+    const response = await axios.get(
+      `https://api.tvmaze.com/shows/${showId}/episodes`,
+    );
+    return response.data.length;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export const createShowStats = async (info: ShowBasicInfo) => {
+  const numberOfEpisodes = await getNumberOfEpisodes(info.id);
+
+  return {
+    ...info,
+    current_episode: 0,
+    total_episodes: numberOfEpisodes,
+    started_watching: new Date(),
+  };
 };
