@@ -5,7 +5,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { ShowStats } from "../interfaces/interfaces";
 import Link from "next/link";
-import Logout from "../components/Logout";
 import UserShowCard from "../components/UserShowCard";
 
 const Profile = () => {
@@ -33,7 +32,6 @@ const Profile = () => {
   if (!loading && userShows.length === 0) {
     return (
       <div>
-        <Logout />
         <h1>
           You don't have any shows yet! How about adding some
           <Link href="/show-search">
@@ -47,11 +45,24 @@ const Profile = () => {
 
   return (
     <div>
-      <Logout />
-      {userShows.map((show) => {
-        return <UserShowCard key={show.id} {...show} />;
-      })}
-      <Link href="/show-search">Click to add another show!</Link>
+      <div className="overflow-x-auto">
+        <table className="table">
+          <thead>
+            <tr>
+              {/* <th></th> */}
+              <th>Title</th>
+              <th>Score</th>
+              <th>Progress</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {userShows.map((show) => {
+              return <UserShowCard key={show.id} {...show} />;
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };

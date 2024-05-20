@@ -1,3 +1,5 @@
+import firebase from "firebase/compat/app";
+
 export interface FirestoreTimestamp {
   seconds: number;
   nanoseconds: number;
@@ -10,18 +12,9 @@ export interface ShowStats {
   total_episodes: number;
   status: string;
   rating: number;
-  started_watching: Date | FirestoreTimestamp;
+  started_watching: firebase.firestore.Timestamp;
   image: string | undefined;
   url: string;
-}
-
-export function createShowStats(info: ShowBasicInfo): ShowStats {
-  return {
-    ...info,
-    current_episode: 0,
-    total_episodes: 0,
-    started_watching: new Date(),
-  };
 }
 
 export interface UserData {

@@ -1,17 +1,13 @@
 "use client";
 import { useEffect, useState } from "react";
-import { logout, signIn, signInGoogle, signUp } from "../utils/authFunctions";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useRouter } from "next/navigation";
 import { auth } from "../config/firebase";
+import SignUpForm from "../components/auth/SignUpForm";
+import LoginForm from "../components/auth/LoginForm";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
   const [signUpClicked, setSignUpClicked] = useState(false);
-  const [signUpUsername, setSignUpUsername] = useState("");
-  const [signUpEmail, setSignUpEmail] = useState("");
-  const [signUpPass, setSignUpPass] = useState("");
   const router = useRouter();
   const [user] = useAuthState(auth);
 
@@ -22,66 +18,16 @@ const Login = () => {
   }, [user]);
 
   return (
-    <div className="flex justify-center">
-      <button onClick={() => setSignUpClicked(!signUpClicked)}>
-        {signUpClicked ? "Sign In" : "Sign Up"}
-      </button>
-
-      {signUpClicked ? (
-        <div>
-          <input
-            placeholder="Username"
-            minLength={6}
-            maxLength={10}
-            onChange={(e) => setSignUpUsername(e.target.value)}
-            className="mx-5"
-            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
-          />
-          <input
-            placeholder="Email"
-            type="email"
-            onChange={(e) => setSignUpEmail(e.target.value)}
-            className="mx-5"
-            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
-          />
-          <input
-            placeholder="Password"
-            type="password"
-            minLength={6}
-            onChange={(e) => setSignUpPass(e.target.value)}
-            className="mx-5"
-            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
-          />
-          <button onClick={() => signUp(signUpEmail, signUpPass, signUpUsername)}>Sign Up</button>
-        </div>
-      ) : (
-        <div className="signIn">
-          <input
-            placeholder="Email"
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
-            className="mx-5"
-            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
-          />
-          <input
-            placeholder="Password"
-            type="password"
-            minLength={6}
-            onChange={(e) => setPass(e.target.value)}
-            className="mx-5"
-            style={{ backgroundColor: "rgb(var(--highlight-rgb))" }}
-          />
-          <button onClick={() => signIn(email, pass)} className="mx-5">
-            Sign In
-          </button>
-
-          <button onClick={signInGoogle}>Sign In with Google</button>
-        </div>
-      )}
-
-      <button onClick={logout} className="mx-5">
-        Logout
-      </button>
+    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-8 md:px-8">
+      <div className="rounded-3xl bg-neutral p-10">
+        <a
+          className="btn btn-outline flex justify-center"
+          onClick={() => setSignUpClicked(!signUpClicked)}
+        >
+          {signUpClicked ? "Sign In" : "Sign Up"}
+        </a>
+        {signUpClicked ? <SignUpForm /> : <LoginForm />}
+      </div>
     </div>
   );
 };
