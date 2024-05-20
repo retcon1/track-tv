@@ -43,7 +43,7 @@ const UserShowCard = ({
         </div>
       </td>
       <td
-        className={`font-bold ${rating <= 5 ? "text-accent" : "text-success"}`}
+        className={`font-bold ${rating && rating <= 5 ? "text-accent" : "text-success"}`}
       >
         {rating}
       </td>

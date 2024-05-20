@@ -1,19 +1,26 @@
 import axios from "axios";
 import { ShowBasicInfo } from "../interfaces/interfaces";
+import { getCurrentUserShows } from "./dbFunctions";
+import { Timestamp } from "firebase/firestore";
 
 const SHOW_SEARCH_URL = "https://api.tvmaze.com/search/shows?q=";
 
 export const searchShow = async (searchTerm: string) => {
   try {
     const response = await axios.get(`${SHOW_SEARCH_URL}${searchTerm}`);
-    const showData = extractBasicShowInfo(response.data);
+    const userShows = await getCurrentUserShows();
+    const userShowIds = userShows?.map((show) => show.id);
+    const showData = extractBasicShowInfo(response.data, userShowIds);
     return showData;
   } catch (err) {
     console.error(err);
   }
 };
 
-const extractBasicShowInfo = (showData: any) => {
+const extractBasicShowInfo = (
+  showData: any[],
+  userShowIds: any[] | undefined,
+) => {
   const showInfo = showData.map((show: any) => {
     show = show.show;
     return {
@@ -24,6 +31,7 @@ const extractBasicShowInfo = (showData: any) => {
       image: show.image?.medium,
       url: show.url,
       genres: show.genres,
+      inLibrary: userShowIds?.includes(show.id),
     };
   });
   return showInfo;
@@ -45,8 +53,10 @@ export const createShowStats = async (info: ShowBasicInfo) => {
 
   return {
     ...info,
+    rating: null,
+    inLibrary: true,
     current_episode: 0,
     total_episodes: numberOfEpisodes,
-    started_watching: new Date(),
+    started_watching: Timestamp.now(),
   };
 };

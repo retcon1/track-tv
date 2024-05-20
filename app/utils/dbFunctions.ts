@@ -48,6 +48,7 @@ export const getCurrentUserShows = async (): Promise<ShowStats[] | null> => {
     console.log("User not signed in!");
     return null;
   }
+  
   try {
     const showsCollectionRef = collection(db, "show_stash", user.show_stash_id, "shows");
     const showsQuerySnapshot = await getDocs(showsCollectionRef);
