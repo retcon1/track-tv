@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ShowBasicInfo } from "../interfaces/interfaces";
 import { addShowToStash } from "../utils/dbFunctions";
 import { createShowStats } from "../utils/searchFunctions";
@@ -10,13 +10,16 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
     });
     try {
       addShowToStash(show);
+      setInLibrary(true);
       console.log("Added to user list");
     } catch (err) {
       console.error(err);
     }
   };
 
-  const { image, rating, title, inLibrary } = showBasicInfo;
+  const [inLibrary, setInLibrary] = useState(showBasicInfo.inLibrary);
+
+  const { image, rating, title } = showBasicInfo;
 
   return (
     <div className="card card-compact m-5 w-[210px] bg-base-300 shadow-xl">
