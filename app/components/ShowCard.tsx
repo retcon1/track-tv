@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ShowBasicInfo } from "../interfaces/interfaces";
-import { addShowToStash } from "../utils/dbFunctions";
+import { addShowToStash, removeShowFromStash } from "../utils/dbFunctions";
 import { createShowStats } from "../utils/searchFunctions";
 
 const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
@@ -11,15 +11,23 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
     try {
       addShowToStash(show);
       setInLibrary(true);
-      console.log("Added to user list");
     } catch (err) {
-      console.error(err);
+      alert(err);
     }
   };
 
+  const removeFromUserList = async () => {
+    try {
+      removeShowFromStash(id);
+      setInLibrary(false);
+    } catch (err) {
+      alert(err);
+    }
+  }
+
   const [inLibrary, setInLibrary] = useState(showBasicInfo.inLibrary);
 
-  const { image, rating, title } = showBasicInfo;
+  const { id, image, rating, title } = showBasicInfo;
 
   return (
     <div className="card card-compact m-5 w-[210px] bg-base-300 shadow-xl">
@@ -34,7 +42,9 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
         More Info
       </button>
       {inLibrary ? (
-        <button className="btn btn-warning w-full rounded-none rounded-b-2xl">
+        <button className="btn btn-warning w-full rounded-none rounded-b-2xl"
+          onClick={() => removeFromUserList()}
+        >
           Remove from List
         </button>
       ) : (
