@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ShowBasicInfo } from "../interfaces/interfaces";
 import { addShowToStash, removeShowFromStash } from "../utils/dbFunctions";
 import { createShowStats } from "../utils/searchFunctions";
+import { useRouter } from "next/navigation";
 
 const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
   const addToUserList = async () => {
@@ -23,7 +24,14 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
     } catch (err) {
       alert(err);
     }
-  }
+  };
+
+  const router = useRouter();
+
+  const navigateToDetails = () => {
+    // Navigate to the show details page
+    router.push(`/show/${id}`);
+  };
 
   const [inLibrary, setInLibrary] = useState(showBasicInfo.inLibrary);
 
@@ -38,12 +46,16 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
         {rating ? <div className="badge badge-success">{rating}</div> : null}
         <h2 className="card-title">{title}</h2>
       </div>
-      <button className="btn btn-outline btn-primary w-auto rounded-none rounded-t-xl">
+      <button
+        className="btn btn-outline btn-primary w-auto rounded-none rounded-t-xl"
+        onClick={navigateToDetails}
+      >
         More Info
       </button>
       {inLibrary ? (
-        <button className="btn btn-warning w-full rounded-none rounded-b-2xl"
-          onClick={() => removeFromUserList()}
+        <button
+          className="btn btn-warning w-full rounded-none rounded-b-2xl"
+          onClick={removeFromUserList}
         >
           Remove from List
         </button>

@@ -13,7 +13,6 @@ const ShowSearch = ({ params }: { params: { show: string } }) => {
     // Listener to check if user is signed in, needed so the component doesn't load before fetching user data to check against their list
     const unsubscribe = auth.onAuthStateChanged(async (user: any) => {
       if (user) {
-        console.log(user)
         const showData = await searchShow(params.show);
         setShowList(showData || null ); // Set default value of null if showData is undefined
       } else {
