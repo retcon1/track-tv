@@ -1,14 +1,20 @@
 import React, { useState } from "react";
-import { ShowBasicInfo } from "../interfaces/interfaces";
-import { addShowToStash, removeShowFromStash } from "../utils/dbFunctions";
-import { createShowStats } from "../utils/searchFunctions";
+import { ShowBasicInfo } from "../../interfaces/interfaces";
+import { addShowToStash, removeShowFromStash } from "../../utils/dbFunctions";
+import { createShowStats } from "../../utils/searchFunctions";
 import { useRouter } from "next/navigation";
+import AddToListDropdown from "./AddToListDropdown";
 
 const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
+  const { id, image, rating, title } = showBasicInfo;
+
   const addToUserList = async (status: string) => {
-    const show = await createShowStats({
-      ...showBasicInfo,
-    }, status);
+    const show = await createShowStats(
+      {
+        ...showBasicInfo,
+      },
+      status,
+    );
     try {
       addShowToStash(show);
       setInLibrary(true);
@@ -35,8 +41,6 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
 
   const [inLibrary, setInLibrary] = useState(showBasicInfo.inLibrary);
 
-  const { id, image, rating, title } = showBasicInfo;
-
   return (
     <div className="card card-compact m-5 w-[210px] bg-base-300 shadow-xl">
       <figure>
@@ -60,38 +64,7 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
           Remove from List
         </button>
       ) : (
-        <div className="dropdown">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-primary w-full rounded-none rounded-b-2xl"
-          >
-            Add to List ⬇️
-          </div>
-          <ul
-            tabIndex={0}
-            className="menu dropdown-content absolute z-[1]  w-full items-center rounded-none rounded-b-2xl rounded-t-2xl bg-primary text-base-100 shadow"
-          >
-            <li
-              className="w-full cursor-pointer items-center hover:btn-ghost"
-              onClick={() => addToUserList("watching")}
-            >
-              <a>Watching</a>
-            </li>
-            <li
-              className="w-full cursor-pointer items-center hover:btn-ghost"
-              onClick={() => addToUserList("planning")}
-            >
-              <a>Planning</a>
-            </li>
-            <li
-              className="w-full cursor-pointer items-center hover:btn-ghost"
-              onClick={() => addToUserList("completed")}
-            >
-              <a>Completed</a>
-            </li>
-          </ul>
-        </div>
+        <AddToListDropdown addToUserList={addToUserList} />
       )}
     </div>
   );

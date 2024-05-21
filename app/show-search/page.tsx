@@ -1,5 +1,5 @@
 import React from "react";
-import SearchHandler from "../components/SearchHandler";
+import SearchHandler from "../components/Searching/SearchHandler";
 
 const ShowSearch = () => {
   return (

@@ -1,6 +1,6 @@
 "use client";
-import SearchHandler from "@/app/components/SearchHandler";
-import ShowCard from "@/app/components/ShowCard";
+import SearchHandler from "@/app/components/Searching/SearchHandler";
+import ShowCard from "@/app/components/Searching/ShowCard";
 import { ShowBasicInfo } from "@/app/interfaces/interfaces";
 import { searchShow } from "@/app/utils/searchFunctions";
 import React, { useEffect, useState } from "react";
@@ -14,7 +14,7 @@ const ShowSearch = ({ params }: { params: { show: string } }) => {
     const unsubscribe = auth.onAuthStateChanged(async (user: any) => {
       if (user) {
         const showData = await searchShow(params.show);
-        setShowList(showData || null ); // Set default value of null if showData is undefined
+        setShowList(showData || null); // Set default value of null if showData is undefined
       } else {
         console.log("User not signed in!");
       }
