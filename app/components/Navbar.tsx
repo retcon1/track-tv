@@ -20,7 +20,7 @@ const Navbar = () => {
   // If user is logged in, show the navbar with extra functionality
   if (user)
     return (
-      <div className="navbar bg-base-300 bg-opacity-70 dark:bg-neutral">
+      <div className="navbar bg-base-300 bg-opacity-70 dark:bg-neutral z-10">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
