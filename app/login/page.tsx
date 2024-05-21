@@ -18,7 +18,7 @@ const Login = () => {
   }, [user]);
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4 py-8 md:px-8">
+    <div className="flex min-h-[90vh]  flex-col items-center justify-center px-4 py-8 md:px-8">
       <div className="rounded-3xl bg-neutral p-10">
         <a
           className="btn btn-outline flex justify-center"
