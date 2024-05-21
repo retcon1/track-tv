@@ -13,7 +13,20 @@ const UserShowCard = ({
   image,
 }: ShowStats) => {
   const formattedDate = started_watching.toDate().toLocaleDateString();
-  const badgeCss = status === "Watching" ? "badge-primary" : "badge-secondary";
+
+  let badgeCss;
+
+  switch (status.toLowerCase()) {
+    case "watching":
+      badgeCss = "badge-primary";
+      break;
+    case "completed":
+      badgeCss = "badge-success";
+      break;
+    case "planning":
+      badgeCss = "badge-warning";
+      break;
+  }
 
   return (
     <tr className="hover">
@@ -32,18 +45,18 @@ const UserShowCard = ({
           </div>
           <div>
             <div className="font-bold">
-              {title}{" "}
               <div
                 className={`badge badge-xs ${badgeCss}`}
                 title={status}
-              ></div>
+              ></div>{" "}
+              {title}
             </div>
             <div className="text-sm opacity-50">Started {formattedDate}</div>
           </div>
         </div>
       </td>
       <td
-        className={`font-bold ${rating <= 5 ? "text-accent" : "text-success"}`}
+        className={`font-bold ${rating && rating <= 5 ? "text-accent" : "text-success"}`}
       >
         {rating}
       </td>

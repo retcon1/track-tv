@@ -1,9 +1,5 @@
-import firebase from "firebase/compat/app";
+import { Timestamp } from "firebase/firestore";
 
-export interface FirestoreTimestamp {
-  seconds: number;
-  nanoseconds: number;
-}
 
 export interface ShowStats {
   id: string;
@@ -11,10 +7,11 @@ export interface ShowStats {
   current_episode: number;
   total_episodes: number;
   status: string;
-  rating: number;
-  started_watching: firebase.firestore.Timestamp;
+  rating: number | null;
+  started_watching: Timestamp;
   image: string | undefined;
   url: string;
+  inLibrary: boolean;
 }
 
 export interface UserData {
@@ -27,9 +24,9 @@ export interface UserData {
 export interface ShowBasicInfo {
   id: string;
   title: string;
-  status: string;
-  rating: number;
+  rating: number | null;
   image: string | undefined;
   url: string;
   genres: string[];
+  inLibrary: boolean | undefined;
 }

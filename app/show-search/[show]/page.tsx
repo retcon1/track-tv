@@ -1,20 +1,27 @@
 "use client";
-import SearchHandler from "@/app/components/SearchHandler";
-import ShowCard from "@/app/components/ShowCard";
+import SearchHandler from "@/app/components/Searching/SearchHandler";
+import ShowCard from "@/app/components/Searching/ShowCard";
 import { ShowBasicInfo } from "@/app/interfaces/interfaces";
 import { searchShow } from "@/app/utils/searchFunctions";
 import React, { useEffect, useState } from "react";
+import { auth } from "@/app/config/firebase";
 
 const ShowSearch = ({ params }: { params: { show: string } }) => {
   const [showList, setShowList] = useState<ShowBasicInfo[] | null>(null);
 
   useEffect(() => {
-    const asyncSearch = async () => {
-      const showData = await searchShow(params.show);
-      setShowList(showData);
-    };
+    // Listener to check if user is signed in, needed so the component doesn't load before fetching user data to check against their list
+    const unsubscribe = auth.onAuthStateChanged(async (user: any) => {
+      if (user) {
+        const showData = await searchShow(params.show);
+        setShowList(showData || null); // Set default value of null if showData is undefined
+      } else {
+        console.log("User not signed in!");
+      }
+    });
 
-    asyncSearch();
+    // Cleanup function to unsubscribe from the listener when the component unmounts
+    return () => unsubscribe();
   }, []);
 
   if (!showList) {
@@ -33,7 +40,7 @@ const ShowSearch = ({ params }: { params: { show: string } }) => {
   return (
     <div>
       <SearchHandler />
-      <div className="flex row flex-wrap justify-center">
+      <div className="row flex flex-wrap justify-center">
         {showList.map((show) => (
           <ShowCard key={show.id} {...show} />
         ))}
