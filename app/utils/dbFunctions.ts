@@ -9,6 +9,7 @@ import {
   setDoc,
   addDoc,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 import { ShowStats, UserData } from "../interfaces/interfaces";
@@ -70,6 +71,26 @@ export const getCurrentUserShows = async (): Promise<ShowStats[] | null> => {
   } catch (err) {
     console.error(err);
     return null;
+  }
+};
+
+export const checkShowInUserLibrary = async (
+  showId: string,
+): Promise<boolean> => {
+  const user = await findUserByEmail();
+
+  if (!user) {
+    console.log("User not signed in!");
+    return false;
+  }
+
+  try {
+    const docRef = doc(db, "show_stash", user.show_stash_id, "shows", showId);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists();
+  } catch (error) {
+    console.error("Error checking user library:", error);
+    return false;
   }
 };
 

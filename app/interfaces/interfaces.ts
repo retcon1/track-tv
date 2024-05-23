@@ -1,6 +1,5 @@
 import { Timestamp } from "firebase/firestore";
 
-
 export interface ShowStats {
   id: string;
   title: string;
@@ -29,4 +28,20 @@ export interface ShowBasicInfo {
   url: string;
   genres: string[];
   inLibrary: boolean | undefined;
+}
+
+export interface ShowDetailedInfo {
+  id: string;
+  title: string;
+  rating: number | null;
+  image: string | undefined;
+  url: string;
+  genres: string[];
+  inLibrary: boolean | undefined;
+  cast: Array<{}>;
+  summary: string;
+  status: string;
+  runtime: number;
+  // premiered: string;
+  network: string;
 }

@@ -25,7 +25,12 @@ const ShowSearch = ({ params }: { params: { show: string } }) => {
   }, []);
 
   if (!showList) {
-    return <h1>Loading...</h1>;
+    return (
+      <div className="flex h-[80vh] items-center justify-center text-center align-middle">
+        <h1 className="align-middle text-2xl font-bold">Loading </h1>
+        <span className="loading loading-bars loading-md"></span>
+      </div>
+    );
   }
 
   if (showList.length === 0) {
@@ -40,7 +45,7 @@ const ShowSearch = ({ params }: { params: { show: string } }) => {
   return (
     <div>
       <SearchHandler />
-      <div className="row flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center">
         {showList.map((show) => (
           <ShowCard key={show.id} {...show} />
         ))}
