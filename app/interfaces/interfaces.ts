@@ -30,6 +30,12 @@ export interface ShowBasicInfo {
   inLibrary: boolean | undefined;
 }
 
+export interface Actor {
+  castName: string;
+  charName: string;
+  headshot: string;
+}
+
 export interface ShowDetailedInfo {
   id: string;
   title: string;
@@ -38,7 +44,7 @@ export interface ShowDetailedInfo {
   url: string;
   genres: string[];
   inLibrary: boolean | undefined;
-  cast: Array<{}>;
+  cast: Actor[];
   summary: string;
   status: string;
   runtime: number;
