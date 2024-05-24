@@ -147,6 +147,9 @@ const findShowDocRef = async (showId: string) => {
 };
 
 export const addShowToStash = async (showData: ShowStats) => {
+  const showInStash = await checkShowInUserLibrary(showData.id.toString());
+  if (showInStash) throw Error("Show already in stash!");
+  
   const showDocRef = await findShowDocRef(showData.id.toString());
   if (!showDocRef) throw Error("Show not found!");
 
