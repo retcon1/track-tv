@@ -1,6 +1,7 @@
 import React from "react";
 import { ShowStats } from "../interfaces/interfaces";
 import AddEp from "./AddEp";
+import Link from "next/link";
 
 const UserShowCard = ({
   id,
@@ -38,11 +39,11 @@ const UserShowCard = ({
       </th> */}
       <td>
         <div className="flex items-center gap-3">
-          <div className="avatar">
+          <Link className="avatar hover:cursor-pointer" href={`/show/${id}`}>
             <div className="mask mask-squircle h-12 w-12">
               <img src={image} alt="Avatar Tailwind CSS Component" />
             </div>
-          </div>
+          </Link>
           <div>
             <div className="font-bold">
               <div
