@@ -34,7 +34,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
   }
 
   return (
-    <div className="p-24">
+    <div className="pt-16 sm:px-12 md:px-24 lg:px-32 xl:px-48">
       <div className="flex justify-center">
         <header className="flex flex-row items-start overflow-hidden ">
           <img
@@ -66,36 +66,53 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
         </header>
       </div>
       <div className="flex flex-row">
-        <div className="flex w-44 flex-col rounded-xl bg-neutral p-4">
-          <h2 className="mt-2 mb-2 text-xl font-bold">Rating</h2>
+        {/* Left-Side info section */}
+        <div className="mb-5 flex min-w-[12rem] flex-col rounded-xl bg-neutral p-4 ">
+          <h2 className="mb-2 mt-2 text-xl font-bold">Rating</h2>
           <p className="badge badge-success">{showDetails.rating}</p>
-          <h2 className="mt-6 text-xl font-bold">Genres</h2>
-          <ul className="ml-10 text-left">
+          <h2 className="mb-1 mt-6 text-xl font-bold">Genres</h2>
+          <ul className="flex flex-col">
             {showDetails.genres.map((genre) => (
-              <li key={genre} className="badge">
+              <li
+                key={genre}
+                className="badge mb-2 h-auto w-auto overflow-hidden break-words text-center"
+              >
                 {genre}
               </li>
             ))}
           </ul>
-          <h2 className="mt-10 text-xl font-bold">Network</h2>
+          <h2 className="mt-5 text-xl font-bold">Network</h2>
           <p>{showDetails.network}</p>
+          <h2 className="mt-5 text-xl font-bold">Status</h2>
+          <p>{showDetails.status}</p>
+          <h2 className="mt-5 text-xl font-bold">Runtime</h2>
+          <p>{showDetails.runtime} minutes</p>
         </div>
-        <div className="ml-6 flex flex-col rounded-xl bg-neutral p-4">
-          <h2 className="text-lg mb-1">Cast</h2>
-          <ul className="flex flex-row flex-wrap gap-5">
-            {showDetails.cast
-              .slice(0, 10)
-              .map((actor: Actor, index: number) => (
-                <li key={index} className="flex flex-col items-center text-center">
-                  <img
-                    src={actor.headshot}
-                    alt={`headshot of ${actor.castName}`}
-                    className="mask mask-square h-12 w-12 rounded-sm object-cover"
-                  />
-                  <h2 className="text-sm">{actor.castName}</h2>
-                  <h3 className="text-sm opacity-60 max-w-[126px]">{actor.charName}</h3>
-                </li>
-              ))}
+        {/* Cast section */}
+        <div className="mb-5 ml-6 flex flex-col rounded-xl bg-neutral p-4">
+          <h2 className="mb-1 text-lg">Cast</h2>
+          <ul className="flex flex-row flex-wrap justify-start gap-5 ">
+            {showDetails.cast.slice(0, 8).map((actor: Actor, index: number) => (
+              <li
+                key={index}
+                className="flex w-48 flex-col items-center text-center"
+              >
+                <img
+                  src={actor.headshot}
+                  alt={`headshot of ${actor.castName}`}
+                  className="mask mask-square z-20 h-24 w-24 rounded-md object-cover transition-all duration-300 ease-in-out hover:opacity-0"
+                />
+                <img
+                  src={actor.charHeadshot}
+                  alt={`headshot of ${actor.castName}`}
+                  className="mask mask-square z-10 mt-[-6rem] h-24 w-24 rounded-md object-cover transition-opacity duration-300 "
+                />
+                <h2 className="text-sm">{actor.castName}</h2>
+                <h3 className="max-w-[126px] text-sm opacity-60">
+                  {actor.charName}
+                </h3>
+              </li>
+            ))}
           </ul>
         </div>
       </div>

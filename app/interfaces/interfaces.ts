@@ -34,6 +34,7 @@ export interface Actor {
   castName: string;
   charName: string;
   headshot: string;
+  charHeadshot: string;
 }
 
 export interface ShowDetailedInfo {

@@ -70,14 +70,16 @@ export const getShowDetails = async (showId: string) => {
 
     const inLibrary = await checkShowInUserLibrary(showId);
     const showData = extractDetailedShowInfo(response.data, inLibrary);
-    console.log(inLibrary)
     return showData;
   } catch (err) {
     console.error(err);
   }
 };
 
-const extractDetailedShowInfo = (showData: any, inLibrary: boolean): ShowDetailedInfo => {
+const extractDetailedShowInfo = (
+  showData: any,
+  inLibrary: boolean,
+): ShowDetailedInfo => {
   const cast = extractCastInfo(showData._embedded.cast);
   console.log(showData);
 
@@ -93,7 +95,7 @@ const extractDetailedShowInfo = (showData: any, inLibrary: boolean): ShowDetaile
     runtime: showData.averageRuntime,
     // schedule: showData.schedule,
     // premiered: showData.premiered,
-    network: showData.network.name,
+    network: showData.network?.name || showData.webChannel?.name || "Unknown",
     cast: cast,
     inLibrary: inLibrary,
   };
@@ -105,6 +107,7 @@ const extractCastInfo = (castArray: any) => {
       castName: cast.person.name,
       charName: cast.character.name,
       headshot: cast.person.image?.medium,
+      charHeadshot: cast.character.image?.medium,
     };
   });
 };
