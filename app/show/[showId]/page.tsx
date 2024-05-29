@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { auth } from "@/app/config/firebase";
 import { getShowDetails } from "@/app/utils/searchFunctions";
 import { ShowDetailedInfo, Actor } from "@/app/interfaces/interfaces";
+import EditModal from "@/app/components/EditModal";
 
 const ShowInfo = ({ params }: { params: { showId: string } }) => {
   const [showDetails, setShowDetails] = useState<ShowDetailedInfo | null>(null);
@@ -37,11 +38,24 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
     <div className="pt-16 sm:px-12 md:px-24 lg:px-32 xl:px-48">
       <div className="flex justify-center">
         <header className="flex flex-row items-start overflow-hidden ">
-          <img
-            src={showDetails?.image}
-            alt={`poster of ${showDetails?.title}`}
-            className="z-10 mb-10 mr-[-10px] w-1/4 rounded-md object-contain"
-          />
+          <div className="flex flex-col">
+            <img
+              src={showDetails?.image}
+              alt={`poster of ${showDetails?.title}`}
+              className="z-10 mr-[-10px] max-w-[210px] rounded-none rounded-t-md object-contain"
+            />
+            <button
+              className="btn btn-primary mb-10 w-full rounded-none rounded-b-md"
+              onClick={() =>
+                (
+                  document.getElementById("my_modal_1") as HTMLDialogElement
+                ).showModal()
+              }
+            >
+              Add to List
+            </button>
+            <EditModal showDetails={showDetails} />
+          </div>
           <div className="mb-8 mt-12 flex h-auto min-h-[270px] flex-col rounded-xl bg-neutral p-2 pl-10">
             <h1 className="mb-5 mt-2 text-4xl font-bold">
               {showDetails.title}
@@ -50,11 +64,11 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
               dangerouslySetInnerHTML={{
                 __html: fullSummary
                   ? showDetails.summary
-                  : `${showDetails.summary.slice(0, 800)}${showDetails.summary.length > 800 ? "..." : ""}`,
+                  : `${showDetails.summary?.slice(0, 800)}${showDetails.summary?.length > 800 ? "..." : ""}`,
               }}
-              className="peer text-sm transition-all duration-300 ease-in-out hover:text-white"
+              className="peer pr-10 text-sm transition-all duration-300 ease-in-out hover:text-white"
             />
-            {showDetails.summary.length > 800 ? (
+            {showDetails.summary?.length > 800 ? (
               <button
                 onClick={() => setFullSummary(!fullSummary)}
                 className="mt-[-20px] bg-gradient-to-t from-neutral pt-5 opacity-0 transition-all duration-300 ease-in-out hover:from-transparent hover:opacity-100 peer-hover:opacity-100"
@@ -69,7 +83,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
         {/* Left-Side info section */}
         <div className="mb-5 flex min-w-[12rem] flex-col rounded-xl bg-neutral p-4 ">
           <h2 className="mb-2 mt-2 text-xl font-bold">Rating</h2>
-          <p className="badge badge-success">{showDetails.rating}</p>
+          <p className="badge badge-success">{showDetails.rating || "N/A"}</p>
           <h2 className="mb-1 mt-6 text-xl font-bold">Genres</h2>
           <ul className="flex flex-col">
             {showDetails.genres.map((genre) => (
@@ -81,12 +95,14 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
               </li>
             ))}
           </ul>
+          <h2 className="mt-5 text-xl font-bold">Episodes</h2>
+          <p>{showDetails.total_episodes}</p>
+          <h2 className="mt-5 text-xl font-bold">Runtime</h2>
+          <p>{showDetails.runtime} minutes</p>
           <h2 className="mt-5 text-xl font-bold">Network</h2>
           <p>{showDetails.network}</p>
           <h2 className="mt-5 text-xl font-bold">Status</h2>
           <p>{showDetails.status}</p>
-          <h2 className="mt-5 text-xl font-bold">Runtime</h2>
-          <p>{showDetails.runtime} minutes</p>
         </div>
         {/* Cast section */}
         <div className="mb-5 ml-6 flex flex-col rounded-xl bg-neutral p-4">
@@ -95,7 +111,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
             {showDetails.cast.slice(0, 8).map((actor: Actor, index: number) => (
               <li
                 key={index}
-                className="flex w-48 flex-col items-center text-center"
+                className="mb-6 flex w-48 flex-col items-center text-center"
               >
                 <img
                   src={actor.headshot}
@@ -103,9 +119,9 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
                   className="mask mask-square z-20 h-24 w-24 rounded-md object-cover transition-all duration-300 ease-in-out hover:opacity-0"
                 />
                 <img
-                  src={actor.charHeadshot}
-                  alt={`headshot of ${actor.castName}`}
-                  className="mask mask-square z-10 mt-[-6rem] h-24 w-24 rounded-md object-cover transition-opacity duration-300 "
+                  src={actor.charHeadshot || actor.headshot}
+                  alt={`picture of ${actor.charName}`}
+                  className="mask mask-square z-10 mt-[-6rem] h-24 w-24 rounded-md object-cover transition-opacity duration-300"
                 />
                 <h2 className="text-sm">{actor.castName}</h2>
                 <h3 className="max-w-[126px] text-sm opacity-60">

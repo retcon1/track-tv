@@ -3,7 +3,7 @@ import React from "react";
 const ArrowDownSVG = (props: React.SVGProps<SVGAElement>) => {
   return (
     <svg
-      fill="#000000"
+      fill={props.fill || "#000000"}
       height="15px"
       width="15px"
       version="1.1"

@@ -12,7 +12,7 @@ import {
   getDoc,
 } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
-import { ShowStats, UserData } from "../interfaces/interfaces";
+import { UserShowStats, UserData } from "../interfaces/interfaces";
 import { User } from "firebase/auth";
 
 // If no email is provided, the function will search for the logged in user's data
@@ -43,7 +43,9 @@ export const findUserByEmail = async (
   }
 };
 
-export const getCurrentUserShows = async (): Promise<ShowStats[] | null> => {
+export const getCurrentUserShows = async (): Promise<
+  UserShowStats[] | null
+> => {
   const user = await findUserByEmail();
 
   if (!user) {
@@ -60,12 +62,12 @@ export const getCurrentUserShows = async (): Promise<ShowStats[] | null> => {
     );
     const showsQuerySnapshot = await getDocs(showsCollectionRef);
 
-    const showsDataArray: ShowStats[] = [];
+    const showsDataArray: UserShowStats[] = [];
 
     showsQuerySnapshot.forEach((doc) => {
       const showData = doc.data();
       showData.id = Number(doc.id);
-      showsDataArray.push(showData as ShowStats);
+      showsDataArray.push(showData as UserShowStats);
     });
     return showsDataArray;
   } catch (err) {
@@ -146,10 +148,10 @@ const findShowDocRef = async (showId: string) => {
   return showDocRef;
 };
 
-export const addShowToStash = async (showData: ShowStats) => {
+export const addShowToStash = async (showData: UserShowStats) => {
   const showInStash = await checkShowInUserLibrary(showData.id.toString());
   if (showInStash) throw Error("Show already in stash!");
-  
+
   const showDocRef = await findShowDocRef(showData.id.toString());
   if (!showDocRef) throw Error("Show not found!");
 
@@ -180,5 +182,20 @@ export const updateCurrEp = async (showId: string, epNum: number) => {
     await setDoc(showDocRef, { current_episode: epNum }, { merge: true });
   } catch (error) {
     console.error("Error updating current_episode:", error);
+  }
+};
+
+export const fetchShowFromStash = async (
+  showId: string,
+): Promise<UserShowStats | null | undefined> => {
+  const showDocRef = await findShowDocRef(showId);
+  if (!showDocRef) throw Error("Show not found!");
+
+  try {
+    const show = await getDoc(showDocRef);
+    if (!show.exists()) return null;
+    return show.data() as UserShowStats;
+  } catch (error) {
+    console.error("Error fetching show:", error);
   }
 };

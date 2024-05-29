@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { getCurrentUserShows } from "../utils/dbFunctions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
-import { ShowStats } from "../interfaces/interfaces";
+import { UserShowStats } from "../interfaces/interfaces";
 import Link from "next/link";
 import UserShowCard from "../components/UserShowCard";
 
 const Profile = () => {
-  const [userShows, setUserShows] = useState<ShowStats[]>([]);
+  const [userShows, setUserShows] = useState<UserShowStats[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

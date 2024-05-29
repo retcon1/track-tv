@@ -31,7 +31,7 @@ export const signInGoogle = async () => {
     const googleCredentials = await signInWithPopup(auth, googleProvider);
     const user = googleCredentials.user;
     const userExists = await findUserByEmail(user.email);
-    console.log(userExists);
+    
     if (!userExists) {
       await addUserAndShowStash(user);
     }

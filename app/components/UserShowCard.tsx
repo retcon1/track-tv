@@ -1,5 +1,5 @@
 import React from "react";
-import { ShowStats } from "../interfaces/interfaces";
+import { UserShowStats } from "../interfaces/interfaces";
 import AddEp from "./AddEp";
 import Link from "next/link";
 
@@ -12,7 +12,7 @@ const UserShowCard = ({
   rating,
   started_watching,
   image,
-}: ShowStats) => {
+}: UserShowStats) => {
   const formattedDate = started_watching.toDate().toLocaleDateString();
 
   let badgeCss;

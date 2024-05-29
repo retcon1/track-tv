@@ -1,11 +1,11 @@
 import { Timestamp } from "firebase/firestore";
 
-export interface ShowStats {
+export interface UserShowStats {
   id: string;
   title: string;
   current_episode: number;
   total_episodes: number;
-  status: string;
+  status: string | null;
   rating: number | null;
   started_watching: Timestamp;
   image: string | undefined;
@@ -51,4 +51,5 @@ export interface ShowDetailedInfo {
   runtime: number;
   // premiered: string;
   network: string;
+  total_episodes: number;
 }

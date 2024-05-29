@@ -70,6 +70,9 @@ export const getShowDetails = async (showId: string) => {
 
     const inLibrary = await checkShowInUserLibrary(showId);
     const showData = extractDetailedShowInfo(response.data, inLibrary);
+    const episodes = await getNumberOfEpisodes(showId);
+    showData.total_episodes = episodes;
+
     return showData;
   } catch (err) {
     console.error(err);
@@ -98,6 +101,7 @@ const extractDetailedShowInfo = (
     network: showData.network?.name || showData.webChannel?.name || "Unknown",
     cast: cast,
     inLibrary: inLibrary,
+    total_episodes: 0,
   };
 };
 
