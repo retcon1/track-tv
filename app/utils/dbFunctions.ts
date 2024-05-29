@@ -185,6 +185,17 @@ export const updateCurrEp = async (showId: string, epNum: number) => {
   }
 };
 
+export const editUserShow = async (showData: UserShowStats) => {
+  const showDocRef = await findShowDocRef(showData.id.toString());
+  if (!showDocRef) throw Error("Show not found!");
+
+  try {
+    await setDoc(showDocRef, { ...showData }, { merge: true });
+  } catch (error) {
+    console.error("Error updating current_episode:", error);
+  }
+};
+
 export const fetchShowFromStash = async (
   showId: string,
 ): Promise<UserShowStats | null | undefined> => {
