@@ -4,6 +4,7 @@ import { auth } from "@/app/config/firebase";
 import { getShowDetails } from "@/app/utils/searchFunctions";
 import { ShowDetailedInfo, Actor } from "@/app/interfaces/interfaces";
 import EditModal from "@/app/components/EditModal";
+import { Timestamp } from "firebase/firestore";
 
 const ShowInfo = ({ params }: { params: { showId: string } }) => {
   const [showDetails, setShowDetails] = useState<ShowDetailedInfo | null>(null);
@@ -54,7 +55,14 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
             >
               Add to List
             </button>
-            <EditModal showDetails={showDetails} />
+            <EditModal
+              showDetails={{
+                ...showDetails,
+                current_episode: 0,
+                started_watching: Timestamp.now(),
+                inLibrary: false,
+              }}
+            />
           </div>
           <div className="mb-8 mt-12 flex h-auto min-h-[270px] flex-col rounded-xl bg-neutral p-2 pl-10">
             <h1 className="mb-5 mt-2 text-4xl font-bold">

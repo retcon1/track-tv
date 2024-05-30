@@ -58,8 +58,8 @@ const Profile = () => {
             </tr>
           </thead>
           <tbody>
-            {userShows.map((show) => {
-              return <UserShowTile key={show.id} {...show} />;
+            {userShows.map((show, index) => {
+              return <UserShowTile key={index} modalNum={index + 1} showDetails={{ ...show }} />;
             })}
           </tbody>
         </table>

@@ -17,17 +17,17 @@ const AddEp = ({
 
   return (
     <div className="row flex items-center">
-      <p className="mr-2">
-        {epNum}/{total_episodes}
-      </p>
       {epNum !== total_episodes ? (
         <button
-          className="btn btn-square btn-xs px-3"
+          className="btn btn-square btn-outline btn-xs px-3 mr-2"
           onClick={() => addEp(id)}
         >
           +
         </button>
       ) : null}
+      <p >
+        {epNum}/{total_episodes}
+      </p>
     </div>
   );
 };

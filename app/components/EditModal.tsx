@@ -6,18 +6,18 @@ import {
   fetchShowFromStash,
   removeShowFromStash,
 } from "../utils/dbFunctions";
-import { ShowDetailedInfo, UserShowStats } from "../interfaces/interfaces";
+import { UserShowStats } from "../interfaces/interfaces";
 import { Timestamp } from "firebase/firestore";
 import StarScale from "./StarScale";
 import AddedToList from "./toasts/AddedToList";
 import RemovedFromList from "./toasts/RemovedFromList";
-import { set } from "firebase/database";
 
 interface EditModalProps {
-  showDetails: ShowDetailedInfo;
+  showDetails: UserShowStats;
+  modalNum?: number;
 }
 
-const EditModal = ({ showDetails }: EditModalProps) => {
+const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
   const defaultUserData: UserShowStats = {
     id: showDetails.id,
     title: showDetails.title,
@@ -36,6 +36,7 @@ const EditModal = ({ showDetails }: EditModalProps) => {
   const [added, setAdded] = useState(false);
   const [removed, setRemoved] = useState(false);
 
+
   const handleListEdit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!userData || userData.status == "")
@@ -51,10 +52,15 @@ const EditModal = ({ showDetails }: EditModalProps) => {
       try {
         await editUserShow(updatedData);
         setAdded(true);
-        (document.getElementById("my_modal_1") as HTMLDialogElement).close();
+        (
+          document.getElementById(
+            `my_modal_${modalNum || 1}`,
+          ) as HTMLDialogElement
+        ).close();
         setTimeout(() => {
           setAdded(false);
         }, 5000);
+        return;
       } catch (err) {}
       return;
     }
@@ -64,7 +70,11 @@ const EditModal = ({ showDetails }: EditModalProps) => {
       updatedData.inLibrary = true;
       await addShowToStash(updatedData);
       setAdded(true);
-      (document.getElementById("my_modal_1") as HTMLDialogElement).close();
+      (
+        document.getElementById(
+          `my_modal_${modalNum || 1}`,
+        ) as HTMLDialogElement
+      ).close();
       setTimeout(() => {
         setAdded(false);
       }, 5000);
@@ -76,7 +86,11 @@ const EditModal = ({ showDetails }: EditModalProps) => {
       await removeShowFromStash(showDetails.id);
       setRemoved(true);
       setUserData(defaultUserData);
-      (document.getElementById("my_modal_1") as HTMLDialogElement).close();
+      (
+        document.getElementById(
+          `my_modal_${modalNum || 1}`,
+        ) as HTMLDialogElement
+      ).close();
       setTimeout(() => {
         setRemoved(false);
       }, 5000);
@@ -92,14 +106,17 @@ const EditModal = ({ showDetails }: EditModalProps) => {
       setUserData(showData || defaultUserData);
       setRating(showData?.rating || 0);
     };
-    getUserData(defaultUserData.id);
+    if (!showDetails.inLibrary) getUserData(defaultUserData.id);
+    else {
+      setUserData(showDetails);
+      setRating(showDetails.rating);
+    }
   }, []);
 
   if (!userData) {
     return (
-      <dialog id="my_modal_1" className="modal">
-        <div className="modal-box h-1/2 w-1/2 bg-neutral">
-          <div className="skeleton h-32 w-32"></div>
+      <dialog id={`my_modal_${modalNum || 1}`} className="modal">
+        <div className="modal-box skeleton h-1/2 w-1/2 bg-neutral">
           <div className="modal-action">
             <form method="dialog">
               <button className="btn">Close</button>
@@ -114,7 +131,7 @@ const EditModal = ({ showDetails }: EditModalProps) => {
     <>
       {added && <AddedToList />}
       {removed && <RemovedFromList />}
-      <dialog id="my_modal_1" className="modal">
+      <dialog id={`my_modal_${modalNum || 1}`} className="modal">
         <div className="modal-box h-1/2 w-11/12 bg-neutral">
           <h3 className="mb-5 text-lg font-bold">{defaultUserData.title}</h3>
           <div className="flex flex-row">

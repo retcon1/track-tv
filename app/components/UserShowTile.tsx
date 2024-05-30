@@ -2,18 +2,17 @@ import React from "react";
 import { UserShowStats } from "../interfaces/interfaces";
 import AddEp from "./AddEp";
 import Link from "next/link";
+import EditModal from "./EditModal";
 
-const UserShowCard = ({
-  id,
-  title,
-  current_episode,
-  total_episodes,
-  status,
-  rating,
-  started_watching,
-  image,
-}: UserShowStats) => {
-  const formattedDate = started_watching.toDate().toLocaleDateString();
+interface EditModalProps {
+  showDetails: UserShowStats;
+  modalNum: number;
+}
+
+const UserShowTile = ({ showDetails, modalNum }: EditModalProps) => {
+  const formattedDate = showDetails.started_watching
+    .toDate()
+    .toLocaleDateString();
 
   let badgeCss;
 
@@ -29,6 +28,8 @@ const UserShowCard = ({
       break;
   }
 
+  if (!showDetails) return null;
+
   return (
     <tr className="hover">
       {/* Potential future functionality
@@ -39,40 +40,58 @@ const UserShowCard = ({
       </th> */}
       <td>
         <div className="flex items-center gap-3">
-          <Link className="avatar hover:cursor-pointer" href={`/show/${id}`}>
+          <Link
+            className="avatar hover:cursor-pointer"
+            href={`/show/${showDetails.id}`}
+          >
             <div className="mask mask-squircle h-12 w-12">
-              <img src={image} alt="Avatar Tailwind CSS Component" />
+              <img
+                src={showDetails.image}
+                alt="Avatar Tailwind CSS Component"
+              />
             </div>
           </Link>
           <div>
             <div className="font-bold">
               <div
                 className={`badge badge-xs ${badgeCss}`}
-                title={status}
+                title={showDetails.status}
               ></div>{" "}
-              {title}
+              {showDetails.title}
             </div>
             <div className="text-sm opacity-50">Started {formattedDate}</div>
           </div>
         </div>
       </td>
       <td
-        className={`font-bold ${rating && rating <= 5 ? "text-accent" : "text-success"}`}
+        className={`font-bold ${showDetails.rating && showDetails.rating <= 5 ? "text-accent" : "text-success"}`}
       >
-        {rating}
+        {showDetails.rating}
       </td>
       <td>
         <AddEp
-          id={id}
-          current_episode={current_episode}
-          total_episodes={total_episodes}
+          id={showDetails.id}
+          current_episode={showDetails.current_episode}
+          total_episodes={showDetails.total_episodes}
         />
       </td>
       <th>
-        <button className="btn btn-ghost btn-xs">Edit</button>
+        <button
+          className="btn btn-ghost btn-xs"
+          onClick={() =>
+            (
+              document.getElementById(
+                `my_modal_${modalNum}`,
+              ) as HTMLDialogElement
+            ).showModal()
+          }
+        >
+          Edit
+        </button>
+        <EditModal showDetails={showDetails} modalNum={modalNum} />
       </th>
     </tr>
   );
 };
 
-export default UserShowCard;
+export default UserShowTile;
