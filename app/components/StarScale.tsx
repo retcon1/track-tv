@@ -4,9 +4,10 @@ import React from "react";
 interface RatingProps {
   rating: number | null;
   setRating: (rating: number | null) => void;
+  index?: number;
 }
 
-const StarScale = ({ rating, setRating }: RatingProps) => {
+const StarScale = ({ rating, setRating, index }: RatingProps) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRating(Number(event.target.value));
   };
@@ -15,7 +16,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
     <div className="rating rating-half rating-lg">
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="rating-hidden"
         value={0}
         defaultChecked={!rating || rating === 0}
@@ -23,7 +24,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
       />
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="mask mask-half-1 mask-star-2 bg-success"
         value={1}
         defaultChecked={rating === 1}
@@ -31,7 +32,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
       />
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="mask mask-half-2 mask-star-2 bg-success"
         value={2}
         defaultChecked={rating === 2}
@@ -39,7 +40,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
       />
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="mask mask-half-1 mask-star-2 bg-success"
         value={3}
         defaultChecked={rating === 3}
@@ -47,7 +48,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
       />
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="mask mask-half-2 mask-star-2 bg-success"
         value={4}
         defaultChecked={rating === 4}
@@ -55,7 +56,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
       />
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="mask mask-half-1 mask-star-2 bg-success"
         value={5}
         defaultChecked={rating === 5}
@@ -63,7 +64,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
       />
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="mask mask-half-2 mask-star-2 bg-success"
         value={6}
         defaultChecked={rating === 6}
@@ -71,7 +72,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
       />
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="mask mask-half-1 mask-star-2 bg-success"
         value={7}
         defaultChecked={rating === 7}
@@ -79,7 +80,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
       />
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="mask mask-half-2 mask-star-2 bg-success"
         value={8}
         defaultChecked={rating === 8}
@@ -87,7 +88,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
       />
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="mask mask-half-1 mask-star-2 bg-success"
         value={9}
         defaultChecked={rating === 9}
@@ -95,7 +96,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
       />
       <input
         type="radio"
-        name="rating-10"
+        name={`rating-${index || 10}`}
         className="mask mask-half-2 mask-star-2 bg-success"
         value={10}
         defaultChecked={rating === 10}

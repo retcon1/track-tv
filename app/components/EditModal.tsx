@@ -162,7 +162,7 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
               <div className="label">
                 <span className="label-text">Rating</span>
               </div>
-              <StarScale setRating={setRating} rating={userData.rating} />
+              <StarScale index={modalNum} setRating={setRating} rating={userData.rating} />
             </label>
           </div>
           <div className="flex flex-row">
