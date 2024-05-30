@@ -16,7 +16,7 @@ const UserShowTile = ({ showDetails, modalNum }: EditModalProps) => {
 
   let badgeCss;
 
-  switch (status?.toLowerCase()) {
+  switch (showDetails.status?.toLowerCase()) {
     case "watching":
       badgeCss = "badge-primary";
       break;

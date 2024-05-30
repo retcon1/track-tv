@@ -197,6 +197,12 @@ export const editUserShow = async (showData: UserShowStats) => {
   const showDocRef = await findShowDocRef(showData.id.toString());
   if (!showDocRef) throw Error("Show not found!");
 
+  if (showData.status == "completed")
+    showData.current_episode = showData.total_episodes;
+
+  if (showData.current_episode == showData.total_episodes)
+    showData.status = "completed";
+
   try {
     await setDoc(showDocRef, { ...showData }, { merge: true });
   } catch (error) {
