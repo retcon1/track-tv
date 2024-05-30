@@ -5,7 +5,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { UserShowStats } from "../interfaces/interfaces";
 import Link from "next/link";
-import UserShowCard from "../components/UserShowCard";
+import UserShowTile from "../components/UserShowTile";
 
 const Profile = () => {
   const [userShows, setUserShows] = useState<UserShowStats[]>([]);
@@ -59,7 +59,7 @@ const Profile = () => {
           </thead>
           <tbody>
             {userShows.map((show) => {
-              return <UserShowCard key={show.id} {...show} />;
+              return <UserShowTile key={show.id} {...show} />;
             })}
           </tbody>
         </table>

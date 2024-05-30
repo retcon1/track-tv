@@ -4,10 +4,14 @@ import {
   addShowToStash,
   editUserShow,
   fetchShowFromStash,
+  removeShowFromStash,
 } from "../utils/dbFunctions";
 import { ShowDetailedInfo, UserShowStats } from "../interfaces/interfaces";
 import { Timestamp } from "firebase/firestore";
 import StarScale from "./StarScale";
+import AddedToList from "./toasts/AddedToList";
+import RemovedFromList from "./toasts/RemovedFromList";
+import { set } from "firebase/database";
 
 interface EditModalProps {
   showDetails: ShowDetailedInfo;
@@ -18,7 +22,7 @@ const EditModal = ({ showDetails }: EditModalProps) => {
     id: showDetails.id,
     title: showDetails.title,
     image: showDetails.image,
-    status: null,
+    status: "",
     rating: 0,
     current_episode: 0,
     total_episodes: showDetails.total_episodes,
@@ -29,11 +33,14 @@ const EditModal = ({ showDetails }: EditModalProps) => {
 
   const [userData, setUserData] = useState<UserShowStats | null>(null);
   const [rating, setRating] = useState<number | null>(null);
-  const [success, setSuccess] = useState(false);
+  const [added, setAdded] = useState(false);
+  const [removed, setRemoved] = useState(false);
 
   const handleListEdit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    if (!userData) return;
+    if (!userData || userData.status == "")
+      return alert("Please declare status");
+
     const updatedData = {
       ...userData,
       rating: rating,
@@ -43,10 +50,10 @@ const EditModal = ({ showDetails }: EditModalProps) => {
     if (userData.inLibrary) {
       try {
         await editUserShow(updatedData);
-        setSuccess(true);
+        setAdded(true);
         (document.getElementById("my_modal_1") as HTMLDialogElement).close();
         setTimeout(() => {
-          setSuccess(false);
+          setAdded(false);
         }, 5000);
       } catch (err) {}
       return;
@@ -56,12 +63,26 @@ const EditModal = ({ showDetails }: EditModalProps) => {
     try {
       updatedData.inLibrary = true;
       await addShowToStash(updatedData);
-      setSuccess(true);
+      setAdded(true);
+      (document.getElementById("my_modal_1") as HTMLDialogElement).close();
       setTimeout(() => {
-        setSuccess(false);
-        (document.getElementById("my_modal_1") as HTMLDialogElement).close();
+        setAdded(false);
       }, 5000);
     } catch (err) {}
+  };
+
+  const removeFromUserList = async () => {
+    try {
+      await removeShowFromStash(showDetails.id);
+      setRemoved(true);
+      setUserData(defaultUserData);
+      (document.getElementById("my_modal_1") as HTMLDialogElement).close();
+      setTimeout(() => {
+        setRemoved(false);
+      }, 5000);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   useEffect(() => {
@@ -91,13 +112,8 @@ const EditModal = ({ showDetails }: EditModalProps) => {
 
   return (
     <>
-      {success && (
-        <div className="toast toast-end toast-top">
-          <div className="alert alert-success">
-            <span>Successfully added to list!</span>
-          </div>
-        </div>
-      )}
+      {added && <AddedToList />}
+      {removed && <RemovedFromList />}
       <dialog id="my_modal_1" className="modal">
         <div className="modal-box h-1/2 w-11/12 bg-neutral">
           <h3 className="mb-5 text-lg font-bold">{defaultUserData.title}</h3>
@@ -182,10 +198,20 @@ const EditModal = ({ showDetails }: EditModalProps) => {
           </div>
           <div className="modal-action">
             <form method="dialog">
+              {userData.inLibrary && (
+                <button
+                  className="btn btn-warning mr-4"
+                  onClick={removeFromUserList}
+                >
+                  Delete Entry
+                </button>
+              )}
               <button className="btn btn-primary mr-4" onClick={handleListEdit}>
                 Save
               </button>
-              <button className="btn btn-outline btn-primary">Discard</button>
+              <button className="btn btn-outline btn-primary">
+                Discard Changes
+              </button>
             </form>
           </div>
         </div>

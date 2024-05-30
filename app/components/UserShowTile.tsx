@@ -17,7 +17,7 @@ const UserShowCard = ({
 
   let badgeCss;
 
-  switch (status.toLowerCase()) {
+  switch (status?.toLowerCase()) {
     case "watching":
       badgeCss = "badge-primary";
       break;

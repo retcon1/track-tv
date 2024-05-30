@@ -18,7 +18,7 @@ const StarScale = ({ rating, setRating }: RatingProps) => {
         name="rating-10"
         className="rating-hidden"
         value={0}
-        defaultChecked={rating === 0}
+        defaultChecked={!rating || rating === 0}
         onChange={handleChange}
       />
       <input

@@ -5,7 +5,7 @@ export interface UserShowStats {
   title: string;
   current_episode: number;
   total_episodes: number;
-  status: string | null;
+  status: string;
   rating: number | null;
   started_watching: Timestamp;
   image: string | undefined;
