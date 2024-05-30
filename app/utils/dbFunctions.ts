@@ -155,6 +155,9 @@ export const addShowToStash = async (showData: UserShowStats) => {
   const showDocRef = await findShowDocRef(showData.id.toString());
   if (!showDocRef) throw Error("Show not found!");
 
+  if ((showData.status = "completed"))
+    showData.current_episode = showData.total_episodes;
+
   try {
     await setDoc(showDocRef, showData);
   } catch (error) {
@@ -180,6 +183,11 @@ export const updateCurrEp = async (showId: string, epNum: number) => {
   try {
     // Update the current_episode for the specified show
     await setDoc(showDocRef, { current_episode: epNum }, { merge: true });
+
+    const show = await getDoc(showDocRef);
+    if (show.data()?.current_episode == show.data()?.total_episodes) {
+      await setDoc(showDocRef, { status: "completed" }, { merge: true });
+    }
   } catch (error) {
     console.error("Error updating current_episode:", error);
   }
