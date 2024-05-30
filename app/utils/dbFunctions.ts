@@ -155,7 +155,7 @@ export const addShowToStash = async (showData: UserShowStats) => {
   const showDocRef = await findShowDocRef(showData.id.toString());
   if (!showDocRef) throw Error("Show not found!");
 
-  if ((showData.status = "completed"))
+  if (showData.status == "completed")
     showData.current_episode = showData.total_episodes;
 
   try {
