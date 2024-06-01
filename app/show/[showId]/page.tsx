@@ -5,6 +5,7 @@ import { fetchShowBanner, getShowDetails } from "@/app/utils/searchFunctions";
 import { ShowDetailedInfo, Actor } from "@/app/interfaces/interfaces";
 import EditModal from "@/app/components/EditModal";
 import { Timestamp } from "firebase/firestore";
+import Headshot from "@/app/components/Headshot";
 
 const ShowInfo = ({ params }: { params: { showId: string } }) => {
   const [showDetails, setShowDetails] = useState<ShowDetailedInfo | null>(null);
@@ -40,12 +41,16 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
 
   return (
     <>
-      {banner ? <img
-        src={banner}
-        alt={`banner of ${showDetails?.title}`}
-        className="z-0 mt-[-5rem] h-80 w-full object-cover object-top"
-      /> : <div className="mb-8" ></div>}
-      <div className="flex justify-center">
+      {banner ? (
+        <img
+          src={banner}
+          alt={`banner of ${showDetails?.title}`}
+          className="z-0 mt-[-5rem] h-80 w-full object-cover object-top"
+        />
+      ) : (
+        <div className="mb-8"></div>
+      )}
+      <div className="">
         <header className="mb-8 bg-neutral shadow-xl">
           <div className="mt-[-30px] flex flex-row items-start overflow-hidden sm:px-12 md:px-24 lg:px-32 xl:px-48">
             <div className="flex flex-col">
@@ -130,25 +135,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
               {showDetails.cast
                 .slice(0, 8)
                 .map((actor: Actor, index: number) => (
-                  <li
-                    key={index}
-                    className="mb-6 flex w-48 flex-col items-center text-center"
-                  >
-                    <img
-                      src={actor.headshot}
-                      alt={`headshot of ${actor.castName}`}
-                      className="mask mask-square z-20 h-24 w-24 rounded-md object-cover transition-all duration-300 ease-in-out hover:opacity-0"
-                    />
-                    <img
-                      src={actor.charHeadshot || actor.headshot}
-                      alt={`picture of ${actor.charName}`}
-                      className="mask mask-square z-10 mt-[-6rem] h-24 w-24 rounded-md object-cover transition-opacity duration-300"
-                    />
-                    <h2 className="text-sm">{actor.castName}</h2>
-                    <h3 className="max-w-[126px] text-sm opacity-60">
-                      {actor.charName}
-                    </h3>
-                  </li>
+                  <Headshot key={index} actor={actor} index={index} />
                 ))}
             </ul>
           </div>

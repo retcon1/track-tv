@@ -125,54 +125,10 @@ export const fetchShowBanner = async (showId: string) => {
     let banner = images.find((image: any) => image.type === "banner");
     if (!banner)
       banner = images.find((image: any) => image.type === "background");
+
+    if (!banner) return null;
     return banner.resolutions.original.url;
   } catch (err) {
     console.error(err);
   }
-};
-
-const cast = {
-  person: {
-    id: 26406,
-    url: "https://www.tvmaze.com/people/26406/matthew-fox",
-    name: "Matthew Fox",
-    country: {
-      name: "United States",
-      code: "US",
-      timezone: "America/New_York",
-    },
-    birthday: "1966-07-14",
-    deathday: null,
-    gender: "Male",
-    image: {
-      medium:
-        "https://static.tvmaze.com/uploads/images/medium_portrait/490/1227294.jpg",
-      original:
-        "https://static.tvmaze.com/uploads/images/original_untouched/490/1227294.jpg",
-    },
-    updated: 1701804629,
-    _links: {
-      self: {
-        href: "https://api.tvmaze.com/people/26406",
-      },
-    },
-  },
-  character: {
-    id: 34808,
-    url: "https://www.tvmaze.com/characters/34808/lost-dr-jack-shephard",
-    name: "Dr. Jack Shephard",
-    image: {
-      medium:
-        "https://static.tvmaze.com/uploads/images/medium_portrait/0/1390.jpg",
-      original:
-        "https://static.tvmaze.com/uploads/images/original_untouched/0/1390.jpg",
-    },
-    _links: {
-      self: {
-        href: "https://api.tvmaze.com/characters/34808",
-      },
-    },
-  },
-  self: false,
-  voice: false,
 };

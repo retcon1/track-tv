@@ -130,7 +130,7 @@ const Navbar = () => {
             >
               <div className="w-10 rounded-full">
                 <Image
-                  alt="Tailwind CSS Navbar component"
+                  alt="User Icon Placeholder"
                   src="/user.png"
                   width={300}
                   height={300}
