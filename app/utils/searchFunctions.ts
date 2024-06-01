@@ -116,6 +116,21 @@ const extractCastInfo = (castArray: any) => {
   });
 };
 
+export const fetchShowBanner = async (showId: string) => {
+  try {
+    const response = await axios.get(
+      `https://api.tvmaze.com/shows/${showId}/images`,
+    );
+    const images = response.data;
+    let banner = images.find((image: any) => image.type === "banner");
+    if (!banner)
+      banner = images.find((image: any) => image.type === "background");
+    return banner.resolutions.original.url;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
 const cast = {
   person: {
     id: 26406,

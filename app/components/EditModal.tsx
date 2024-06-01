@@ -36,7 +36,6 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
   const [added, setAdded] = useState(false);
   const [removed, setRemoved] = useState(false);
 
-
   const handleListEdit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!userData || userData.status == "")
@@ -102,10 +101,10 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
   useEffect(() => {
     const getUserData = async (id: string) => {
       const showData = await fetchShowFromStash(id);
-      console.log(showData);
       setUserData(showData || defaultUserData);
       setRating(showData?.rating || 0);
     };
+
     if (!showDetails.inLibrary) getUserData(defaultUserData.id);
     else {
       setUserData(showDetails);
@@ -162,7 +161,11 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
               <div className="label">
                 <span className="label-text">Rating</span>
               </div>
-              <StarScale index={modalNum} setRating={setRating} rating={userData.rating} />
+              <StarScale
+                index={modalNum}
+                setRating={setRating}
+                rating={userData.rating}
+              />
             </label>
           </div>
           <div className="flex flex-row">

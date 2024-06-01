@@ -45,25 +45,29 @@ const Profile = () => {
   }
 
   return (
-    <div>
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              {/* <th></th> */}
-              <th>Title</th>
-              <th>Score</th>
-              <th>Progress</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {userShows.map((show, index) => {
-              return <UserShowTile key={index} modalNum={index + 1} showDetails={{ ...show }} />;
-            })}
-          </tbody>
-        </table>
-      </div>
+    <div className="overflow-x-auto px-0 md:px-20 ">
+      <table className="table">
+        <thead>
+          <tr>
+            {/* <th></th> */}
+            <th>Title</th>
+            <th>Score</th>
+            <th>Progress</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {userShows.map((show, index) => {
+            return (
+              <UserShowTile
+                key={index}
+                modalNum={index + 1}
+                showDetails={{ ...show }}
+              />
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };
