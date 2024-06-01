@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { getCurrentUserShows } from "../utils/dbFunctions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
-import { ShowStats } from "../interfaces/interfaces";
+import { UserShowStats } from "../interfaces/interfaces";
 import Link from "next/link";
-import UserShowCard from "../components/UserShowCard";
+import UserShowTile from "../components/UserShowTile";
 
 const Profile = () => {
-  const [userShows, setUserShows] = useState<ShowStats[]>([]);
+  const [userShows, setUserShows] = useState<UserShowStats[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -23,8 +23,9 @@ const Profile = () => {
 
   if (loading) {
     return (
-      <div>
-        <h1>Loading..</h1>
+      <div className="flex h-[80vh] items-center justify-center text-center align-middle">
+        <h1 className="align-middle text-2xl font-bold">Loading </h1>
+        <span className="loading loading-bars loading-md"></span>
       </div>
     );
   }
@@ -44,25 +45,29 @@ const Profile = () => {
   }
 
   return (
-    <div>
-      <div className="overflow-x-auto">
-        <table className="table">
-          <thead>
-            <tr>
-              {/* <th></th> */}
-              <th>Title</th>
-              <th>Score</th>
-              <th>Progress</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {userShows.map((show) => {
-              return <UserShowCard key={show.id} {...show} />;
-            })}
-          </tbody>
-        </table>
-      </div>
+    <div className="overflow-x-auto px-0 md:px-20 ">
+      <table className="table">
+        <thead>
+          <tr>
+            {/* <th></th> */}
+            <th>Title</th>
+            <th>Score</th>
+            <th>Progress</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {userShows.map((show, index) => {
+            return (
+              <UserShowTile
+                key={index}
+                modalNum={index + 1}
+                showDetails={{ ...show }}
+              />
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   );
 };

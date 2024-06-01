@@ -9,9 +9,10 @@ import {
   setDoc,
   addDoc,
   deleteDoc,
+  getDoc,
 } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
-import { ShowStats, UserData } from "../interfaces/interfaces";
+import { UserShowStats, UserData } from "../interfaces/interfaces";
 import { User } from "firebase/auth";
 
 // If no email is provided, the function will search for the logged in user's data
@@ -42,7 +43,9 @@ export const findUserByEmail = async (
   }
 };
 
-export const getCurrentUserShows = async (): Promise<ShowStats[] | null> => {
+export const getCurrentUserShows = async (): Promise<
+  UserShowStats[] | null
+> => {
   const user = await findUserByEmail();
 
   if (!user) {
@@ -59,17 +62,37 @@ export const getCurrentUserShows = async (): Promise<ShowStats[] | null> => {
     );
     const showsQuerySnapshot = await getDocs(showsCollectionRef);
 
-    const showsDataArray: ShowStats[] = [];
+    const showsDataArray: UserShowStats[] = [];
 
     showsQuerySnapshot.forEach((doc) => {
       const showData = doc.data();
       showData.id = Number(doc.id);
-      showsDataArray.push(showData as ShowStats);
+      showsDataArray.push(showData as UserShowStats);
     });
     return showsDataArray;
   } catch (err) {
     console.error(err);
     return null;
+  }
+};
+
+export const checkShowInUserLibrary = async (
+  showId: string,
+): Promise<boolean> => {
+  const user = await findUserByEmail();
+
+  if (!user) {
+    console.log("User not signed in!");
+    return false;
+  }
+
+  try {
+    const docRef = doc(db, "show_stash", user.show_stash_id, "shows", showId);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists();
+  } catch (error) {
+    console.error("Error checking user library:", error);
+    return false;
   }
 };
 
@@ -125,9 +148,15 @@ const findShowDocRef = async (showId: string) => {
   return showDocRef;
 };
 
-export const addShowToStash = async (showData: ShowStats) => {
+export const addShowToStash = async (showData: UserShowStats) => {
+  const showInStash = await checkShowInUserLibrary(showData.id.toString());
+  if (showInStash) throw Error("Show already in stash!");
+
   const showDocRef = await findShowDocRef(showData.id.toString());
   if (!showDocRef) throw Error("Show not found!");
+
+  if (showData.status == "completed")
+    showData.current_episode = showData.total_episodes;
 
   try {
     await setDoc(showDocRef, showData);
@@ -154,7 +183,44 @@ export const updateCurrEp = async (showId: string, epNum: number) => {
   try {
     // Update the current_episode for the specified show
     await setDoc(showDocRef, { current_episode: epNum }, { merge: true });
+
+    const show = await getDoc(showDocRef);
+    if (show.data()?.current_episode == show.data()?.total_episodes) {
+      await setDoc(showDocRef, { status: "completed" }, { merge: true });
+    }
   } catch (error) {
     console.error("Error updating current_episode:", error);
+  }
+};
+
+export const editUserShow = async (showData: UserShowStats) => {
+  const showDocRef = await findShowDocRef(showData.id.toString());
+  if (!showDocRef) throw Error("Show not found!");
+
+  if (showData.status == "completed")
+    showData.current_episode = showData.total_episodes;
+
+  if (showData.current_episode == showData.total_episodes)
+    showData.status = "completed";
+
+  try {
+    await setDoc(showDocRef, { ...showData }, { merge: true });
+  } catch (error) {
+    console.error("Error updating current_episode:", error);
+  }
+};
+
+export const fetchShowFromStash = async (
+  showId: string,
+): Promise<UserShowStats | null | undefined> => {
+  const showDocRef = await findShowDocRef(showId);
+  if (!showDocRef) throw Error("Show not found!");
+
+  try {
+    const show = await getDoc(showDocRef);
+    if (!show.exists()) return null;
+    return show.data() as UserShowStats;
+  } catch (error) {
+    console.error("Error fetching show:", error);
   }
 };

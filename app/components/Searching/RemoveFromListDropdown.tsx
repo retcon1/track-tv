@@ -13,7 +13,7 @@ const RemoveFromListDropdown = ({ removeFromUserList }: any) => {
         onClick={() => setDropdownOpen(!dropdownOpen)}
       >
         Change Status{" "}
-        <div className="row absolute right-4">
+        <div className="absolute right-4">
           <ArrowDownSVG />
         </div>
       </summary>
@@ -23,19 +23,19 @@ const RemoveFromListDropdown = ({ removeFromUserList }: any) => {
       >
         <li
           className="w-full cursor-pointer items-center hover:btn-ghost"
-          onClick={() => addToUserList("watching")}
+          onClick={() => removeFromUserList("watching")}
         >
           <strong>Watching</strong>
         </li>
         <li
           className="w-full cursor-pointer items-center hover:btn-ghost"
-          onClick={() => addToUserList("planning")}
+          onClick={() => removeFromUserList("planning")}
         >
           <strong>Planning</strong>
         </li>
         <li
           className="w-full cursor-pointer items-center hover:btn-ghost"
-          onClick={() => addToUserList("completed")}
+          onClick={() => removeFromUserList("completed")}
         >
           <strong>Completed</strong>
         </li>

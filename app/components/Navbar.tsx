@@ -20,7 +20,7 @@ const Navbar = () => {
   // If user is logged in, show the navbar with extra functionality
   if (user)
     return (
-      <div className="navbar bg-base-300 bg-opacity-70 dark:bg-neutral z-10">
+      <div className="navbar relative z-40 bg-transparent opacity-30 transition-all duration-500 ease-in-out hover:bg-neutral hover:opacity-100 dark:bg-transparent">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -62,7 +62,7 @@ const Navbar = () => {
               </li>
             </ul>
           </div>
-          <a className="btn btn-ghost text-xl" href="/">
+          <a className="btn btn-ghost ml-0 text-xl lg:ml-20" href="/">
             trackTV
           </a>
         </div>
@@ -122,7 +122,7 @@ const Navbar = () => {
               </svg>
             </button>
           </label>
-          <div className="dropdown dropdown-end">
+          <div className="dropdown dropdown-end dropdown-hover">
             <div
               tabIndex={0}
               role="button"
@@ -130,7 +130,7 @@ const Navbar = () => {
             >
               <div className="w-10 rounded-full">
                 <Image
-                  alt="Tailwind CSS Navbar component"
+                  alt="User Icon Placeholder"
                   src="/user.png"
                   width={300}
                   height={300}
@@ -139,7 +139,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
+              className="menu dropdown-content menu-sm z-[1] w-52 rounded-box bg-base-100 p-2 shadow"
             >
               <li>
                 <a href="/profile">Profile</a>

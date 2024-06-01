@@ -1,7 +1,6 @@
 import { Timestamp } from "firebase/firestore";
 
-
-export interface ShowStats {
+export interface UserShowStats {
   id: string;
   title: string;
   current_episode: number;
@@ -29,4 +28,28 @@ export interface ShowBasicInfo {
   url: string;
   genres: string[];
   inLibrary: boolean | undefined;
+}
+
+export interface Actor {
+  castName: string;
+  charName: string;
+  headshot: string;
+  charHeadshot: string;
+}
+
+export interface ShowDetailedInfo {
+  id: string;
+  title: string;
+  rating: number | null;
+  image: string | undefined;
+  url: string;
+  genres: string[];
+  inLibrary: boolean | undefined;
+  cast: Actor[];
+  summary: string;
+  status: string;
+  runtime: number;
+  // premiered: string;
+  network: string;
+  total_episodes: number;
 }
