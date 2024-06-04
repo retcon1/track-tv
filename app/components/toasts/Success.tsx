@@ -1,13 +1,17 @@
 import React from "react";
 
-const AddedToList = () => {
+interface SuccessProps {
+  text: string;
+}
+
+const Success = ({ text }: SuccessProps) => {
   return (
     <div className="toast toast-end toast-top z-50">
       <div className="alert alert-success">
-        <span>Successfully added to list!</span>
+        <span>{text}</span>
       </div>
     </div>
   );
 };
 
-export default AddedToList;
+export default Success;

@@ -27,7 +27,8 @@ const ShowSearch = ({ params }: { params: { show: string } }) => {
   if (!showList) {
     return (
       <div className="flex h-[80vh] items-center justify-center text-center align-middle">
-        <h1 className="align-middle text-2xl font-bold">Loading </h1>
+        <h1 className="align-middle text-2xl font-bold">Loading</h1>
+        &nbsp;
         <span className="loading loading-bars loading-md"></span>
       </div>
     );
