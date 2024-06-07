@@ -20,7 +20,6 @@ const ChangePassForm = () => {
       changePassForm.newPassword,
     );
     if (result) {
-      alert("Password changed successfully");
       setChangePassForm({ password: "", newPassword: "", confirmPassword: "" });
       setSuccess(true);
     }

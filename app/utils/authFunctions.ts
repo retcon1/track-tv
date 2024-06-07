@@ -4,9 +4,11 @@ import {
   signInWithPopup,
   signOut,
   updatePassword,
+  updateProfile,
 } from "firebase/auth";
-import { auth, googleProvider } from "../config/firebase";
+import { auth, db, googleProvider } from "../config/firebase";
 import { addUserAndShowStash, findUserByEmail } from "./dbFunctions";
+import { doc, updateDoc } from "firebase/firestore";
 
 export const signUp = async (email: string, pass: string, username: string) => {
   try {
@@ -17,6 +19,7 @@ export const signUp = async (email: string, pass: string, username: string) => {
       pass,
     );
     const user = userCredential.user;
+    updateProfile(user, { displayName: username });
     await addUserAndShowStash(user, email, username);
   } catch (err) {
     console.error(err);
@@ -25,7 +28,8 @@ export const signUp = async (email: string, pass: string, username: string) => {
 
 export const signIn = async (email: string, pass: string): Promise<boolean> => {
   try {
-    await signInWithEmailAndPassword(auth, email, pass);
+    const user = await signInWithEmailAndPassword(auth, email, pass);
+    console.log(user);
     return true;
   } catch (err) {
     console.error(err);
@@ -78,5 +82,21 @@ export const changePassword = async (
     throw new Error(
       "No user is currently signed in or the current user does not have an email.",
     );
+  }
+};
+
+export const changeUsername = async (newUsername: string) => {
+  const user = auth?.currentUser;
+  if (!user) return alert("No user signed in!");
+
+  const userRef = doc(db, "users", user.uid);
+
+  try {
+    await updateDoc(userRef, { username: newUsername });
+    await updateProfile(user, { displayName: newUsername });
+    return true;
+  } catch (error) {
+    console.error("Error updating username:", error);
+    return false;
   }
 };
