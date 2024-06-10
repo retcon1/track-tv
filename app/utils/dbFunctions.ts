@@ -43,10 +43,35 @@ export const findUserByEmail = async (
   }
 };
 
+export const findUserById = async (
+  userId = auth?.currentUser?.uid,
+): Promise<UserData | null> => {
+  if (!userId) {
+    console.log("User not signed in!");
+    return null;
+  }
+
+  try {
+    const userDocRef = doc(db, "users", userId);
+    const userDoc = await getDoc(userDocRef);
+
+    if (!userDoc.exists()) {
+      console.log(`No user found with id ${userId}`);
+      return null;
+    }
+
+    const userData = userDoc.data() as UserData;
+    return userData;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
 export const getCurrentUserShows = async (): Promise<
   UserShowStats[] | null
 > => {
-  const user = await findUserByEmail();
+  const user = await findUserById();
 
   if (!user) {
     console.log("User not signed in!");
@@ -115,7 +140,9 @@ export const addUserAndShowStash = async (
     user_id: user.uid,
     show_stash_id: showStashDocRef.id,
   };
-  addDoc(userCollectionRef, newUserData);
+
+  const userDocRef = doc(userCollectionRef, user.uid);
+  setDoc(userDocRef, newUserData);
 };
 
 const findShowStashId = async () => {

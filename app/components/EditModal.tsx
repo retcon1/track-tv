@@ -9,8 +9,8 @@ import {
 import { UserShowStats } from "../interfaces/interfaces";
 import { Timestamp } from "firebase/firestore";
 import StarScale from "./StarScale";
-import AddedToList from "./toasts/AddedToList";
-import RemovedFromList from "./toasts/RemovedFromList";
+import Warning from "./toasts/Warning";
+import Success from "./toasts/Success";
 
 interface EditModalProps {
   showDetails: UserShowStats;
@@ -35,6 +35,9 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
   const [rating, setRating] = useState<number | null>(null);
   const [added, setAdded] = useState(false);
   const [removed, setRemoved] = useState(false);
+  const [successText, setSuccessText] = useState<string>(
+    "Successfully added to list!",
+  );
 
   const handleListEdit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -50,6 +53,7 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
     if (userData.inLibrary) {
       try {
         await editUserShow(updatedData);
+        setSuccessText("Successfully updated show!");
         setAdded(true);
         (
           document.getElementById(
@@ -68,6 +72,7 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
     try {
       updatedData.inLibrary = true;
       await addShowToStash(updatedData);
+      setSuccessText("Successfully added to list!");
       setAdded(true);
       (
         document.getElementById(
@@ -128,8 +133,8 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
 
   return (
     <>
-      {added && <AddedToList />}
-      {removed && <RemovedFromList />}
+      {added && <Success text={successText} />}
+      {removed && <Warning text="Removed from list!" />}
       <dialog id={`my_modal_${modalNum || 1}`} className="modal">
         <div className="modal-box h-1/2 w-11/12 bg-neutral">
           <h3 className="mb-5 text-lg font-bold">{defaultUserData.title}</h3>

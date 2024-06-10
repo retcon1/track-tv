@@ -45,7 +45,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
         <img
           src={banner}
           alt={`banner of ${showDetails?.title}`}
-          className="z-0 mt-[-5rem] h-80 w-full object-cover object-top"
+          className="z-0 mt-[-5rem] h-80 w-full object-cover object-center"
         />
       ) : (
         <div className="mb-8"></div>
