@@ -5,8 +5,8 @@
 - As a user I want to be able to create an account ✅
 - As a user I want to be able to create an account through gmail ✅
 - As a user I want to be able to sign in to my account ✅
-- As a user I want to be able to change my password in case it becomes compromised
-- As a user I want to be able to change my username
+- As a user I want to be able to change my password in case it becomes compromised ✅
+- As a user I want to be able to change my username ✅
 
 ### Searching
 
