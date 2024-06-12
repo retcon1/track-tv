@@ -10,17 +10,17 @@ import UserShowTile from "../components/UserShowTile";
 const Profile = () => {
   const [userShows, setUserShows] = useState<UserShowStats[]>([]);
   const [loading, setLoading] = useState(true);
-  const [order, setOrder] = useState("title");
+  const [order, setOrder] = useState({ by: "title", asc: true });
 
   useEffect(() => {
     onAuthStateChanged(auth, async () => {
-      const currentShows = await getShowsBy(order);
+      const currentShows = await getShowsBy(order.by, order.asc);
       if (currentShows) {
         setUserShows(currentShows);
         setLoading(false);
       }
     });
-  }, []);
+  }, [order]);
 
   if (loading) {
     return (
@@ -34,8 +34,8 @@ const Profile = () => {
 
   if (!loading && userShows.length === 0) {
     return (
-      <div>
-        <h1>
+      <div className="flex h-[80vh] items-center justify-center text-center align-middle">
+        <h1 className="align-middle text-2xl font-bold">
           You don't have any shows yet! How about adding some
           <Link href="/show-search">
             <strong> here</strong>
@@ -52,9 +52,26 @@ const Profile = () => {
         <thead>
           <tr>
             {/* <th></th> */}
-            <th>Title</th>
-            <th>Rating</th>
-            <th>Progress</th>
+            <th
+              className="hover:cursor-pointer hover:text-white"
+              onClick={() => setOrder({ by: "title", asc: !order.asc })}
+            >
+              Title
+            </th>
+            <th
+              className="hover:cursor-pointer hover:text-white"
+              onClick={() => setOrder({ by: "rating", asc: !order.asc })}
+            >
+              Rating
+            </th>
+            <th
+              className="hover:cursor-pointer hover:text-white"
+              onClick={() =>
+                setOrder({ by: "total_episodes", asc: !order.asc })
+              }
+            >
+              Progress
+            </th>
             <th></th>
           </tr>
         </thead>

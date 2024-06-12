@@ -11,6 +11,7 @@ import {
   deleteDoc,
   getDoc,
   orderBy,
+  OrderByDirection,
 } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 import { UserShowStats, UserData } from "../interfaces/interfaces";
@@ -102,7 +103,7 @@ export const getCurrentUserShows = async (): Promise<
   }
 };
 
-export const getShowsBy = async (order: string): Promise<
+export const getShowsBy = async (by: string, asc: boolean): Promise<
   UserShowStats[] | null
 > => {
   const user = await findUserById();
@@ -120,7 +121,8 @@ export const getShowsBy = async (order: string): Promise<
       "shows",
     );
 
-    const showsQuery = query(showsCollectionRef, orderBy(`${order}`));
+    let order: OrderByDirection = asc ? "asc" : "desc";
+    const showsQuery = query(showsCollectionRef, orderBy(`${by}`, `${order}`));
     const showsQuerySnapshot = await getDocs(showsQuery);
 
     const showsDataArray: UserShowStats[] = [];
