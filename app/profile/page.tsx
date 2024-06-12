@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getCurrentUserShows } from "../utils/dbFunctions";
+import { getShowsBy } from "../utils/dbFunctions";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "../config/firebase";
 import { UserShowStats } from "../interfaces/interfaces";
@@ -10,10 +10,11 @@ import UserShowTile from "../components/UserShowTile";
 const Profile = () => {
   const [userShows, setUserShows] = useState<UserShowStats[]>([]);
   const [loading, setLoading] = useState(true);
+  const [order, setOrder] = useState("title");
 
   useEffect(() => {
     onAuthStateChanged(auth, async () => {
-      const currentShows = await getCurrentUserShows();
+      const currentShows = await getShowsBy(order);
       if (currentShows) {
         setUserShows(currentShows);
         setLoading(false);
@@ -52,21 +53,36 @@ const Profile = () => {
           <tr>
             {/* <th></th> */}
             <th>Title</th>
-            <th>Score</th>
+            <th>Rating</th>
             <th>Progress</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          {userShows.map((show, index) => {
-            return (
-              <UserShowTile
-                key={index}
-                modalNum={index + 1}
-                showDetails={{ ...show }}
-              />
-            );
-          })}
+          <tr>
+            <th className="font-bold text-primary">Watching</th>
+          </tr>
+          {userShows
+            .filter((show) => show.status == "watching")
+            .map((show, index) => {
+              return <UserShowTile key={index} showDetails={{ ...show }} />;
+            })}
+          <tr>
+            <th className="font-bold text-success">Completed</th>
+          </tr>
+          {userShows
+            .filter((show) => show.status == "completed")
+            .map((show, index) => {
+              return <UserShowTile key={index} showDetails={{ ...show }} />;
+            })}
+          <tr>
+            <th className="font-bold text-warning">Planning</th>
+          </tr>
+          {userShows
+            .filter((show) => show.status == "planning")
+            .map((show, index) => {
+              return <UserShowTile key={index} showDetails={{ ...show }} />;
+            })}
         </tbody>
       </table>
     </div>

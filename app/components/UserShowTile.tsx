@@ -6,10 +6,9 @@ import EditModal from "./EditModal";
 
 interface EditModalProps {
   showDetails: UserShowStats;
-  modalNum: number;
 }
 
-const UserShowTile = ({ showDetails, modalNum }: EditModalProps) => {
+const UserShowTile = ({ showDetails }: EditModalProps) => {
   const formattedDate = showDetails.started_watching
     .toDate()
     .toLocaleDateString();
@@ -31,7 +30,7 @@ const UserShowTile = ({ showDetails, modalNum }: EditModalProps) => {
   if (!showDetails) return null;
 
   return (
-    <tr className="hover">
+    <tr className="hover hover:bg-primary">
       {/* Potential future functionality
       <th>
         <label>
@@ -81,14 +80,14 @@ const UserShowTile = ({ showDetails, modalNum }: EditModalProps) => {
           onClick={() =>
             (
               document.getElementById(
-                `my_modal_${modalNum}`,
+                `my_modal_${showDetails.id}`,
               ) as HTMLDialogElement
             ).showModal()
           }
         >
           Edit
         </button>
-        <EditModal showDetails={showDetails} modalNum={modalNum} />
+        <EditModal showDetails={showDetails}/>
       </th>
     </tr>
   );

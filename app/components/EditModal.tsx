@@ -14,10 +14,9 @@ import Success from "./toasts/Success";
 
 interface EditModalProps {
   showDetails: UserShowStats;
-  modalNum?: number;
 }
 
-const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
+const EditModal = ({ showDetails }: EditModalProps) => {
   const defaultUserData: UserShowStats = {
     id: showDetails.id,
     title: showDetails.title,
@@ -57,7 +56,7 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
         setAdded(true);
         (
           document.getElementById(
-            `my_modal_${modalNum || 1}`,
+            `my_modal_${showDetails.id}`,
           ) as HTMLDialogElement
         ).close();
         setTimeout(() => {
@@ -76,7 +75,7 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
       setAdded(true);
       (
         document.getElementById(
-          `my_modal_${modalNum || 1}`,
+          `my_modal_${showDetails.id}`,
         ) as HTMLDialogElement
       ).close();
       setTimeout(() => {
@@ -92,7 +91,7 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
       setUserData(defaultUserData);
       (
         document.getElementById(
-          `my_modal_${modalNum || 1}`,
+          `my_modal_${showDetails.id}`,
         ) as HTMLDialogElement
       ).close();
       setTimeout(() => {
@@ -119,7 +118,7 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
 
   if (!userData) {
     return (
-      <dialog id={`my_modal_${modalNum || 1}`} className="modal">
+      <dialog id={`my_modal_${showDetails.id}`} className="modal">
         <div className="modal-box skeleton h-1/2 w-1/2 bg-neutral">
           <div className="modal-action">
             <form method="dialog">
@@ -135,7 +134,7 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
     <>
       {added && <Success text={successText} />}
       {removed && <Warning text="Removed from list!" />}
-      <dialog id={`my_modal_${modalNum || 1}`} className="modal">
+      <dialog id={`my_modal_${showDetails.id}`} className="modal">
         <div className="modal-box h-1/2 w-11/12 bg-neutral">
           <h3 className="mb-5 text-lg font-bold">{defaultUserData.title}</h3>
           <div className="flex flex-row">
@@ -167,7 +166,7 @@ const EditModal = ({ showDetails, modalNum }: EditModalProps) => {
                 <span className="label-text">Rating</span>
               </div>
               <StarScale
-                index={modalNum}
+                index={Number(showDetails.id)}
                 setRating={setRating}
                 rating={userData.rating}
               />

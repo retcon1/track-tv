@@ -63,7 +63,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
                 className="btn btn-primary mb-10 w-[210px] rounded-none rounded-b-md"
                 onClick={() =>
                   (
-                    document.getElementById("my_modal_1") as HTMLDialogElement
+                    document.getElementById(`my_modal_${params.showId}`) as HTMLDialogElement
                   ).showModal()
                 }
               >
