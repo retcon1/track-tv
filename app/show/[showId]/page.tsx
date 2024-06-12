@@ -63,7 +63,9 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
                 className="btn btn-primary mb-10 w-[210px] rounded-none rounded-b-md"
                 onClick={() =>
                   (
-                    document.getElementById(`my_modal_${params.showId}`) as HTMLDialogElement
+                    document.getElementById(
+                      `my_modal_${params.showId}`,
+                    ) as HTMLDialogElement
                   ).showModal()
                 }
               >
@@ -82,22 +84,28 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
               <h1 className="mb-5 mt-2 text-4xl font-bold">
                 {showDetails.title}
               </h1>
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: fullSummary
-                    ? showDetails.summary
-                    : `${showDetails.summary?.slice(0, 800)}${showDetails.summary?.length > 800 ? "..." : ""}`,
-                }}
-                className="peer text-sm transition-all duration-300 ease-in-out hover:text-white"
-              />
-              {showDetails.summary?.length > 800 ? (
-                <button
-                  onClick={() => setFullSummary(!fullSummary)}
-                  className="mt-[-20px] bg-gradient-to-t from-neutral pt-5 opacity-0 transition-all duration-300 ease-in-out hover:from-transparent hover:opacity-100 peer-hover:opacity-100"
-                >
-                  {fullSummary ? "Show Less" : "Show More"}
-                </button>
-              ) : null}
+              <div>
+                {showDetails.summary && (
+                  <>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: fullSummary
+                          ? showDetails.summary
+                          : `${showDetails.summary.slice(0, 800)}${showDetails.summary.length > 800 ? "..." : ""}`,
+                      }}
+                      className="peer text-sm transition-all duration-300 ease-in-out hover:text-white"
+                    />
+                    {showDetails.summary.length > 800 && (
+                      <button
+                        onClick={() => setFullSummary(!fullSummary)}
+                        className="mt-[-20px] bg-gradient-to-t from-neutral pt-5 opacity-0 transition-all duration-300 ease-in-out hover:from-transparent hover:opacity-100 peer-hover:opacity-100"
+                      >
+                        {fullSummary ? "Show Less" : "Show More"}
+                      </button>
+                    )}
+                  </>
+                )}
+              </div>
             </div>
           </div>
         </header>
@@ -122,15 +130,22 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
             <h2 className="mt-5 text-xl font-bold">Episodes</h2>
             <p>{showDetails.total_episodes}</p>
             <h2 className="mt-5 text-xl font-bold">Runtime</h2>
-            <p>{showDetails.runtime} minutes</p>
+            <p>
+              {showDetails.runtime
+                ? `${showDetails.runtime} minutes`
+                : "unknown"}
+            </p>
             <h2 className="mt-5 text-xl font-bold">Network</h2>
             <p>{showDetails.network}</p>
             <h2 className="mt-5 text-xl font-bold">Status</h2>
             <p>{showDetails.status}</p>
           </div>
           {/* Cast section */}
-          <div className="mb-5 ml-6 flex flex-col rounded-xl bg-neutral p-4">
+          <div className="mb-5 ml-6 flex w-full flex-col rounded-xl bg-neutral p-4">
             <h2 className="mb-3 ml-1 text-lg font-bold">Cast</h2>
+            {showDetails.cast.length === 0 ? (
+              <p className="ml-5 font-bold">No cast found</p>
+            ) : null}
             <ul className="flex flex-row flex-wrap justify-start gap-5 ">
               {showDetails.cast
                 .slice(0, 8)
