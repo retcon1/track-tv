@@ -1,5 +1,4 @@
 "use client";
-import SearchHandler from "@/app/components/Searching/SearchHandler";
 import ShowCard from "@/app/components/Searching/ShowCard";
 import { ShowBasicInfo } from "@/app/interfaces/interfaces";
 import { searchShow } from "@/app/utils/searchFunctions";
@@ -36,8 +35,7 @@ const ShowSearch = ({ params }: { params: { show: string } }) => {
 
   if (showList.length === 0) {
     return (
-      <div>
-        <SearchHandler />
+      <div className="flex h-[80vh] items-center justify-center text-center align-middle">
         <h1>No shows found, please try again!</h1>
       </div>
     );
@@ -45,7 +43,6 @@ const ShowSearch = ({ params }: { params: { show: string } }) => {
 
   return (
     <div>
-      <SearchHandler />
       <div className="flex flex-wrap justify-center">
         {showList.map((show) => (
           <ShowCard key={show.id} {...show} />

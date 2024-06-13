@@ -10,6 +10,8 @@ import {
   addDoc,
   deleteDoc,
   getDoc,
+  orderBy,
+  OrderByDirection,
 } from "firebase/firestore";
 import { auth, db } from "../config/firebase";
 import { UserShowStats, UserData } from "../interfaces/interfaces";
@@ -86,6 +88,42 @@ export const getCurrentUserShows = async (): Promise<
       "shows",
     );
     const showsQuerySnapshot = await getDocs(showsCollectionRef);
+
+    const showsDataArray: UserShowStats[] = [];
+
+    showsQuerySnapshot.forEach((doc) => {
+      const showData = doc.data();
+      showData.id = Number(doc.id);
+      showsDataArray.push(showData as UserShowStats);
+    });
+    return showsDataArray;
+  } catch (err) {
+    console.error(err);
+    return null;
+  }
+};
+
+export const getShowsBy = async (by: string, asc: boolean): Promise<
+  UserShowStats[] | null
+> => {
+  const user = await findUserById();
+
+  if (!user) {
+    console.log("User not signed in!");
+    return null;
+  }
+
+  try {
+    const showsCollectionRef = collection(
+      db,
+      "show_stash",
+      user.show_stash_id,
+      "shows",
+    );
+
+    let order: OrderByDirection = asc ? "asc" : "desc";
+    const showsQuery = query(showsCollectionRef, orderBy(`${by}`, `${order}`));
+    const showsQuerySnapshot = await getDocs(showsQuery);
 
     const showsDataArray: UserShowStats[] = [];
 
