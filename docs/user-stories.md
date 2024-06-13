@@ -25,4 +25,4 @@
 - As a user I want to be able to rate the shows I've watched on a 1-10 scale ✅
 - As a user I want to be able to define shows by "Currently Watching", "Plan to Watch", "Completed" and "Dropped" ✅Half - Add Dropped option
 - As a user I want my show list to be broken up into "watching", "completed" and "planning" ✅
-- As a user I want to be able to sort my list alphabetically, by score and by total episodes
+- As a user I want to be able to sort my list alphabetically, by score and by total episodes ✅

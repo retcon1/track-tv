@@ -6,6 +6,8 @@ import { ShowDetailedInfo, Actor } from "@/app/interfaces/interfaces";
 import EditModal from "@/app/components/EditModal";
 import { Timestamp } from "firebase/firestore";
 import Headshot from "@/app/components/Headshot";
+import Image from "next/image";
+import placeholder from "@/public/poster-default.webp";
 
 const ShowInfo = ({ params }: { params: { showId: string } }) => {
   const [showDetails, setShowDetails] = useState<ShowDetailedInfo | null>(null);
@@ -54,11 +56,15 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
         <header className="mb-8 bg-neutral shadow-xl">
           <div className="mt-[-30px] flex flex-row items-start overflow-hidden sm:px-12 md:px-24 lg:px-32 xl:px-48">
             <div className="flex flex-col">
-              <img
-                src={showDetails?.image}
-                alt={`poster of ${showDetails?.title}`}
-                className="z-10 mr-[-10px] max-w-[210px] rounded-none rounded-t-md object-contain"
-              />
+              {showDetails.image ? (
+                <img
+                  src={showDetails?.image}
+                  alt={`poster of ${showDetails?.title}`}
+                  className="z-10 mr-[-10px] max-w-[210px] rounded-none rounded-t-md object-contain"
+                />
+              ) : (
+                <Image className="z-10 mr-[-10px] max-w-[210px] rounded-none rounded-t-md" src={placeholder} alt="placeholder poster" />
+              )}
               <button
                 className="btn btn-primary mb-10 w-[210px] rounded-none rounded-b-md"
                 onClick={() =>

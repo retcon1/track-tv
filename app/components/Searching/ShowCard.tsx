@@ -4,6 +4,8 @@ import { addShowToStash, removeShowFromStash } from "../../utils/dbFunctions";
 import { createShowStats } from "../../utils/searchFunctions";
 import { useRouter } from "next/navigation";
 import AddToListDropdown from "./AddToListDropdown";
+import placeholder from "@/public/poster-default.webp";
+import Image from "next/image";
 
 const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
   const { id, image, rating, title } = showBasicInfo;
@@ -44,7 +46,11 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
   return (
     <div className="card card-compact m-5 w-[210px] bg-base-300 shadow-xl">
       <figure>
-        {image ? <img src={image} /> : <p>Placeholder Image Here</p>}
+        {image ? (
+          <img src={image} />
+        ) : (
+          <Image src={placeholder} alt="placeholder poster" />
+        )}
       </figure>
       <div className="card-body">
         {rating ? <div className="badge badge-success">{rating}</div> : null}
