@@ -103,9 +103,10 @@ export const getCurrentUserShows = async (): Promise<
   }
 };
 
-export const getShowsBy = async (by: string, asc: boolean): Promise<
-  UserShowStats[] | null
-> => {
+export const getShowsBy = async (
+  by: string,
+  asc: boolean,
+): Promise<UserShowStats[] | null> => {
   const user = await findUserById();
 
   if (!user) {
@@ -152,10 +153,35 @@ export const checkShowInUserLibrary = async (
   try {
     const docRef = doc(db, "show_stash", user.show_stash_id, "shows", showId);
     const docSnap = await getDoc(docRef);
-    return docSnap.exists();
+    if (docSnap.exists()) {
+      return docSnap.data().status;
+    }
+
+    return false;
   } catch (error) {
     console.error("Error checking user library:", error);
     return false;
+  }
+};
+
+export const checkUserShowStatus = async (
+  showId: string,
+): Promise<string | undefined> => {
+  const user = await findUserByEmail();
+
+  if (!user) {
+    console.log("User not signed in!");
+    return undefined;
+  }
+
+  try {
+    const docRef = doc(db, "show_stash", user.show_stash_id, "shows", showId);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data().status;
+    }
+  } catch (error) {
+    console.error("Error checking user library:", error);
   }
 };
 

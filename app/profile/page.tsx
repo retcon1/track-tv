@@ -81,24 +81,24 @@ const Profile = () => {
           </tr>
           {userShows
             .filter((show) => show.status == "watching")
-            .map((show, index) => {
-              return <UserShowTile key={index} showDetails={{ ...show }} />;
+            .map((show) => {
+              return <UserShowTile key={show.id} showDetails={{ ...show }} />;
             })}
           <tr>
             <th className="font-bold text-success">Completed</th>
           </tr>
           {userShows
             .filter((show) => show.status == "completed")
-            .map((show, index) => {
-              return <UserShowTile key={index} showDetails={{ ...show }} />;
+            .map((show) => {
+              return <UserShowTile key={show.id} showDetails={{ ...show }} />;
             })}
           <tr>
             <th className="font-bold text-warning">Planning</th>
           </tr>
           {userShows
             .filter((show) => show.status == "planning")
-            .map((show, index) => {
-              return <UserShowTile key={index} showDetails={{ ...show }} />;
+            .map((show) => {
+              return <UserShowTile key={show.id} showDetails={{ ...show }} />;
             })}
         </tbody>
       </table>
