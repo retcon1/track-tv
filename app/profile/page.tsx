@@ -100,6 +100,14 @@ const Profile = () => {
             .map((show) => {
               return <UserShowTile key={show.id} showDetails={{ ...show }} />;
             })}
+          <tr>
+            <th className="font-bold text-error">Dropped</th>
+          </tr>
+          {userShows
+            .filter((show) => show.status == "dropped")
+            .map((show) => {
+              return <UserShowTile key={show.id} showDetails={{ ...show }} />;
+            })}
         </tbody>
       </table>
     </div>
