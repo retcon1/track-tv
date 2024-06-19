@@ -44,7 +44,7 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
   const [inLibrary, setInLibrary] = useState(showBasicInfo.inLibrary);
 
   return (
-    <div className="card card-compact m-5 w-[210px] bg-base-300 shadow-xl">
+    <div className="card card-compact lg:m-4 m-2 lg:w-[200px] w-[144px] bg-base-300 shadow-xl">
       <figure>
         {image ? (
           <img src={image} />
