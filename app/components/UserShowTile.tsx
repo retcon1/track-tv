@@ -25,6 +25,9 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
     case "planning":
       badgeCss = "badge-warning";
       break;
+    case "dropped":
+      badgeCss = "badge-error";
+      break;
   }
 
   if (!showDetails) return null;
@@ -87,7 +90,7 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
         >
           Edit
         </button>
-        <EditModal showDetails={showDetails}/>
+        <EditModal showDetails={showDetails} />
       </th>
     </tr>
   );

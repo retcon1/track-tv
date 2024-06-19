@@ -1,16 +1,21 @@
 "use client";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { logout } from "../utils/authFunctions";
-import { auth } from "../config/firebase";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const Navbar = () => {
-  const [user] = useAuthState(auth);
   const [searchTerm, setSearchTerm] = useState("");
-
+  const [user, setUser] = useState<string | null>(null);
   const router = useRouter();
+
+  // Needed to avoid hydration error when using localStorage
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setUser(window.localStorage.getItem("auth"));
+    }
+
+  }, []);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

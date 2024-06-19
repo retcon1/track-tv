@@ -1,7 +1,6 @@
 import { changeUsername } from "@/app/utils/authFunctions";
 import React, { useEffect, useState } from "react";
 import Success from "../toasts/Success";
-import { auth } from "@/app/config/firebase";
 import { useRouter } from "next/navigation";
 
 const ChangeUsernameForm = () => {
@@ -17,7 +16,6 @@ const ChangeUsernameForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(auth?.currentUser);
     if (changeUsernameForm.newUsername !== changeUsernameForm.confirmUsername)
       return alert("Usernames do not match");
     const result = await changeUsername(changeUsernameForm.newUsername);
@@ -30,18 +28,11 @@ const ChangeUsernameForm = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user: any) => {
-      if (user) {
-        setChangeUsernameForm({
-          ...changeUsernameForm,
-          currentUsername: user.displayName,
-        });
-      } else {
-        console.log("User not signed in!");
-      }
+    const user = JSON.parse(localStorage.getItem("auth") || "");
+    setChangeUsernameForm({
+      ...changeUsernameForm,
+      currentUsername: user.username || "",
     });
-
-    return () => unsubscribe();
   }, []);
 
   return (

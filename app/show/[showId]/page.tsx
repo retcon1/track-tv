@@ -8,20 +8,25 @@ import { Timestamp } from "firebase/firestore";
 import Headshot from "@/app/components/Headshot";
 import Image from "next/image";
 import placeholder from "@/public/poster-default.webp";
+import { checkUserShowStatus } from "@/app/utils/dbFunctions";
 
 const ShowInfo = ({ params }: { params: { showId: string } }) => {
   const [showDetails, setShowDetails] = useState<ShowDetailedInfo | null>(null);
   const [fullSummary, setFullSummary] = useState(false);
   const [banner, setBanner] = useState<undefined | string>(undefined);
+  const [status, setStatus] = useState<string>("Add to List");
 
   useEffect(() => {
     // Listener to check if user is signed in, needed so the component doesn't load before fetching user data to check against their list
     const unsubscribe = auth.onAuthStateChanged(async (user: any) => {
       if (user) {
         const showData = await getShowDetails(params.showId);
-        setShowDetails(showData || null); // Set default value of null if showData is undefined
+        setShowDetails(showData || null);
         const banner = await fetchShowBanner(params.showId);
         setBanner(banner);
+        const showStatus = await checkUserShowStatus(params.showId);
+        console.log(showStatus)
+        setStatus(showStatus || "Add to List");
       } else {
         console.log("User not signed in!");
       }
@@ -66,7 +71,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
                 <Image className="z-10 mr-[-10px] max-w-[210px] rounded-none rounded-t-md" src={placeholder} alt="placeholder poster" />
               )}
               <button
-                className="btn btn-primary mb-10 w-[210px] rounded-none rounded-b-md"
+                className="btn btn-primary mb-10 w-[210px] rounded-none rounded-b-md capitalize"
                 onClick={() =>
                   (
                     document.getElementById(
@@ -75,7 +80,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
                   ).showModal()
                 }
               >
-                Add to List
+                {status}
               </button>
             </div>
             <EditModal

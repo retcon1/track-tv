@@ -28,8 +28,17 @@ export const signUp = async (email: string, pass: string, username: string) => {
 
 export const signIn = async (email: string, pass: string): Promise<boolean> => {
   try {
-    const user = await signInWithEmailAndPassword(auth, email, pass);
-    console.log(user);
+    const { user } = await signInWithEmailAndPassword(auth, email, pass);
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({
+        email: user.email,
+        uid: user.uid,
+        username: user.displayName,
+        avatar: user.photoURL,
+      }),
+    );
+    window.location.reload();
     return true;
   } catch (err) {
     console.error(err);
@@ -55,6 +64,7 @@ export const signInGoogle = async () => {
 export const logout = async () => {
   try {
     await signOut(auth);
+    localStorage.removeItem("auth");
     window.location.href = "/";
   } catch (err) {
     console.error(err);
@@ -94,6 +104,11 @@ export const changeUsername = async (newUsername: string) => {
   try {
     await updateDoc(userRef, { username: newUsername });
     await updateProfile(user, { displayName: newUsername });
+    const authData = JSON.parse(localStorage.getItem("auth") || "");
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({ ...authData, username: newUsername }),
+    );
     return true;
   } catch (error) {
     console.error("Error updating username:", error);
