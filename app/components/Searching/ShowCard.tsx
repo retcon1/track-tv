@@ -44,7 +44,7 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
   const [inLibrary, setInLibrary] = useState(showBasicInfo.inLibrary);
 
   return (
-    <div className="card card-compact lg:m-4 m-2 lg:w-[200px] w-[144px] bg-base-300 shadow-xl">
+    <div className="card card-compact m-2 w-[144px] bg-base-300 shadow-xl lg:m-4 lg:w-[180px]">
       <figure>
         {image ? (
           <img src={image} />
@@ -53,8 +53,12 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
         )}
       </figure>
       <div className="card-body">
-        {rating ? <div className="badge badge-success">{rating}</div> : null}
-        <h2 className="card-title">{title}</h2>
+        {rating ? (
+          <div className="badge badge-success badge-sm lg:badge-lg">
+            {rating}
+          </div>
+        ) : null}
+        <h2 className="lg:card-title">{title}</h2>
       </div>
       <button
         className="btn btn-outline btn-primary w-auto rounded-none rounded-t-xl"

@@ -11,10 +11,9 @@ const Navbar = () => {
 
   // Needed to avoid hydration error when using localStorage
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       setUser(window.localStorage.getItem("auth"));
     }
-
   }, []);
 
   const handleSearch = (e: React.FormEvent) => {
@@ -26,78 +25,17 @@ const Navbar = () => {
   if (user)
     return (
       <div className="navbar relative z-40 bg-transparent opacity-30 transition-all duration-500 ease-in-out hover:bg-neutral hover:opacity-100 dark:bg-transparent">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />
-              </svg>
-            </div>
-            <ul
-              tabIndex={0}
-              className="menu dropdown-content menu-sm z-[1] mt-3 w-52 rounded-box bg-base-100 p-2 shadow"
-            >
-              <li>
-                <a>Item 1</a>
-              </li>
-              <li>
-                <a>Parent</a>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a>Item 3</a>
-              </li>
-            </ul>
-          </div>
-          <a className="btn btn-ghost ml-0 text-xl lg:ml-20" href="/">
+        <div className="flex-1">
+          <a className="btn btn-ghost text-xl" href="/">
             trackTV
           </a>
         </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
-            <li>
-              <a>Item 1</a>
-            </li>
-            <li>
-              <details>
-                <summary>Parent</summary>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
-            <li>
-              <a>Item 3</a>
-            </li>
-          </ul>
-          <label className="input input-bordered mr-2 flex items-center gap-2">
+        <div className="flex-none gap-2">
+          <div className="form-control">
             <input
               type="text"
-              className="grow"
               placeholder="Search"
+              className="input input-bordered w-24 md:w-auto"
               onChange={(e) => {
                 setSearchTerm(e.target.value);
               }}
@@ -108,25 +46,7 @@ const Navbar = () => {
                 }
               }}
             />
-            <button
-              className="hover:cursor-pointer"
-              onClick={handleSearch}
-              disabled={searchTerm.length < 1}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                className="h-4 w-4 opacity-70"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
-          </label>
+          </div>
           <div className="dropdown dropdown-end dropdown-hover">
             <div
               tabIndex={0}
