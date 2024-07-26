@@ -47,7 +47,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="overflow-x-auto px-0 md:px-20 ">
+    <div className="overflow-x-auto sm:px-12 md:px-24 lg:px-48 xl:px-60">
       <table className="table">
         <thead>
           <tr>

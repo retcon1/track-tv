@@ -11,6 +11,7 @@ import { Timestamp } from "firebase/firestore";
 import StarScale from "./StarScale";
 import Warning from "./toasts/Warning";
 import Success from "./toasts/Success";
+import XSymbolSVG from "./icons/XSymbolSVG";
 
 interface EditModalProps {
   showDetails: UserShowStats;
@@ -135,9 +136,9 @@ const EditModal = ({ showDetails }: EditModalProps) => {
       {added && <Success text={successText} />}
       {removed && <Warning text="Removed from list!" />}
       <dialog id={`my_modal_${showDetails.id}`} className="modal">
-        <div className="modal-box h-1/2 w-11/12 bg-neutral">
+        <div className="modal-box w-[100%] bg-neutral sm:h-1/2 sm:max-h-96 sm:min-h-[362px] sm:w-11/12">
           <h3 className="mb-5 text-lg font-bold">{defaultUserData.title}</h3>
-          <div className="flex flex-row">
+          <div className="flex flex-col items-center justify-center sm:flex-row">
             <label className="form-control mb-5 mr-5 w-full max-w-xs">
               <div className="label">
                 <span className="label-text">Status</span>
@@ -173,12 +174,12 @@ const EditModal = ({ showDetails }: EditModalProps) => {
               />
             </label>
           </div>
-          <div className="flex flex-row">
+          <div className="mt-3 flex flex-col items-center sm:mt-0 sm:flex-row">
             <div className="mr-5 flex flex-col">
               <div className="label">
                 <span className="label-text">Progress</span>
               </div>
-              <label className="input flex max-w-[14rem] items-center ">
+              <label className="input ml-5 flex max-w-[14rem] items-center sm:ml-0">
                 <input
                   type="number"
                   className="mr-20 max-w-[4rem]"
@@ -198,11 +199,11 @@ const EditModal = ({ showDetails }: EditModalProps) => {
                 </span>
               </label>
             </div>
-            <div className="flex flex-col">
+            <div className="mt-3 flex flex-col sm:mt-0">
               <div className="label">
                 <span className="label-text">Started Watching</span>
               </div>
-              <label className="input flex max-w-[14rem] items-center ">
+              <label className="input flex max-w-[14rem] items-center">
                 <input
                   type="date"
                   defaultValue={userData.started_watching
@@ -221,21 +222,27 @@ const EditModal = ({ showDetails }: EditModalProps) => {
               </label>
             </div>
           </div>
-          <div className="modal-action">
-            <form method="dialog">
+          <div className="modal-action flex-col items-center px-5 sm:flex-row">
+            <form method="dialog" className="flex flex-col sm:flex-row">
+              <button
+                className="btn btn-primary min-w-[166px] sm:mr-4 sm:mt-0 sm:min-w-[150px]"
+                onClick={handleListEdit}
+              >
+                Save
+              </button>
               {userData.inLibrary && (
                 <button
-                  className="btn btn-warning mr-4"
+                  className="btn btn-warning sm:mr-4 mt-5 sm:mt-0"
                   onClick={removeFromUserList}
                 >
                   Delete Entry
                 </button>
               )}
-              <button className="btn btn-primary mr-4" onClick={handleListEdit}>
-                Save
-              </button>
-              <button className="btn btn-outline btn-primary">
+              <button className="btn btn-outline btn-primary mt-3 max-w-[166px] sm:mt-0">
                 Discard Changes
+              </button>
+              <button className="btn btn-link absolute right-0 top-0">
+                <XSymbolSVG />
               </button>
             </form>
           </div>

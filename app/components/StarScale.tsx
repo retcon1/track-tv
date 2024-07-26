@@ -13,7 +13,7 @@ const StarScale = ({ rating, setRating, index }: RatingProps) => {
   };
 
   return (
-    <div className="rating rating-half rating-lg">
+    <div className="rating rating-half rating-lg flex self-center">
       <input
         type="radio"
         name={`rating-${index}`}

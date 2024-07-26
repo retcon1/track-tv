@@ -61,7 +61,7 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
               ></div>{" "}
               {showDetails.title}
             </div>
-            <div className="text-sm opacity-50">Started {formattedDate}</div>
+            {/* <div className="text-sm opacity-50">Started {formattedDate}</div> */}
           </div>
         </div>
       </td>
