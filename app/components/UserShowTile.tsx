@@ -43,16 +43,33 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
       <td>
         <div className="flex items-center gap-3">
           <Link
-            className="avatar hover:cursor-pointer"
+            className="avatar hidden hover:cursor-pointer sm:inline-flex"
             href={`/show/${showDetails.id}`}
           >
             <div className="mask mask-squircle h-12 w-12">
               <img
                 src={showDetails.image}
-                alt="Avatar Tailwind CSS Component"
+                alt={`poster of ${showDetails.title}`}
               />
             </div>
           </Link>
+          <div
+            className="avatar hover:cursor-pointer sm:hidden"
+            onClick={() =>
+              (
+                document.getElementById(
+                  `my_modal_${showDetails.id}`,
+                ) as HTMLDialogElement
+              ).showModal()
+            }
+          >
+            <div className="mask mask-squircle h-12 w-12">
+              <img
+                src={showDetails.image}
+                alt={`poster of ${showDetails.title}`}
+              />
+            </div>
+          </div>
           <div>
             <div className="font-bold">
               <div
@@ -79,7 +96,7 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
       </td>
       <th>
         <button
-          className="btn btn-ghost btn-xs"
+          className="btn btn-ghost btn-xs hidden sm:inline-flex"
           onClick={() =>
             (
               document.getElementById(

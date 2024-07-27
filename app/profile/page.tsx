@@ -59,7 +59,7 @@ const Profile = () => {
               Title
             </th>
             <th
-              className="hover:cursor-pointer hover:text-white"
+              className="p-0 hover:cursor-pointer hover:text-white sm:p-3"
               onClick={() => setOrder({ by: "rating", asc: !order.asc })}
             >
               Rating
