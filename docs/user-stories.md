@@ -26,8 +26,10 @@
 - As a user I want to be able to define shows by "Currently Watching", "Plan to Watch", "Completed" and "Dropped" ✅
 - As a user I want my show list to be broken up into "watching", "completed" and "planning" ✅
 - As a user I want to be able to sort my list alphabetically, by score and by total episodes ✅
+- As a user I want the shows in my list to be updated if a new season is released
+- As a user I want to be notified if a show on my list is updated and moved out of "completed" 
 
 ### Styling
 
-- As a user I want to be able to browse trackTV comfortably on my phone
+- As a user I want to be able to browse trackTV comfortably on my phone ✅
 - As a user I want to be able to change the style between dark or light mode
