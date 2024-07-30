@@ -93,7 +93,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
               inLibrary: false,
             }}
           />
-          <div className="rounded-xl p-2 mb-8 mt-12 flex h-auto min-h-[270px] flex-col sm:pl-10 pl-5 ">
+          <div className="mb-8 mt-12 flex h-auto min-h-[270px] flex-col rounded-xl p-2 pl-5 sm:pl-10 ">
             <h1 className="mb-5 mt-2 text-2xl font-bold md:text-4xl">
               {showDetails.title}
             </h1>
@@ -106,7 +106,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
                         ? showDetails.summary
                         : `${showDetails.summary.slice(0, 350)}${showDetails.summary.length > 350 ? "..." : ""}`,
                     }}
-                    className="peer sm:text-sm text-xs transition-all duration-300 ease-in-out hover:text-white"
+                    className="peer text-xs transition-all duration-300 ease-in-out hover:text-white sm:text-sm"
                   />
                   {showDetails.summary.length > 350 && (
                     <button
@@ -127,18 +127,20 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
           {/* Left-Side info section */}
           <div className="mb-5 flex min-w-[210px] flex-row overflow-x-auto rounded-xl bg-neutral p-4 md:flex-col ">
             <div className="mr-4">
-              <h2 className="font-bold md:mt-2 md:text-xl mb-2">Rating</h2>
+              <h2 className="mb-2 font-bold md:mt-2 md:text-xl">Rating</h2>
               <p className="badge badge-success badge-sm md:badge-md">
                 {showDetails.rating || "N/A"}
               </p>
             </div>
             <div className="mr-4">
-              <h2 className="md:mb-1 font-bold md:mt-6 md:text-xl mb-2">Genres</h2>
+              <h2 className="mb-2 font-bold md:mb-1 md:mt-6 md:text-xl">
+                Genres
+              </h2>
               <ul className="flex md:flex-col">
                 {showDetails.genres.map((genre) => (
                   <li
                     key={genre}
-                    className="md:text-md badge mr-1 md:mb-2 h-auto overflow-hidden break-words text-center text-xs md:w-1/2"
+                    className="md:text-md badge mr-1 h-auto overflow-hidden break-words text-center text-xs md:mb-2 md:w-1/2"
                   >
                     {genre}
                   </li>
@@ -146,28 +148,34 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
               </ul>
             </div>
             <div className="mr-4">
-              <h2 className="font-bold md:mt-5 md:text-xl mb-2">Episodes</h2>
-              <p className="text-xs md:text-lg text-gray-400">{showDetails.total_episodes}</p>
+              <h2 className="mb-2 font-bold md:mt-5 md:text-xl">Episodes</h2>
+              <p className="text-xs text-gray-400 md:text-lg">
+                {showDetails.total_episodes}
+              </p>
             </div>
             <div className="mr-4">
-              <h2 className="font-bold md:mt-5 md:text-xl mb-2">Runtime</h2>
-              <p className="text-xs md:text-lg text-gray-400">
+              <h2 className="mb-2 font-bold md:mt-5 md:text-xl">Runtime</h2>
+              <p className="text-xs text-gray-400 md:text-lg">
                 {showDetails.runtime
                   ? `${showDetails.runtime} minutes`
                   : "unknown"}
               </p>
             </div>
             <div className="mr-4">
-              <h2 className="font-bold md:mt-5 md:text-xl mb-2">Network</h2>
-              <p className="text-xs md:text-lg text-gray-400">{showDetails.network}</p>
+              <h2 className="mb-2 font-bold md:mt-5 md:text-xl">Network</h2>
+              <p className="text-xs text-gray-400 md:text-lg">
+                {showDetails.network}
+              </p>
             </div>
             <div className="mr-4">
-              <h2 className="font-bold md:mt-5 md:text-xl mb-2">Status</h2>
-              <p className="text-xs md:text-lg text-gray-400">{showDetails.status}</p>
+              <h2 className="mb-2 font-bold md:mt-5 md:text-xl">Status</h2>
+              <p className="text-xs text-gray-400 md:text-lg">
+                {showDetails.status}
+              </p>
             </div>
           </div>
           {/* Cast section */}
-          <div className="mb-5 md:ml-6 flex flex-col rounded-xl bg-neutral p-4 md:w-full">
+          <div className="mb-5 flex max-h-[27rem] max-w-3xl flex-col rounded-xl bg-neutral p-4 md:ml-6 md:w-full">
             <h2 className="mb-3 ml-1 text-lg font-bold">Cast</h2>
             {showDetails.cast.length === 0 ? (
               <p className="ml-5 font-bold">No cast found</p>

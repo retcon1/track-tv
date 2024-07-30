@@ -161,6 +161,7 @@ const EditModal = ({ showDetails }: EditModalProps) => {
                 <option value="planning">planning</option>
                 <option value="completed">completed</option>
                 <option value="dropped">dropped</option>
+                <option value="paused">paused</option>
               </select>
             </label>
             <label className="form-control w-full max-w-xs">
@@ -232,7 +233,7 @@ const EditModal = ({ showDetails }: EditModalProps) => {
               </button>
               {userData.inLibrary && (
                 <button
-                  className="btn btn-warning sm:mr-4 mt-5 sm:mt-0"
+                  className="btn btn-warning mt-5 sm:mr-4 sm:mt-0"
                   onClick={removeFromUserList}
                 >
                   Delete Entry

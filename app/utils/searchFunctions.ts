@@ -36,7 +36,7 @@ const extractBasicShowInfo = (
   return showInfo;
 };
 
-const getNumberOfEpisodes = async (showId: string) => {
+export const getNumberOfEpisodes = async (showId: string) => {
   try {
     const response = await axios.get(
       `https://api.tvmaze.com/shows/${showId}/episodes`,
@@ -66,8 +66,6 @@ export const getShowDetails = async (showId: string) => {
     const response = await axios.get(
       `https://api.tvmaze.com/shows/${showId}?embed=cast`,
     );
-    // TODO - refactor this so that it doesn't need to make this call again
-
     const inLibrary = await checkShowInUserLibrary(showId);
     const showData = extractDetailedShowInfo(response.data, inLibrary);
     const episodes = await getNumberOfEpisodes(showId);
