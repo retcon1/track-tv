@@ -33,7 +33,7 @@ export const updateShows = async () => {
         const docRef = doc.ref;
         await setDoc(
           docRef,
-          { status: "watching", total_episodes: episodes },
+          { status: "paused", total_episodes: episodes },
           { merge: true },
         );
       }

@@ -22,8 +22,6 @@ const Profile = () => {
       }
       updateShows();
     });
-
-    
   }, [order]);
 
   if (loading) {
@@ -109,6 +107,14 @@ const Profile = () => {
           </tr>
           {userShows
             .filter((show) => show.status == "dropped")
+            .map((show) => {
+              return <UserShowTile key={show.id} showDetails={{ ...show }} />;
+            })}
+          <tr>
+            <th className="font-bold text-secondary">Paused</th>
+          </tr>
+          {userShows
+            .filter((show) => show.status == "paused")
             .map((show) => {
               return <UserShowTile key={show.id} showDetails={{ ...show }} />;
             })}

@@ -161,6 +161,7 @@ const EditModal = ({ showDetails }: EditModalProps) => {
                 <option value="planning">planning</option>
                 <option value="completed">completed</option>
                 <option value="dropped">dropped</option>
+                <option value="paused">paused</option>
               </select>
             </label>
             <label className="form-control w-full max-w-xs">

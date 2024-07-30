@@ -28,6 +28,9 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
     case "dropped":
       badgeCss = "badge-error";
       break;
+    case "paused":
+      badgeCss = "badge-secondary";
+      break;
   }
 
   if (!showDetails) return null;
