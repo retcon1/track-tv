@@ -6,6 +6,7 @@ import { auth } from "../config/firebase";
 import { UserShowStats } from "../interfaces/interfaces";
 import Link from "next/link";
 import UserShowTile from "../components/UserShowTile";
+import { updateShows } from "../utils/updateFunctions";
 
 const Profile = () => {
   const [userShows, setUserShows] = useState<UserShowStats[]>([]);
@@ -19,7 +20,10 @@ const Profile = () => {
         setUserShows(currentShows);
         setLoading(false);
       }
+      updateShows();
     });
+
+    
   }, [order]);
 
   if (loading) {

@@ -19,13 +19,13 @@ const AddEp = ({
     <div className="row flex items-center">
       {epNum !== total_episodes ? (
         <button
-          className="btn btn-square btn-outline btn-xs px-3 mr-2"
+          className="btn btn-square btn-outline btn-xs mr-2 px-3"
           onClick={() => addEp(id)}
         >
           +
         </button>
       ) : null}
-      <p >
+      <p>
         {epNum}/{total_episodes}
       </p>
     </div>

@@ -232,7 +232,7 @@ const EditModal = ({ showDetails }: EditModalProps) => {
               </button>
               {userData.inLibrary && (
                 <button
-                  className="btn btn-warning sm:mr-4 mt-5 sm:mt-0"
+                  className="btn btn-warning mt-5 sm:mr-4 sm:mt-0"
                   onClick={removeFromUserList}
                 >
                   Delete Entry
