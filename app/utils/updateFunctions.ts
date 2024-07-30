@@ -1,11 +1,9 @@
 import { collection, getDocs, setDoc } from "firebase/firestore";
 import { findUserById } from "./dbFunctions";
 import { db } from "../config/firebase";
-import { UserShowStats } from "../interfaces/interfaces";
 import { getNumberOfEpisodes } from "./searchFunctions";
 
 export const updateShows = async () => {
-  console.log("Updating shows...");
   const user = await findUserById();
 
   if (!user) {
@@ -27,21 +25,22 @@ export const updateShows = async () => {
     const updatePromises = showsQuerySnapshot.docs.map(async (doc) => {
       const showData = doc.data();
       const episodes = await getNumberOfEpisodes(showData.id);
-      console.log(episodes);
       if (episodes > showData.total_episodes) {
         updatedShows.push(showData.title);
         const docRef = doc.ref;
-        await setDoc(
-          docRef,
-          { status: "paused", total_episodes: episodes },
-          { merge: true },
-        );
+        if (showData.status === "completed") {
+          await setDoc(
+            docRef,
+            { status: "paused", total_episodes: episodes },
+            { merge: true },
+          );
+        } else {
+          await setDoc(docRef, { total_episodes: episodes }, { merge: true });
+        }
       }
     });
 
     await Promise.all(updatePromises); // Wait for all updates to complete
-
-    console.log(updatedShows);
 
     return updatedShows;
   } catch (err) {
