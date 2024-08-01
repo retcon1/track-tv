@@ -106,7 +106,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
                         ? showDetails.summary
                         : `${showDetails.summary.slice(0, 350)}${showDetails.summary.length > 350 ? "..." : ""}`,
                     }}
-                    className="peer text-xs transition-all duration-300 ease-in-out hover:text-white sm:text-sm"
+                    className="peer max-w-7xl text-xs transition-all duration-300 ease-in-out hover:text-white sm:text-sm"
                   />
                   {showDetails.summary.length > 350 && (
                     <button
@@ -175,12 +175,12 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
             </div>
           </div>
           {/* Cast section */}
-          <div className="mb-5 flex max-h-[27rem] max-w-3xl flex-col rounded-xl bg-neutral p-4 md:ml-6 md:w-full">
+          <div className="mb-5 flex xl:max-h-[27rem] max-w-3xl flex-col rounded-xl bg-neutral p-4 md:ml-6 md:w-full">
             <h2 className="mb-3 ml-1 text-lg font-bold">Cast</h2>
             {showDetails.cast.length === 0 ? (
               <p className="ml-5 font-bold">No cast found</p>
             ) : null}
-            <ul className="flex flex-row flex-wrap justify-end md:justify-start md:gap-5 ">
+            <ul className="flex flex-row flex-wrap justify-end md:justify-start md:gap-5">
               {showDetails.cast
                 .slice(0, 8)
                 .map((actor: Actor, index: number) => (

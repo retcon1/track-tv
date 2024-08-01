@@ -11,7 +11,7 @@ const Headshot = ({ actor, index }: HeadshotProps) => {
   return (
     <li
       key={index}
-      className="mb-6 flex flex-col items-center text-center w-32 md:w-40"
+      className="mb-6 flex flex-col items-center text-center w-32 md:w-36"
     >
       {actor.headshot ? (
         <>
