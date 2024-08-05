@@ -26,7 +26,7 @@ const Navbar = () => {
     return (
       <div className="navbar relative z-40 bg-transparent opacity-30 backdrop-blur-xl transition-all duration-500 ease-in-out hover:bg-neutral hover:opacity-80 dark:bg-transparent">
         <div className="flex-1">
-          <a className="btn btn-ghost text-xl" href="/">
+          <a className="btn btn-ghost text-xl" href="/profile">
             trackTV
           </a>
         </div>

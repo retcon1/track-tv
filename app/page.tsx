@@ -11,11 +11,11 @@ export default function Home() {
   const router = useRouter();
   const [user] = useAuthState(auth);
 
-  useEffect(() => {
-    if (user) {
-      router.push("/profile");
-    }
-  }, [user, router]);
+  // useEffect(() => {
+  //   if (user) {
+  //     router.push("/profile");
+  //   }
+  // }, [user, router]);
 
   return (
     <main className="p-8 sm:p-16">
