@@ -18,8 +18,11 @@
   list-style: none;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 .hero-container {
-  overflow: hidden !important;
   position: absolute;
   top: 0;
   left: 0;
@@ -28,7 +31,6 @@
 }
 
 .hero-container::before {
-  overflow: hidden !important;
   content: "";
   position: absolute;
   top: 0;

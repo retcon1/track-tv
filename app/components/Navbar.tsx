@@ -24,10 +24,10 @@ const Navbar = () => {
   // If user is logged in, show the navbar with extra functionality
   if (user)
     return (
-      <div className="navbar relative z-40 bg-transparent opacity-30 backdrop-blur-xl transition-all duration-500 ease-in-out hover:bg-neutral hover:opacity-80 dark:bg-transparent">
+      <div className="navbar relative z-40 opacity-30 backdrop-blur-lg transition-all duration-500 ease-in-out hover:bg-neutral hover:bg-opacity-50 hover:opacity-100">
         <div className="flex-1">
           <a className="btn btn-ghost text-xl" href="/profile">
-            trackTV
+            <span className=""> trackTV </span>
           </a>
         </div>
         <div className="flex-none gap-2">
@@ -84,7 +84,7 @@ const Navbar = () => {
   // If user is not logged in, show the navbar only with Login button
   // TODO add search functionality when user is not logged in
   return (
-    <div className="navbar bg-base-300 bg-opacity-70 dark:bg-neutral">
+    <div className="navbar backdrop-blur-xl">
       <div className="navbar-start">
         <div className="dropdown">
           <a className="btn btn-ghost text-xl" href="/">
