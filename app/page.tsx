@@ -11,14 +11,14 @@ export default function Home() {
   const router = useRouter();
   const [user] = useAuthState(auth);
 
-  // useEffect(() => {
-  //   if (user) {
-  //     router.push("/profile");
-  //   }
-  // }, [user, router]);
+  useEffect(() => {
+    if (user) {
+      router.push("/profile");
+    }
+  }, [user, router]);
 
   return (
-    <main className="p-16">
+    <main className="p-8 sm:p-16">
       <div className="w-[400px]">
         <h1 className="mb-10 mt-10 flex text-left text-3xl md:text-6xl font-bold text-white">
           All your shows
