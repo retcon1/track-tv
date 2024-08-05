@@ -24,7 +24,7 @@ const Navbar = () => {
   // If user is logged in, show the navbar with extra functionality
   if (user)
     return (
-      <div className="navbar relative z-40 bg-transparent opacity-30 transition-all duration-500 ease-in-out hover:bg-neutral hover:opacity-100 dark:bg-transparent">
+      <div className="navbar relative z-40 bg-transparent opacity-30 backdrop-blur-xl transition-all duration-500 ease-in-out hover:bg-neutral hover:opacity-80 dark:bg-transparent">
         <div className="flex-1">
           <a className="btn btn-ghost text-xl" href="/">
             trackTV

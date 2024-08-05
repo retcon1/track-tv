@@ -45,9 +45,9 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
 
   return (
     <div className="card card-compact m-2 w-[144px] bg-base-300 shadow-xl lg:m-4 lg:w-[180px]">
-      <figure>
+      <figure className="relative h-48 lg:h-[252.85px] w-full">
         {image ? (
-          <img src={image} />
+          <Image alt={`poster of ${title}`} fill  src={image} />
         ) : (
           <Image src={placeholder} alt="placeholder poster" />
         )}

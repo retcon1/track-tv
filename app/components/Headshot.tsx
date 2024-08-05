@@ -15,14 +15,18 @@ const Headshot = ({ actor, index }: HeadshotProps) => {
     >
       {actor.headshot ? (
         <>
-          <img
+          <Image
             src={actor.headshot}
             alt={`headshot of ${actor.castName}`}
+            width={96}
+            height={96}
             className="mask mask-square z-20 h-24 w-24 rounded-md object-cover transition-all duration-300 ease-in-out hover:opacity-0"
           />
-          <img
+          <Image
             src={actor.charHeadshot || actor.headshot}
             alt={`picture of ${actor.charName}`}
+            width={96}
+            height={96}
             className="mask mask-square z-10 mt-[-6rem] h-24 w-24 rounded-md object-cover transition-opacity duration-300"
           />
         </>

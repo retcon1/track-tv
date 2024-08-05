@@ -63,7 +63,7 @@ const Profile = () => {
     return (
       <div className="flex h-[80vh] items-center justify-center text-center align-middle">
         <h1 className="align-middle text-2xl font-bold">
-          You don't have any shows yet! How about adding some
+          You don&apos;t have any shows yet! How about adding some
           <Link href="/show-search">
             <strong> here</strong>
           </Link>

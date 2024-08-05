@@ -3,6 +3,7 @@ import { UserShowStats } from "../interfaces/interfaces";
 import AddEp from "./AddEp";
 import Link from "next/link";
 import EditModal from "./EditModal";
+import Image from "next/image";
 
 interface EditModalProps {
   showDetails: UserShowStats;
@@ -50,9 +51,11 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
             href={`/show/${showDetails.id}`}
           >
             <div className="mask mask-squircle h-12 w-12">
-              <img
-                src={showDetails.image}
+              <Image
+                src={showDetails.image ?? ""}
                 alt={`poster of ${showDetails.title}`}
+                width={48}
+                height={48}
               />
             </div>
           </Link>
@@ -67,9 +70,11 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
             }
           >
             <div className="mask mask-squircle h-12 w-12">
-              <img
-                src={showDetails.image}
+              <Image
+                src={showDetails.image ?? ""}
                 alt={`poster of ${showDetails.title}`}
+                width={48}
+                height={48}
               />
             </div>
           </div>

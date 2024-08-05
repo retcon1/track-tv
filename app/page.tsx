@@ -1,30 +1,31 @@
 "use client";
-import ShowSplash from "@/public/shows-2021-edited.webp";
+import ShowSplash from "@/public/hero-show.webp";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./config/firebase";
+import "../app/globals.css";
 
 export default function Home() {
   const router = useRouter();
   const [user] = useAuthState(auth);
 
-  useEffect(() => {
-    if (user) {
-      router.push("/profile");
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     router.push("/profile");
+  //   }
+  // }, [user, router]);
 
   return (
     <main className="p-16">
-      <div className="w-[40vw]">
-        <h1 className="mb-10 mt-10 flex text-left text-6xl font-bold text-white">
+      <div className="w-[400px]">
+        <h1 className="mb-10 mt-10 flex text-left text-3xl md:text-6xl font-bold text-white">
           All your shows
           <br />
           in one place.
         </h1>
-        <h2 className="mb-5 text-xl font-bold text-white">
+        <h2 className="mb-5 text-sm sm:text-lg md:text-xl font-bold text-white">
           The golden age of television needs to be tracked somehow! <br />
           Click below to get started...
         </h2>
@@ -32,9 +33,9 @@ export default function Home() {
           Sign Up
         </a>
       </div>
-      <div>
+      <div className="hero-container">
         <Image
-          className="absolute right-0 top-[4.25rem] z-[-1] w-[60vw]"
+          className=""
           src={ShowSplash}
           alt="collage of tv shows"
           priority

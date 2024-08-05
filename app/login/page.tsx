@@ -15,7 +15,7 @@ const Login = () => {
     if (user) {
       router.push("/profile");
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div className="flex flex-col items-center justify-center px-4 py-8 md:px-8">

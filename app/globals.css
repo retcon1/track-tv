@@ -17,3 +17,47 @@
   box-sizing: border-box;
   list-style: none;
 }
+
+.hero-container {
+  overflow: hidden !important;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  min-width: 1000px;
+}
+
+.hero-container::before {
+  overflow: hidden !important;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 675px;
+  left: 50%;
+  pointer-events: none;
+  position: absolute;
+  transform: translateX(-50%);
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  background: linear-gradient(
+      90deg,
+      rgba(15, 23, 42, 1) 0%,
+      rgba(15, 23, 42, 0.986) 5%,
+      rgba(15, 23, 42, 0) 20%,
+      rgba(15, 23, 42, 0) 80%,
+      rgba(15, 23, 42, 0.986) 95%,
+      rgba(15, 23, 42) 100%
+    ),
+    linear-gradient(
+      0deg,
+      rgba(15, 23, 42, 1) 0%,
+      rgba(15, 23, 42, 1) 10%,
+      rgba(15, 23, 42, 0) 30%,
+      rgba(15, 23, 42, 0) 70%,
+      rgba(15, 23, 42, 0) 90%,
+      rgba(15, 23, 42, 0) 100%
+    );
+  z-index: 0;
+}

@@ -48,10 +48,13 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
   return (
     <>
       {banner ? (
-        <img
+        <Image
           src={banner}
           alt={`banner of ${showDetails?.title}`}
           className="z-0 mt-[-5rem] h-52 w-full object-cover object-center md:h-80"
+          height={208}
+          width={1280}
+          priority
         />
       ) : (
         <div className="mb-8"></div>
@@ -60,10 +63,13 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
         <div className="mt-[-30px] flex flex-row items-start overflow-hidden sm:px-12 md:px-24 lg:px-32 xl:px-48">
           <div className="flex flex-col justify-center ">
             {showDetails.image ? (
-              <img
+              <Image
                 src={showDetails?.image}
                 alt={`poster of ${showDetails?.title}`}
-                className="z-10 mr-[-10px] w-[210px] rounded-none rounded-t-md object-contain"
+                className="z-10 mr-[-10px] rounded-none rounded-t-md object-contain"
+                width={210}
+                height={295}
+                priority
               />
             ) : (
               <Image
@@ -175,7 +181,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
             </div>
           </div>
           {/* Cast section */}
-          <div className="mb-5 flex xl:max-h-[27rem] max-w-3xl flex-col rounded-xl bg-neutral p-4 md:ml-6 md:w-full">
+          <div className="mb-5 flex max-w-3xl flex-col rounded-xl bg-neutral p-4 md:ml-6 md:w-full xl:max-h-[27rem]">
             <h2 className="mb-3 ml-1 text-lg font-bold">Cast</h2>
             {showDetails.cast.length === 0 ? (
               <p className="ml-5 font-bold">No cast found</p>
