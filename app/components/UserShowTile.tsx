@@ -93,7 +93,7 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
       <td
         className={`font-bold ${showDetails.rating && showDetails.rating <= 5 ? "text-accent" : "text-success"}`}
       >
-        {showDetails.rating}
+        {showDetails.rating !== 0 ? showDetails.rating : ""}
       </td>
       <td>
         <AddEp

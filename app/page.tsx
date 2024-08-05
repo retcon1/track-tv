@@ -18,7 +18,7 @@ export default function Home() {
   }, [user, router]);
 
   return (
-    <main className="p-8 sm:p-16">
+    <main className="p-8 sm:p-16 min-h-screen">
       <div className="w-[400px]">
         <h1 className="mb-10 mt-10 flex text-left text-3xl font-bold text-white md:text-6xl">
           All your shows
