@@ -8,6 +8,8 @@ import Link from "next/link";
 import UserShowTile from "../components/UserShowTile";
 import { updateShows } from "../utils/updateFunctions";
 import Success from "../components/toasts/Success";
+import { useRouter } from "next/navigation";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Profile = () => {
   const [userShows, setUserShows] = useState<UserShowStats[]>([]);
@@ -16,38 +18,45 @@ const Profile = () => {
   const [notification, setNotification] = useState("");
   const [popup, setPopup] = useState(false);
 
+  const router = useRouter();
+  const [user] = useAuthState(auth);
+
   useEffect(() => {
-  onAuthStateChanged(auth, async () => {
-    const currentShows = await getShowsBy(order.by, order.asc);
-    if (currentShows) {
-      setUserShows(currentShows);
-      setLoading(false);
-    }
-
-    // Check if the user has any shows with new episodes once a day
-    const lastUpdate = localStorage.getItem('lastUpdate');
-    const now = new Date().getTime();
-    const oneDay = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
-
-    if (!lastUpdate || now - parseInt(lastUpdate) > oneDay) {
-      const changedShows = await updateShows();
-
-      if (changedShows && changedShows.length > 0) {
-        let text = "These shows have new episodes: ";
-        changedShows.forEach((show, index) => {
-          text += `${show}${index < changedShows.length - 1 ? ', ' : '.'}`;
-        });
-        setNotification(text);
-        setPopup(true);
-        setTimeout(() => {
-          setPopup(false);
-        }, 10000);
+    onAuthStateChanged(auth, async () => {
+      const currentShows = await getShowsBy(order.by, order.asc);
+      if (currentShows) {
+        setUserShows(currentShows);
+        setLoading(false);
       }
 
-      localStorage.setItem('lastUpdate', now.toString());
+      // Check if the user has any shows with new episodes once a day
+      const lastUpdate = localStorage.getItem("lastUpdate");
+      const now = new Date().getTime();
+      const oneDay = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+      if (!lastUpdate || now - parseInt(lastUpdate) > oneDay) {
+        const changedShows = await updateShows();
+
+        if (changedShows && changedShows.length > 0) {
+          let text = "These shows have new episodes: ";
+          changedShows.forEach((show, index) => {
+            text += `${show}${index < changedShows.length - 1 ? ", " : "."}`;
+          });
+          setNotification(text);
+          setPopup(true);
+          setTimeout(() => {
+            setPopup(false);
+          }, 10000);
+        }
+
+        localStorage.setItem("lastUpdate", now.toString());
+      }
+    });
+
+    if (!user) {
+      router.push("/");
     }
-  });
-}, [order]);
+  }, [order]);
 
   if (loading) {
     return (
