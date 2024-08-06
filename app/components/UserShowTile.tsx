@@ -47,7 +47,7 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
       <td>
         <div className="flex items-center gap-3">
           <Link
-            className="avatar hidden hover:cursor-pointer sm:inline-flex"
+            className="avatar hover:cursor-pointer"
             href={`/show/${showDetails.id}`}
           >
             <div className="mask mask-squircle h-12 w-12">
@@ -59,32 +59,24 @@ const UserShowTile = ({ showDetails }: EditModalProps) => {
               />
             </div>
           </Link>
-          <div
-            className="avatar hover:cursor-pointer sm:hidden"
-            onClick={() =>
-              (
-                document.getElementById(
-                  `my_modal_${showDetails.id}`,
-                ) as HTMLDialogElement
-              ).showModal()
-            }
-          >
-            <div className="mask mask-squircle h-12 w-12">
-              <Image
-                src={showDetails.image ?? ""}
-                alt={`poster of ${showDetails.title}`}
-                width={48}
-                height={48}
-              />
-            </div>
-          </div>
           <div>
             <div className="font-bold">
               <div
                 className={`badge badge-xs ${badgeCss}`}
                 title={showDetails.status}
               ></div>{" "}
-              {showDetails.title}
+              <div
+                className="avatar sm:disabled hover:cursor-pointer"
+                onClick={() =>
+                  (
+                    document.getElementById(
+                      `my_modal_${showDetails.id}`,
+                    ) as HTMLDialogElement
+                  ).showModal()
+                }
+              >
+                {showDetails.title}
+              </div>
             </div>
             {/* <div className="text-sm opacity-50">Started {formattedDate}</div> */}
           </div>
