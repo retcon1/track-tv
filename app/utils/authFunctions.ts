@@ -5,12 +5,10 @@ import {
   signOut,
   updatePassword,
   updateProfile,
-  signInWithRedirect,
 } from "firebase/auth";
 import { auth, db, googleProvider } from "../config/firebase";
 import { addUserAndShowStash, findUserByEmail } from "./dbFunctions";
 import { doc, updateDoc } from "firebase/firestore";
-import { isMobile } from "react-device-detect";
 
 export const signUp = async (email: string, pass: string, username: string) => {
   try {
@@ -51,13 +49,7 @@ export const signIn = async (email: string, pass: string): Promise<boolean> => {
 
 export const signInGoogle = async () => {
   try {
-    let googleCredentials;
-    if (isMobile) {
-      googleCredentials = await signInWithRedirect(auth, googleProvider);
-    } else {
-      googleCredentials = await signInWithPopup(auth, googleProvider);
-    }
-
+    const googleCredentials = await signInWithPopup(auth, googleProvider);
     const user = googleCredentials.user;
     const userExists = await findUserByEmail(user.email);
 
