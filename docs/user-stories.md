@@ -7,6 +7,7 @@
 - As a user I want to be able to sign in to my account ✅
 - As a user I want to be able to change my password in case it becomes compromised ✅
 - As a user I want to be able to change my username ✅
+- As a user I want to be able to change my avatar
 
 ### Searching
 
@@ -41,3 +42,4 @@
 - As a user I want to be able to click on a show from an actor's page to see its details
 - As a user I want to be able to click on a network to see what other shows they have produced
 - As a user I want to be able to see a home page with the top trending, highest rated and upcoming shows
+- As a user I want to be able to see the latest episodes from a show on its details page

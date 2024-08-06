@@ -56,6 +56,20 @@ export const signInGoogle = async () => {
     if (!userExists) {
       await addUserAndShowStash(user);
     }
+
+    console.log(user.email)
+
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({
+        email: user.email,
+        uid: user.uid,
+        username: user.displayName,
+        avatar: user.photoURL,
+      }),
+    );
+
+    window.location.reload();
   } catch (err) {
     console.error(err);
   }
