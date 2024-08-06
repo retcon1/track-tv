@@ -18,7 +18,7 @@ export default function Home() {
   }, [user, router]);
 
   return (
-    <main className="p-8 sm:p-16 min-h-screen">
+    <main className="min-h-screen p-8 sm:p-16">
       <div className="w-[400px]">
         <h1 className="mb-10 mt-10 flex text-left text-3xl font-bold text-white md:text-6xl">
           All your shows
@@ -26,7 +26,8 @@ export default function Home() {
           in one place.
         </h1>
         <h2 className="mb-5 text-sm font-bold text-white sm:text-lg md:text-xl">
-          The golden age of television needs to be tracked somehow! <br />
+          The golden age of television needs to be <br /> tracked somehow!
+          <br />
           Click below to get started...
         </h2>
         <a className="btn btn-secondary" href="/login">
