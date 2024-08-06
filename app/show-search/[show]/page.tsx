@@ -42,12 +42,10 @@ const ShowSearch = ({ params }: { params: { show: string } }) => {
   }
 
   return (
-    <div>
-      <div className="flex flex-wrap justify-center">
-        {showList.map((show) => (
-          <ShowCard key={show.id} {...show} />
-        ))}
-      </div>
+    <div className="flex flex-wrap justify-center">
+      {showList.map((show) => (
+        <ShowCard key={show.id} {...show} />
+      ))}
     </div>
   );
 };
