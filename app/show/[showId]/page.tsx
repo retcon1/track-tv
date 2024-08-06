@@ -14,7 +14,8 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
   const [showDetails, setShowDetails] = useState<ShowDetailedInfo | null>(null);
   const [fullSummary, setFullSummary] = useState(false);
   const [banner, setBanner] = useState<undefined | string>(undefined);
-  const [status, setStatus] = useState<string>("Add to List");
+  const [userStatus, setUserStatus] = useState<string>("Add to List");
+  const [buttonColour, setButtonColour] = useState<string>("btn-primary");
 
   useEffect(() => {
     // Listener to check if user is signed in, needed so the component doesn't load before fetching user data to check against their list
@@ -25,7 +26,28 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
         const banner = await fetchShowBanner(params.showId);
         setBanner(banner);
         const showStatus = await checkUserShowStatus(params.showId);
-        setStatus(showStatus || "Add to List");
+        setUserStatus(showStatus || "Add to List");
+        if (showStatus !== "Add to List") {
+          switch (showStatus) {
+            case "watching":
+              setButtonColour("btn-primary");
+              break;
+            case "completed":
+              setButtonColour("btn-success");
+              break;
+            case "planning":
+              setButtonColour("btn-warning");
+              break;
+            case "dropped":
+              setButtonColour("btn-error");
+              break;
+            case "paused":
+              setButtonColour("btn-secondary");
+              break;
+            default:
+              setButtonColour("btn-primary");
+          }
+        }
       } else {
         console.log("User not signed in!");
       }
@@ -79,7 +101,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
               />
             )}
             <button
-              className="btn btn-primary mb-10 w-[153px] rounded-none rounded-b-md capitalize md:w-[210px]"
+              className={`btn ${buttonColour} mb-10 w-[153px] rounded-none rounded-b-md capitalize md:w-[210px]`}
               onClick={() =>
                 (
                   document.getElementById(
@@ -88,7 +110,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
                 ).showModal()
               }
             >
-              {status}
+              {userStatus}
             </button>
           </div>
           <EditModal
