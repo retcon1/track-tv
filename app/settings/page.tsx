@@ -4,7 +4,7 @@ import ChangeUsernameForm from "../components/auth/ChangeUsernameForm";
 
 const Settings = () => {
   return (
-    <div className="mt-20 flex h-[80vh] flex-col items-center justify-center px-4 py-8 md:px-8">
+    <div className="flex h-auto flex-col items-center justify-center px-4 py-8 sm:mt-20 md:px-8">
       <div className="flex flex-row flex-wrap">
         <div className="m-10 rounded-3xl bg-neutral p-10">
           <h1 className="flex justify-center text-lg font-bold">
