@@ -22,6 +22,10 @@ const Profile = () => {
   const [user] = useAuthState(auth);
 
   useEffect(() => {
+    if (!user) {
+      router.push("/");
+    }
+
     onAuthStateChanged(auth, async () => {
       const currentShows = await getShowsBy(order.by, order.asc);
       if (currentShows) {
@@ -52,10 +56,6 @@ const Profile = () => {
         localStorage.setItem("lastUpdate", now.toString());
       }
     });
-
-    if (!user) {
-      router.push("/");
-    }
   }, [order]);
 
   if (loading) {
@@ -72,9 +72,9 @@ const Profile = () => {
     return (
       <div className="flex h-[80vh] items-center justify-center text-center align-middle">
         <h1 className="align-middle text-2xl font-bold">
-          You don&apos;t have any shows yet! How about adding some
+          You don&apos;t have any shows yet! How about adding some shows{" "}
           <Link href="/show-search">
-            <strong> here</strong>
+            <strong className="underline">here</strong>
           </Link>
           ?
         </h1>

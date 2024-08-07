@@ -10,13 +10,13 @@ import { getFirestore } from "firebase/firestore";
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
-  apiKey: "AIzaSyClrq_tfXGvP7fxlusBg4y4xCO4mpkqL-0",
-  authDomain: "tracktv-cc99a.firebaseapp.com",
-  projectId: "tracktv-cc99a",
-  storageBucket: "tracktv-cc99a.appspot.com",
-  messagingSenderId: "454117558344",
-  appId: "1:454117558344:web:2cf8df700a06fead57307d",
-  measurementId: "G-8SB6TTRD49",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 
 // Initialize Firebase
@@ -24,9 +24,7 @@ const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const googleProvider = new GoogleAuthProvider();
 
-export const db = getFirestore(app)
-
-
+export const db = getFirestore(app);
 
 // Don't need analytics for now...
 // const analytics = getAnalytics(app);

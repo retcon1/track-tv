@@ -17,13 +17,14 @@ const SearchHandler = () => {
       <input
         type="text"
         placeholder="Search for a show"
+        className="input input-bordered w-full max-w-xs mb-5"
         onChange={(e) => {
           setSearchTerm(e.target.value);
         }}
       />
       <button
         type="submit"
-        className="btn btn-primary"
+        className="btn btn-primary w-full"
         onClick={handleSearch}
         disabled={searchTerm.length < 1}
       >
