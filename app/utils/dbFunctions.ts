@@ -203,6 +203,7 @@ export const addUserAndShowStash = async (
     username: username,
     user_id: user.uid,
     show_stash_id: showStashDocRef.id,
+    avatar: user.photoURL || "",
   };
 
   const userDocRef = doc(userCollectionRef, user.uid);

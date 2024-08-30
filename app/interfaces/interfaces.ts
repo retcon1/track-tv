@@ -18,6 +18,7 @@ export interface UserData {
   email: string;
   show_stash_id: string;
   username: string;
+  avatar: string;
 }
 
 export interface ShowBasicInfo {

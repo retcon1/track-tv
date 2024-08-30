@@ -1,20 +1,32 @@
 "use client";
 import { logout } from "../utils/authFunctions";
-import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { auth } from "../config/firebase";
+import { UserData } from "../interfaces/interfaces";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [user, setUser] = useState<string | null>(null);
+  const [localUser, setLocalUser] = useState<UserData | null>(null);
   const router = useRouter();
+  const [user] = useAuthState(auth);
 
-  // Needed to avoid hydration error when using localStorage
   useEffect(() => {
+    // Needed to avoid hydration error when using localStorage
     if (typeof window !== "undefined") {
-      setUser(window.localStorage.getItem("auth"));
+      const localAuth = localStorage.getItem("auth");
+      if (localAuth) setLocalUser(JSON.parse(localAuth));
+
+      // If user is not logged in properly, redirect to login page
+      if (!localAuth && user) {
+        console.log("first")
+        alert("Session expired. Please log in again.");
+        logout();
+        router.push("/login");
+      }
     }
-  }, []);
+  }, [user]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,12 +34,12 @@ const Navbar = () => {
   };
 
   // If user is logged in, show the navbar with extra functionality
-  if (user)
+  if (localUser)
     return (
       <div className="navbar relative z-40 opacity-30 backdrop-blur-lg transition-all duration-500 ease-in-out hover:bg-neutral hover:bg-opacity-50 hover:opacity-100">
         <div className="flex-1">
           <a className="btn btn-ghost text-xl" href="/profile">
-            <span className=""> trackTV </span>
+            <span> trackTV </span>
           </a>
         </div>
         <div className="flex-none gap-2">
@@ -53,10 +65,10 @@ const Navbar = () => {
               role="button"
               className="avatar btn btn-circle btn-ghost"
             >
-              <div className="w-10 rounded-full">
-                <Image
+              <div className="w-15 rounded-full">
+                <img
                   alt="User Icon Placeholder"
-                  src="/user.png"
+                  src={localUser.avatar ? localUser.avatar : "/user.png"}
                   width={300}
                   height={300}
                 />

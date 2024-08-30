@@ -19,6 +19,16 @@ export const signUp = async (email: string, pass: string, username: string) => {
       pass,
     );
     const user = userCredential.user;
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({
+        email: user.email,
+        uid: user.uid,
+        username: user.displayName,
+        avatar: user.photoURL,
+      }),
+    );
+
     updateProfile(user, { displayName: username });
     await addUserAndShowStash(user, email, username);
   } catch (err) {
@@ -120,6 +130,25 @@ export const changeUsername = async (newUsername: string) => {
     localStorage.setItem(
       "auth",
       JSON.stringify({ ...authData, username: newUsername }),
+    );
+    return true;
+  } catch (error) {
+    console.error("Error updating username:", error);
+    return false;
+  }
+};
+
+export const changeAvatar = async (newAvatarUrl: string) => {
+  const user = auth?.currentUser;
+  if (!user) return alert("No user signed in!");
+
+  const userRef = doc(db, "users", user.uid);
+  try {
+    await updateProfile(user, { photoURL: newAvatarUrl });
+    const authData = JSON.parse(localStorage.getItem("auth") || "");
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({ ...authData, avatar: newAvatarUrl }),
     );
     return true;
   } catch (error) {
