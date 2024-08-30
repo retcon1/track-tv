@@ -45,7 +45,10 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
 
   return (
     <div className="card card-compact m-2 w-[144px] bg-base-300 shadow-xl lg:m-4 lg:w-[180px]">
-      <figure className="relative h-48 w-full lg:h-[252.85px]">
+      <figure
+        className="relative h-48 w-full hover:cursor-pointer lg:h-[252.85px]"
+        onClick={navigateToDetails}
+      >
         {image ? (
           <Image
             alt={`poster of ${title}`}
@@ -63,14 +66,13 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
             {rating}
           </div>
         ) : null}
-        <h2 className="lg:card-title">{title}</h2>
+        <h2
+          className="lg:card-title hover:cursor-pointer hover:underline"
+          onClick={navigateToDetails}
+        >
+          {title}
+        </h2>
       </div>
-      <button
-        className="btn btn-outline btn-primary w-auto rounded-none rounded-t-xl"
-        onClick={navigateToDetails}
-      >
-        More Info
-      </button>
       {inLibrary ? (
         <button
           className="btn btn-warning w-full rounded-none rounded-b-2xl"
