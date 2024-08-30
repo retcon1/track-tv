@@ -28,7 +28,7 @@ const ChangeAvatarForm = () => {
       >
         <p className="text-md text-center">
           We recommend uploading your avatar to a site like imgur, make sure
-          it's a square! Preferably 50px x 50px
+          it&apos;s a square! Preferably 50px x 50px
         </p>
         <label className="input input-bordered my-5 flex items-center gap-2">
           <svg
