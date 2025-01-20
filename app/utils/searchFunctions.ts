@@ -1,5 +1,9 @@
 import axios from "axios";
-import { ShowBasicInfo, ShowDetailedInfo } from "../interfaces/interfaces";
+import {
+  CastDetails,
+  ShowBasicInfo,
+  ShowDetailedInfo,
+} from "../interfaces/interfaces";
 import { checkShowInUserLibrary, getCurrentUserShows } from "./dbFunctions";
 import { Timestamp } from "firebase/firestore";
 
@@ -106,6 +110,7 @@ const extractDetailedShowInfo = (
 const extractCastInfo = (castArray: any) => {
   return castArray.map((cast: any) => {
     return {
+      id: cast.person.id,
       castName: cast.person.name,
       charName: cast.character.name,
       headshot: cast.person.image?.medium,
@@ -129,4 +134,42 @@ export const fetchShowBanner = async (showId: string) => {
   } catch (err) {
     console.error(err);
   }
+};
+
+export const getCastDetails = async (castId: string) => {
+  try {
+    const response = await axios.get(`https://api.tvmaze.com/people/${castId}`);
+    return extractCastInfoDetailed(response.data);
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const extractCastInfoDetailed = (cast: any): CastDetails => {
+  return {
+    id: cast.id,
+    name: cast.name,
+    country: cast.country.name,
+    birthday: cast.birthday,
+    age: calculateAge(cast.birthday),
+    deathday: cast.deathday,
+    headshot: cast.image.medium,
+    gender: cast.gender,
+  };
+};
+
+const calculateAge = (birthdate: string): number => {
+  const birthDate = new Date(birthdate);
+  const today = new Date();
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const monthDifference = today.getMonth() - birthDate.getMonth();
+
+  if (
+    monthDifference < 0 ||
+    (monthDifference === 0 && today.getDate() < birthDate.getDate())
+  ) {
+    age--;
+  }
+
+  return age;
 };
