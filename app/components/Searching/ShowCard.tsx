@@ -49,6 +49,11 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
         className="relative h-48 w-full hover:cursor-pointer lg:h-[252.85px]"
         onClick={navigateToDetails}
       >
+        {rating ? (
+          <div className="badge badge-success badge-sm absolute bottom-1 left-1 z-50 shadow-md lg:badge-lg">
+            {rating}
+          </div>
+        ) : null}
         {image ? (
           <Image
             alt={`poster of ${title}`}
@@ -61,11 +66,6 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
         )}
       </figure>
       <div className="card-body">
-        {rating ? (
-          <div className="badge badge-success badge-sm lg:badge-lg">
-            {rating}
-          </div>
-        ) : null}
         <h2
           className="lg:card-title hover:cursor-pointer hover:underline"
           onClick={navigateToDetails}
