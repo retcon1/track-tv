@@ -36,6 +36,18 @@ export interface Actor {
   charName: string;
   headshot: string;
   charHeadshot: string;
+  id: string;
+}
+
+export interface CastDetails {
+  id: string;
+  name: string;
+  headshot: string;
+  birthday: string;
+  age: number;
+  deathday: string;
+  country: string;
+  gender: string;
 }
 
 export interface ShowDetailedInfo {
