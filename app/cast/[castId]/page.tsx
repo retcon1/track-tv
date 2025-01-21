@@ -1,13 +1,15 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getCastDetails } from "@/app/utils/searchFunctions";
+import { getCastDetails, getCastShows } from "@/app/utils/searchFunctions";
 import Image from "next/image";
 import placeholder from "@/public/poster-default.webp";
-import { CastDetails } from "@/app/interfaces/interfaces";
+import { CastDetails, CastShowInfo } from "@/app/interfaces/interfaces";
+import CastShowCard from "@/app/components/Searching/CastShowCard";
 
 const CastInfo = ({ params }: { params: { castId: string } }) => {
   const [castDetails, setCastDetails] = useState<CastDetails | null>(null);
   const [notFound, setNotFound] = useState<boolean>(false);
+  const [castShows, setCastShows] = useState<CastShowInfo[] | null>();
 
   useEffect(() => {
     const fetchDetails = async () => {
@@ -15,6 +17,8 @@ const CastInfo = ({ params }: { params: { castId: string } }) => {
         const cast = await getCastDetails(params.castId);
         if (cast) {
           setCastDetails(cast);
+          const shows = await getCastShows(params.castId);
+          setCastShows(shows);
         } else {
           setNotFound(true);
         }
@@ -103,6 +107,14 @@ const CastInfo = ({ params }: { params: { castId: string } }) => {
             </div>
           </div>
         </header>
+        <div className="md:mx-20">
+          <h1 className="text-2xl font-bold md:text-4xl ml-5">Known For</h1>
+          <ul className="flex flex-wrap justify-center">
+            {castShows?.map((show, index) => (
+              <CastShowCard key={index} {...show} />
+            ))}
+          </ul>
+        </div>
       </>
     );
 };

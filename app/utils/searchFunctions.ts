@@ -1,6 +1,7 @@
 import axios from "axios";
 import {
   CastDetails,
+  CastShowInfo,
   ShowBasicInfo,
   ShowDetailedInfo,
 } from "../interfaces/interfaces";
@@ -12,6 +13,8 @@ const SHOW_SEARCH_URL = "https://api.tvmaze.com/search/shows?q=";
 export const searchShow = async (searchTerm: string) => {
   try {
     const response = await axios.get(`${SHOW_SEARCH_URL}${searchTerm}`);
+
+    // Fetches user shows in order to see whether they exist in the library
     const userShows = await getCurrentUserShows();
     const userShowIds = userShows?.map((show) => show.id);
     const showData = extractBasicShowInfo(response.data, userShowIds);
@@ -86,7 +89,6 @@ const extractDetailedShowInfo = (
   inLibrary: boolean,
 ): ShowDetailedInfo => {
   const cast = extractCastInfo(showData._embedded.cast);
-  console.log(showData);
 
   return {
     id: showData.id,
@@ -172,4 +174,52 @@ const calculateAge = (birthdate: string): number => {
   }
 
   return age;
+};
+
+export const getCastShows = async (
+  castId: string,
+): Promise<CastShowInfo[] | undefined> => {
+  try {
+    const response = await axios.get(
+      `https://api.tvmaze.com/people/${castId}/castcredits`,
+    );
+    const castShows = await extractCastShows(response.data);
+
+    const detailedShows: CastShowInfo[] = await Promise.all(
+      castShows.map(async (show: any) => {
+        const details = await getCastShowDetails(show.url);
+        return { charName: show.charName, ...details };
+      }),
+    );
+
+    return detailedShows;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// Used on cast pages to display what shows they've been in
+export const getCastShowDetails = async (showUrl: string) => {
+  try {
+    const response = await axios.get(showUrl);
+    const showData = response.data;
+
+    const result = {
+      id: showData.id,
+      title: showData.name,
+      rating: showData.rating.average,
+      image: showData.image?.medium,
+    };
+
+    return result;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+const extractCastShows = async (data: any) => {
+  return data.map((show: any) => ({
+    url: show._links.show.href,
+    charName: show._links.character.name,
+  }));
 };

@@ -31,6 +31,14 @@ export interface ShowBasicInfo {
   inLibrary: boolean | undefined;
 }
 
+export interface CastShowInfo {
+  id: string;
+  title: string;
+  rating: number | null;
+  image: string | undefined;
+  charName: string;
+}
+
 export interface Actor {
   castName: string;
   charName: string;

@@ -10,6 +10,8 @@ import Image from "next/image";
 const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
   const { id, image, rating, title } = showBasicInfo;
 
+  const [inLibrary, setInLibrary] = useState(showBasicInfo.inLibrary);
+
   const addToUserList = async (status: string) => {
     const show = await createShowStats(
       {
@@ -40,8 +42,6 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
     // Navigate to the show details page
     router.push(`/show/${id}`);
   };
-
-  const [inLibrary, setInLibrary] = useState(showBasicInfo.inLibrary);
 
   return (
     <div className="card card-compact m-2 w-[144px] bg-base-300 shadow-xl lg:m-4 lg:w-[180px]">
