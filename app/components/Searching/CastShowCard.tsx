@@ -44,7 +44,7 @@ const CastShowCard = ({ ...castShowInfo }: CastShowInfo) => {
         >
           {title}
         </h2>
-        <h3>{charName}</h3>
+        <h3>{charName.join(", ")}</h3>
       </div>
     </li>
   );

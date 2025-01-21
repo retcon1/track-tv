@@ -185,10 +185,18 @@ export const getCastShows = async (
     );
     const castShows = await extractCastShows(response.data);
 
-    const detailedShows: CastShowInfo[] = await Promise.all(
+    const detailedShows: CastShowInfo[] = [];
+
+    await Promise.all(
       castShows.map(async (show: any) => {
         const details = await getCastShowDetails(show.url);
-        return { charName: show.charName, ...details };
+        const existingShow = detailedShows.find((s) => s.id === details?.id);
+
+        if (existingShow) {
+          existingShow.charName.push(show.charName);
+        } else {
+          detailedShows.push({ ...details!, charName: [show.charName] });
+        }
       }),
     );
 

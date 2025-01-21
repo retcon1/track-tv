@@ -36,7 +36,7 @@ export interface CastShowInfo {
   title: string;
   rating: number | null;
   image: string | undefined;
-  charName: string;
+  charName: string[];
 }
 
 export interface Actor {
