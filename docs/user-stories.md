@@ -39,8 +39,8 @@
 
 ### Pages
 
-- As a user I want to be able to click on an actor and see what other shows they've been in
-- As a user I want to be able to click on a show from an actor's page to see its details
+- As a user I want to be able to click on an actor and see what other shows they've been in ✅
+- As a user I want to be able to click on a show from an actor's page to see its details ✅
 - As a user I want to be able to click on a network to see what other shows they have produced
 - As a user I want to be able to see a home page with the top trending, highest rated and upcoming shows
 - As a user I want to be able to see the latest episodes from a show on its details page
