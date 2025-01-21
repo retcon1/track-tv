@@ -55,7 +55,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
 
     // Cleanup function to unsubscribe from the listener when the component unmounts
     return () => unsubscribe();
-  }, []);
+  }, [params.showId]);
 
   if (!showDetails) {
     return (
