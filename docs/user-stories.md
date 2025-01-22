@@ -7,7 +7,7 @@
 - As a user I want to be able to sign in to my account ✅
 - As a user I want to be able to change my password in case it becomes compromised ✅
 - As a user I want to be able to change my username ✅
-- As a user I want to be able to change my avatar
+- As a user I want to be able to change my avatar ✅
 
 ### Searching
 
@@ -15,6 +15,7 @@
 - As a user I want to be able to see if a show is already on my list when searching ✅
 - As a user I want to avoid adding a show to my list twice, so an add button should only show up if it isn't in my list ✅
 - As a user I want to be able to click on a TV show result to get more details on it ✅
+- As a user I want to be able to change the status of the show from searching, not just remove it
 - As a user I want to be able to sort by release date, rating and alphabetical order after searching
 - As a user I want to be able to see all shows by most popular or highest rated
 
@@ -38,8 +39,8 @@
 
 ### Pages
 
-- As a user I want to be able to click on an actor and see what other shows they've been in
-- As a user I want to be able to click on a show from an actor's page to see its details
+- As a user I want to be able to click on an actor and see what other shows they've been in ✅
+- As a user I want to be able to click on a show from an actor's page to see its details ✅
 - As a user I want to be able to click on a network to see what other shows they have produced
 - As a user I want to be able to see a home page with the top trending, highest rated and upcoming shows
 - As a user I want to be able to see the latest episodes from a show on its details page

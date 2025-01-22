@@ -212,7 +212,7 @@ const ShowInfo = ({ params }: { params: { showId: string } }) => {
               {showDetails.cast
                 .slice(0, 8)
                 .map((actor: Actor, index: number) => (
-                  <Headshot key={index} actor={actor} index={index} />
+                  <Headshot key={index} actor={actor} id={actor.id} />
                 ))}
             </ul>
           </div>

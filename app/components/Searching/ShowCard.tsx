@@ -10,6 +10,8 @@ import Image from "next/image";
 const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
   const { id, image, rating, title } = showBasicInfo;
 
+  const [inLibrary, setInLibrary] = useState(showBasicInfo.inLibrary);
+
   const addToUserList = async (status: string) => {
     const show = await createShowStats(
       {
@@ -41,14 +43,17 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
     router.push(`/show/${id}`);
   };
 
-  const [inLibrary, setInLibrary] = useState(showBasicInfo.inLibrary);
-
   return (
     <div className="card card-compact m-2 w-[144px] bg-base-300 shadow-xl lg:m-4 lg:w-[180px]">
       <figure
         className="relative h-48 w-full hover:cursor-pointer lg:h-[252.85px]"
         onClick={navigateToDetails}
       >
+        {rating ? (
+          <div className="badge badge-success badge-sm absolute bottom-1 left-1 z-50 shadow-md lg:badge-lg">
+            {rating}
+          </div>
+        ) : null}
         {image ? (
           <Image
             alt={`poster of ${title}`}
@@ -61,11 +66,6 @@ const ShowCard = ({ ...showBasicInfo }: ShowBasicInfo) => {
         )}
       </figure>
       <div className="card-body">
-        {rating ? (
-          <div className="badge badge-success badge-sm lg:badge-lg">
-            {rating}
-          </div>
-        ) : null}
         <h2
           className="lg:card-title hover:cursor-pointer hover:underline"
           onClick={navigateToDetails}

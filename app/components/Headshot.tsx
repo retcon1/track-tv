@@ -1,17 +1,26 @@
 import React from "react";
 import { Actor } from "@/app/interfaces/interfaces";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface HeadshotProps {
   actor: Actor;
-  index: number;
+  id: string;
 }
 
-const Headshot = ({ actor, index }: HeadshotProps) => {
+const Headshot = ({ actor, id }: HeadshotProps) => {
+  const router = useRouter();
+
+  const navigateToDetails = () => {
+    // Navigate to the cast details page
+    router.push(`/cast/${id}`);
+  };
+
   return (
     <li
-      key={index}
-      className="mb-6 flex flex-col items-center text-center w-32 md:w-36"
+      key={id}
+      className="mb-6 flex w-32 cursor-pointer flex-col items-center text-center md:w-36"
+      onClick={navigateToDetails}
     >
       {actor.headshot ? (
         <>

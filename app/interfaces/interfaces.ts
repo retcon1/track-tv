@@ -31,11 +31,31 @@ export interface ShowBasicInfo {
   inLibrary: boolean | undefined;
 }
 
+export interface CastShowInfo {
+  id: string;
+  title: string;
+  rating: number | null;
+  image: string | undefined;
+  charName: string[];
+}
+
 export interface Actor {
   castName: string;
   charName: string;
   headshot: string;
   charHeadshot: string;
+  id: string;
+}
+
+export interface CastDetails {
+  id: string;
+  name: string;
+  headshot: string;
+  birthday: string | null;
+  age: number | null;
+  deathday: string;
+  country: string;
+  gender: string;
 }
 
 export interface ShowDetailedInfo {
