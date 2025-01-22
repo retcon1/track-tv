@@ -51,8 +51,8 @@ export interface CastDetails {
   id: string;
   name: string;
   headshot: string;
-  birthday: string;
-  age: number;
+  birthday: string | null;
+  age: number | null;
   deathday: string;
   country: string;
   gender: string;

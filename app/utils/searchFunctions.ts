@@ -160,7 +160,8 @@ const extractCastInfoDetailed = (cast: any): CastDetails => {
   };
 };
 
-const calculateAge = (birthdate: string): number => {
+const calculateAge = (birthdate: string): number | null => {
+  if (!birthdate) return null;
   const birthDate = new Date(birthdate);
   const today = new Date();
   let age = today.getFullYear() - birthDate.getFullYear();

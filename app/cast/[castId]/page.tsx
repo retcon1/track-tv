@@ -27,7 +27,7 @@ const CastInfo = ({ params }: { params: { castId: string } }) => {
       }
     };
     fetchDetails();
-  }, [params.castId]);
+  }, []);
 
   if (!castDetails && !notFound) {
     return (
@@ -81,13 +81,17 @@ const CastInfo = ({ params }: { params: { castId: string } }) => {
               </h1>
               <div>
                 <ul>
-                  <li>
-                    <span className="font-bold">Age:</span> {castDetails.age}
-                  </li>
-                  <li>
-                    <span className="font-bold">Birthday:</span>{" "}
-                    {castDetails.birthday}
-                  </li>
+                  {castDetails.age && (
+                    <li>
+                      <span className="font-bold">Age:</span> {castDetails.age}
+                    </li>
+                  )}
+                  {castDetails.birthday && (
+                    <li>
+                      <span className="font-bold">Birthday:</span>{" "}
+                      {castDetails.birthday}
+                    </li>
+                  )}
                   {castDetails.deathday && (
                     <li>
                       <span className="font-bold">Died:</span>{" "}
@@ -108,7 +112,7 @@ const CastInfo = ({ params }: { params: { castId: string } }) => {
           </div>
         </header>
         <div className="md:mx-20">
-          <h1 className="text-2xl font-bold md:text-4xl ml-5">Known For</h1>
+          <h1 className="ml-5 text-2xl font-bold md:text-4xl">Known For</h1>
           <ul className="flex flex-wrap justify-center">
             {castShows?.map((show, index) => (
               <CastShowCard key={index} {...show} />
