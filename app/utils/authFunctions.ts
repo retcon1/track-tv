@@ -1,5 +1,6 @@
 import {
   createUserWithEmailAndPassword,
+  deleteUser,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -153,6 +154,22 @@ export const changeAvatar = async (newAvatarUrl: string) => {
     return true;
   } catch (error) {
     console.error("Error updating username:", error);
+    return false;
+  }
+};
+
+export const deleteAccount = async () => {
+  const user = auth?.currentUser;
+  if (!user) return alert("No user signed in!");
+
+  try {
+    //TODO add functionality to ensure the user has recently signed in, may need to use: reauthenticateWithCredential
+    await deleteUser(user);
+    console.log("User account deleted!");
+    window.location.href = "/";
+    return true;
+  } catch (error) {
+    console.error("Error deleting user account:", error);
     return false;
   }
 };
