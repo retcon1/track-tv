@@ -1,6 +1,7 @@
 import {
   createUserWithEmailAndPassword,
   deleteUser,
+  getAuth,
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
@@ -25,7 +26,7 @@ export const signUp = async (email: string, pass: string, username: string) => {
       JSON.stringify({
         email: user.email,
         uid: user.uid,
-        username: user.displayName,
+        username: username,
         avatar: user.photoURL,
       }),
     );
@@ -143,7 +144,6 @@ export const changeAvatar = async (newAvatarUrl: string) => {
   const user = auth?.currentUser;
   if (!user) return alert("No user signed in!");
 
-  const userRef = doc(db, "users", user.uid);
   try {
     await updateProfile(user, { photoURL: newAvatarUrl });
     const authData = JSON.parse(localStorage.getItem("auth") || "");
@@ -159,14 +159,14 @@ export const changeAvatar = async (newAvatarUrl: string) => {
 };
 
 export const deleteAccount = async () => {
-  const user = auth?.currentUser;
+  const auth = getAuth();
+  const user = auth.currentUser;
   if (!user) return alert("No user signed in!");
 
   try {
-    //TODO add functionality to ensure the user has recently signed in, may need to use: reauthenticateWithCredential
     await deleteUser(user);
     console.log("User account deleted!");
-    window.location.href = "/";
+    localStorage.removeItem("auth");
     return true;
   } catch (error) {
     console.error("Error deleting user account:", error);
