@@ -210,7 +210,7 @@ export const addUserAndShowStash = async (
   setDoc(userDocRef, newUserData);
 };
 
-const findShowStashId = async () => {
+export const findShowStashId = async () => {
   const userData = await findUserByEmail();
 
   if (!userData) {
