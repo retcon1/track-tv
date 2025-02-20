@@ -2,6 +2,7 @@
 import ChangeAvatarForm from "../components/auth/ChangeAvatarForm";
 import ChangePassForm from "../components/auth/ChangePassForm";
 import ChangeUsernameForm from "../components/auth/ChangeUsernameForm";
+import DeleteAccount from "../components/auth/DeleteAccount";
 
 const Settings = () => {
   return (
@@ -23,6 +24,12 @@ const Settings = () => {
           Change Your Username
         </h1>
         <ChangeAvatarForm />
+      </div>
+      <div className="m-10 rounded-3xl bg-neutral p-10">
+        <h1 className="mb-2 flex justify-center text-lg font-bold">
+          Delete Account
+        </h1>
+        <DeleteAccount />
       </div>
     </div>
   );
