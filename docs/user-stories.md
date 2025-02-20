@@ -8,7 +8,7 @@
 - As a user I want to be able to change my password in case it becomes compromised ✅
 - As a user I want to be able to change my username ✅
 - As a user I want to be able to change my avatar ✅
-- As a user I want to be able to delete my account
+- As a user I want to be able to delete my account ✅
 - As a user I want to be able to reset my password if I forget it
 
 ### Searching
@@ -37,7 +37,7 @@
 ### Styling
 
 - As a user I want to be able to browse trackTV comfortably on my phone ✅
-- As a user I want to be able to change the style between dark or light mode
+- As a user I want to be able to change the style between dark or light mode ✅
 
 ### Pages
 

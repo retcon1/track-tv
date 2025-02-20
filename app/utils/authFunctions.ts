@@ -2,7 +2,6 @@ import {
   createUserWithEmailAndPassword,
   deleteUser,
   EmailAuthProvider,
-  getAuth,
   reauthenticateWithCredential,
   signInWithEmailAndPassword,
   signInWithPopup,

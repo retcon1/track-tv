@@ -1,4 +1,4 @@
-import { changePassword, deleteAccount } from "@/app/utils/authFunctions";
+import { deleteAccount } from "@/app/utils/authFunctions";
 import React, { useState } from "react";
 import Success from "../toasts/Success";
 import Warning from "../toasts/Warning";
