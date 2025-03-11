@@ -2,7 +2,11 @@ import { changePassword } from "@/app/utils/authFunctions";
 import React, { useState } from "react";
 import Success from "../toasts/Success";
 
-const ChangePassForm = () => {
+interface ChangePassFormProps {
+  currentUsername: string;
+}
+
+const ChangePassForm: React.FC<ChangePassFormProps> = ({ currentUsername }) => {
   const [changePassForm, setChangePassForm] = useState({
     password: "",
     newPassword: "",
@@ -27,8 +31,9 @@ const ChangePassForm = () => {
 
   return (
     <>
-    {success && <Success text="Password changed successfully" />}
+      {success && <Success text="Password changed successfully" />}
       <form className="flex flex-col items-center" onSubmit={handleSubmit}>
+        <input type="hidden" name="username" value={currentUsername} />
         <label className="input input-bordered my-5 flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,6 +49,7 @@ const ChangePassForm = () => {
           </svg>
           <input
             placeholder="Current Password"
+            autoComplete="current-password"
             type="password"
             minLength={6}
             onChange={(e) =>
@@ -67,6 +73,7 @@ const ChangePassForm = () => {
           </svg>
           <input
             placeholder="New Password"
+            autoComplete="new-password"
             type="password"
             minLength={6}
             onChange={(e) =>
@@ -93,6 +100,7 @@ const ChangePassForm = () => {
           </svg>
           <input
             placeholder="Confirm Password"
+            autoComplete="new-password"
             type="password"
             minLength={6}
             onChange={(e) =>

@@ -3,7 +3,13 @@ import React, { useState } from "react";
 import Success from "../toasts/Success";
 import Warning from "../toasts/Warning";
 
-const DeleteAccount = () => {
+interface DeleteAccountFormProps {
+  currentUsername: string;
+}
+
+const DeleteAccount: React.FC<DeleteAccountFormProps> = ({
+  currentUsername,
+}) => {
   const [deleted, setDeleted] = useState(false);
   const [failed, setFailed] = useState(false);
   const [passConfirm, setPassConfirm] = useState<string>("");
@@ -28,7 +34,8 @@ const DeleteAccount = () => {
     <>
       {deleted && <Success text="Account Deleted, sad to see you go!" />}
       {failed && <Warning text="Failed to delete account, please try again!" />}
-      <div className="flex max-w-[290px] flex-col items-center">
+      <form className="flex max-w-[290px] flex-col items-center">
+        <input type="hidden" name="username" value={currentUsername} />
         <label className="input input-bordered my-8 flex items-center gap-2">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -48,6 +55,7 @@ const DeleteAccount = () => {
             minLength={6}
             onChange={(e) => setPassConfirm(e.target.value)}
             className="mx-5 rounded"
+            autoComplete="current-password"
           />
         </label>
         <button
@@ -57,7 +65,7 @@ const DeleteAccount = () => {
         >
           Delete Account
         </button>
-      </div>
+      </form>
     </>
   );
 };

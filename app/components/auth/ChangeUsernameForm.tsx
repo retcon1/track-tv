@@ -3,9 +3,13 @@ import React, { useEffect, useState } from "react";
 import Success from "../toasts/Success";
 import { useRouter } from "next/navigation";
 
-const ChangeUsernameForm = () => {
+interface ChangeUsernameFormProps {
+  currentUsername: string;
+}
+
+const ChangeUsernameForm: React.FC<ChangeUsernameFormProps> = ({ currentUsername }) => {
   const [changeUsernameForm, setChangeUsernameForm] = useState({
-    currentUsername: "",
+    currentUsername,
     newUsername: "",
     confirmUsername: "",
   });
@@ -27,13 +31,13 @@ const ChangeUsernameForm = () => {
     }
   };
 
-  useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("auth") || "");
-    setChangeUsernameForm({
-      ...changeUsernameForm,
-      currentUsername: user.username || "",
-    });
-  }, []);
+  // useEffect(() => {
+  //   const user = JSON.parse(localStorage.getItem("auth") || "");
+  //   setChangeUsernameForm({
+  //     ...changeUsernameForm,
+  //     currentUsername: user.username || "",
+  //   });
+  // }, []);
 
   return (
     <>
