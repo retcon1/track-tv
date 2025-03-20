@@ -10,6 +10,9 @@
 - As a user I want to be able to change my avatar ✅
 - As a user I want to be able to delete my account ✅
 - As a user I want to be able to reset my password if I forget it
+- As a user I want to have a personalised profile (TV list should be separate)
+- As a user I want to be able to add 4 favourite shows to my profile
+- As a user I want to be able to discover other user's profiles
 
 ### Searching
 
